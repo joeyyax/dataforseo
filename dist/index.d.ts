@@ -12,5 +12,10 @@ export { classify, domainStem, elsewhere, intentOf, isBrandKeyword, mentions, pa
 export type { Classified, Relevance, TermKind, Topic } from './relevance.js';
 export { aiReport, baselineReport, gapReport, localReport, redirectReport, snapshotReport, chain, funnels, snapshotOpportunities, GLOSSARY, } from './reports.js';
 export { buildReport, capitalize, code, count, day, every, longDate, percent, plural, series, theTop, times, tonesFor, usd } from './report.js';
-export type { BadgeTone, Block, MethodLine, ReportSpec, StatItem, TableColumn, Terms, Tone } from './report.js';
+export type { BadgeTone, Block, CalloutBlock, ChartBlock, DetailsBlock, FooterBlock, HeadingBlock, ListBlock, MethodLine, Renderer, ReportSpec, StatItem, StatsBlock, TableBlock, TableColumn, Terms, TextBlock, Tone, } from './report.js';
+export { toMarkdown } from './markdown.js';
+export { toHtml } from './html.js';
+export type { HtmlOptions } from './html.js';
+export { parseInline } from './inline.js';
+export type { Inline } from './inline.js';
 export { mapLimit, money, normalizeDomain } from './util.js';

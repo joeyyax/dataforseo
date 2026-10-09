@@ -11,5 +11,9 @@ export { classify, domainStem, elsewhere, intentOf, isBrandKeyword, mentions, pa
 // Reports
 export { aiReport, baselineReport, gapReport, localReport, redirectReport, snapshotReport, chain, funnels, snapshotOpportunities, GLOSSARY, } from './reports.js';
 export { buildReport, capitalize, code, count, day, every, longDate, percent, plural, series, theTop, times, tonesFor, usd } from './report.js';
+// Renderers
+export { toMarkdown } from './markdown.js';
+export { toHtml } from './html.js';
+export { parseInline } from './inline.js';
 // Utilities
 export { mapLimit, money, normalizeDomain } from './util.js';

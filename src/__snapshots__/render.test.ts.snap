@@ -1,0 +1,1088 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`toHtml > renders every block type as a plain fragment 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Sample · October 8, 2026</p><h1>Example report</h1></hgroup>
+<p id="answer" class="dfs-lg">The <strong>answer</strong>, with <code>code</code> and a <a href="https://example.com" rel="noopener">link</a>.</p>
+<dl class="dfs-terms"><div><dt>answer</dt><dd>The one line at the top.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat dfs-good"><dt>Visits</dt><dd class="dfs-value"><a href="#rows">1,241</a></dd><dd class="dfs-note">a month</dd></div>
+<div class="dfs-stat"><dt>Share</dt><dd class="dfs-value">7%</dd></div>
+</dl>
+<h2 id="rows-title">Rows</h2>
+<div class="dfs-table" id="rows" tabindex="0"><table>
+<thead><tr><th scope="col">Term</th><th scope="col">Position</th><th scope="col" class="dfs-num">Visits</th><th scope="col" class="dfs-num">Share</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>plumber</td><td><span class="dfs-badge dfs-good">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:100"></span>50</td><td><code>/</code></td></tr>
+<tr><td>drain</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num"></td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:50"></span>25</td><td><code>/drains</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Position</dt><dd>Where it ranks.</dd></div></dl>
+<aside class="dfs-callout dfs-warn" id="warn"><p><strong>Check this.</strong> One page redirects home.</p></aside>
+<aside class="dfs-callout dfs-info" id="info"><p><strong>Note.</strong> No title, so the tone names it.</p></aside>
+<ol id="steps">
+<li>First</li>
+<li>Second</li>
+</ol>
+<details id="more" open>
+<summary>How this was measured</summary>
+<ul>
+<li><strong>What:</strong> everything</li>
+</ul>
+</details>
+<figure class="dfs-chart" id="trend"><figcaption>Visits by month</figcaption><div class="dfs-table" tabindex="0"><table>
+<thead><tr><td></td><th scope="col" class="dfs-num">Visits</th></tr></thead>
+<tbody>
+<tr><th scope="row">Sep</th><td class="dfs-num">1,100</td></tr>
+<tr><th scope="row">Oct</th><td class="dfs-num">1,241</td></tr>
+</tbody>
+</table></div></figure>
+<footer class="dfs-footer" id="footer"><p>Data: example, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the ai-visibility report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">AI visibility · October 8, 2026</p><h1>Acme Plumbing in AI answers</h1></hgroup>
+<p id="answer" class="dfs-lg">AI answers in DataForSEO’s sample link acmeplumbing.example as a source 3 times and name Acme Plumbing once.</p>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>Citations</dt><dd class="dfs-value"><a href="#platforms-title">3</a></dd><dd class="dfs-note">answers linking acmeplumbing.example</dd></div>
+<div class="dfs-stat"><dt>Mentions</dt><dd class="dfs-value"><a href="#platforms-title">1</a></dd><dd class="dfs-note">answers naming Acme Plumbing</dd></div>
+<div class="dfs-stat"><dt>Topics checked</dt><dd class="dfs-value"><a href="#topics-title">2</a></dd><dd class="dfs-note">acmeplumbing.example a top source in 1</dd></div>
+<div class="dfs-stat"><dt>Pages cited</dt><dd class="dfs-value"><a href="#pages-title">1</a></dd><dd class="dfs-note">in 1 top question</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> How often AI answers name Acme Plumbing (a mention) and link a page on acmeplumbing.example as a source (a citation).</li>
+<li><strong>Where:</strong> ChatGPT and Google AI Overviews, United States, English.</li>
+<li><strong>When:</strong> Data pulled October 8, 2026.</li>
+<li><strong>Source:</strong> DataForSEO LLM Mentions, a large sample of AI answers to real questions. Counts are answers in that sample, not every conversation, and the same question can get a different answer each time.</li>
+<li><strong>Name matching:</strong> An answer counts as a mention when it contains “Acme Plumbing”. A name made of common words also matches generic phrases, so the mention count can run high.</li>
+<li><strong>Topics:</strong> For questions containing “water heater repair” and “sewer line repair”, the sites the answers cite most.</li>
+<li><strong>Questions:</strong> The question with the most AI searches a month whose answers cite acmeplumbing.example.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">AI tools tend to link pages that answer one question plainly.</p>
+<ul id="actions">
+<li>For questions about “water heater repair”, AI answers cite rivalplumbing.example, forum.example and hardware.example most. acmeplumbing.example isn’t in the top 3.</li>
+</ul>
+<h2 id="platforms-title">By platform</h2>
+<p id="platforms-note">A mention is the name in the answer’s text. A citation is a link to the site among its sources. Either can happen without the other.</p>
+<dl class="dfs-terms"><div><dt>mention</dt><dd>The AI answer names the organization in its text, with or without a link.</dd></div><div><dt>citation</dt><dd>The AI answer links a page on the site as one of its sources.</dd></div></dl>
+<div class="dfs-table" id="platforms" tabindex="0"><table>
+<thead><tr><th scope="col">Platform</th><th scope="col" class="dfs-num">Mentions</th><th scope="col" class="dfs-num">Citations</th></tr></thead>
+<tbody>
+<tr><td>ChatGPT</td><td class="dfs-num">1</td><td class="dfs-num">0</td></tr>
+<tr><td>Google AI Overviews</td><td class="dfs-num">0</td><td class="dfs-num">3</td></tr>
+</tbody>
+</table></div>
+<h2 id="topics-title">Topics checked</h2>
+<p id="topics-note">The sites AI answers cite most often for questions containing each topic. “No” means acmeplumbing.example isn’t among those top sites, not that it’s never cited. “Too few answers” means under 10 answers in the sample.</p>
+<div class="dfs-table" id="topics" tabindex="0"><table>
+<thead><tr><th scope="col">Topic</th><th scope="col">acmeplumbing.example a top source</th><th scope="col" class="dfs-num">Answers found</th><th scope="col">Most cited sites</th></tr></thead>
+<tbody>
+<tr><td>water heater repair</td><td><span class="dfs-badge dfs-warn">No</span></td><td class="dfs-num">90</td><td>rivalplumbing.example, forum.example, hardware.example</td></tr>
+<tr><td>sewer line repair</td><td><span class="dfs-badge dfs-good">Yes</span></td><td class="dfs-num">40</td><td>acmeplumbing.example</td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Answers found</dt><dd>Answers in the sample to questions that contain the topic.</dd></div></dl>
+<h2 id="pages-title">Pages AI cites</h2>
+<p id="pages-note">From the question with the most AI searches a month whose answers link acmeplumbing.example.</p>
+<div class="dfs-table" id="pages" tabindex="0"><table>
+<thead><tr><th scope="col">Page</th><th scope="col" class="dfs-num">Questions</th><th scope="col" class="dfs-num">AI searches a month</th></tr></thead>
+<tbody>
+<tr><td><code>/sewer</code></td><td class="dfs-num">1</td><td class="dfs-num">260</td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>AI searches a month</dt><dd>DataForSEO’s estimate of how often people ask AI tools that question in a month.</dd></div></dl>
+<h2 id="prompts-title">Answers that cite the site</h2>
+<div class="dfs-table" id="prompts" tabindex="0"><table>
+<thead><tr><th scope="col">Question</th><th scope="col">Where</th><th scope="col" class="dfs-num">AI searches a month</th><th scope="col">Page cited</th></tr></thead>
+<tbody>
+<tr><td>who fixes sewer lines in springfield</td><td>Google AI Overviews</td><td class="dfs-num">260</td><td><code>/sewer</code></td></tr>
+</tbody>
+</table></div>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO LLM Mentions, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the backlink-redirects report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Broken link check · October 8, 2026</p><h1>acmeplumbing.example links that fail today</h1></hgroup>
+<p id="answer" class="dfs-lg">3 addresses that other sites link to fail on the live site, https://staging.acmeplumbing.example. Counted per address, they have 62 linking sites.</p>
+<dl class="dfs-terms"><div><dt>linking site</dt><dd>Other websites with at least one link to that address. Each site counts once.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat dfs-bad"><dt>Broken</dt><dd class="dfs-value"><a href="#fix">3</a></dd><dd class="dfs-note">62 linking sites</dd></div>
+<div class="dfs-stat"><dt>Redirecting</dt><dd class="dfs-value"><a href="#redirecting-title">3</a></dd><dd class="dfs-note">land on a live page</dd></div>
+<div class="dfs-stat"><dt>Unchanged</dt><dd class="dfs-value"><a href="#unchanged-title">1</a></dd><dd class="dfs-note">same address, still live</dd></div>
+<div class="dfs-stat dfs-warn"><dt>Behind a login</dt><dd class="dfs-value"><a href="#gated-title">1</a></dd><dd class="dfs-note">couldn’t be checked</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> The 100 old acmeplumbing.example addresses with the most linking sites, of 170 that have any. Variants that differ only by http, www, subdomain or tracking tags count as one, which leaves 8 addresses.</li>
+<li><strong>How:</strong> Each address is requested on https://staging.acmeplumbing.example and followed through any redirects to where it ends up.</li>
+<li><strong>Results:</strong> Broken: ends on a missing page or an error. Redirecting: forwards to a live page. Unchanged: same address, still live. Behind a login: hit a sign-in page, so it couldn’t be checked.</li>
+<li><strong>When:</strong> Links counted October 8, 2026; addresses checked October 8, 2026.</li>
+<li><strong>Source:</strong> DataForSEO Backlinks for the linked addresses and their linking sites. The checks run directly against the site.</li>
+</ul>
+</details>
+<h2 id="actions-title">Fix</h2>
+<p id="actions-intro">Each needs a redirect to its closest match, starting with the most linked. Links to a missing page pass no search value, and visitors who follow them land on an error.</p>
+<div class="dfs-table" id="fix" tabindex="0"><table>
+<thead><tr><th scope="col">Old address</th><th scope="col">Type</th><th scope="col">Result</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
+<tbody>
+<tr><td><code>/coupons/spring-2019</code></td><td>Page</td><td><span class="dfs-badge">404</span></td><td class="dfs-num">46</td></tr>
+<tr><td><code>/services/water-heaters/</code></td><td>Page</td><td><span class="dfs-badge">404</span></td><td class="dfs-num">11</td></tr>
+<tr><td><code>/old-blog/frozen-pipes</code></td><td>Page</td><td><span class="dfs-badge">No response</span></td><td class="dfs-num">5</td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Result</dt><dd>404 means page not found. Any other number is an error the server returned.</dd></div></dl>
+<aside class="dfs-callout dfs-warn" id="home-redirects"><p><strong>Sent to the homepage.</strong> 1 inner page redirects to the homepage, which Google treats like a missing page. Point it at its closest match.</p></aside>
+<h2 id="gated-title">Behind a login</h2>
+<p id="gated-note">These hit a sign-in page, so they couldn’t be checked.</p>
+<div class="dfs-table" id="gated" tabindex="0"><table>
+<thead><tr><th scope="col">Old address</th><th scope="col">Lands on</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
+<tbody>
+<tr><td><code>/account</code></td><td><code>/login?next=%2Faccount</code></td><td class="dfs-num">4</td></tr>
+</tbody>
+</table></div>
+<h2 id="redirecting-title">Redirecting</h2>
+<p id="redirecting-note">Old addresses that forward to a live page. Check each lands somewhere a visitor would expect.</p>
+<div class="dfs-table" id="redirecting" tabindex="0"><table>
+<thead><tr><th scope="col">Old address</th><th scope="col">Lands on</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
+<tbody>
+<tr><td><code>/about-us/</code></td><td><code>/about</code></td><td class="dfs-num">59</td></tr>
+<tr><td><code>/blog/2020/03/hello</code></td><td><code>/</code></td><td class="dfs-num">3</td></tr>
+<tr><td><code>/drains/</code></td><td><code>/services/drains</code></td><td class="dfs-num">8</td></tr>
+</tbody>
+</table></div>
+<h2 id="unchanged-title">Unchanged</h2>
+<div class="dfs-table" id="unchanged" tabindex="0"><table>
+<thead><tr><th scope="col">Address</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
+<tbody>
+<tr><td><code>/</code></td><td class="dfs-num">300</td></tr>
+</tbody>
+</table></div>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Backlinks, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the competitor-gap report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Competitor gap · October 8, 2026</p><h1>acmeplumbing.example against competitors on Google</h1></hgroup>
+<p id="answer" class="dfs-lg">rivalplumbing.example and citydrains.example are on Google’s page one for 6 search terms about your work where acmeplumbing.example ranks lower: 2 where it’s further down and 4 where it isn’t in the top 100. Those terms get about 8,790 searches a month.</p>
+<dl class="dfs-terms"><div><dt>page one</dt><dd>Positions #1 to #10, the first page of results. Few people click past it.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>Behind a competitor</dt><dd class="dfs-value"><a href="#weak-title">2</a></dd><dd class="dfs-note">both rank, the competitor higher</dd></div>
+<div class="dfs-stat"><dt>Not ranking</dt><dd class="dfs-value"><a href="#missing-title">4</a></dd><dd class="dfs-note">you’re not in the top 100</dd></div>
+<div class="dfs-stat"><dt>Searches a month</dt><dd class="dfs-value"><a href="#themes-title">8,790</a></dd><dd class="dfs-note">across those terms</dd></div>
+<div class="dfs-stat"><dt>Competitors</dt><dd class="dfs-value"><a href="#competitors-title">2</a></dd><dd class="dfs-note">compared</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Search terms where at least one competitor is on page one (#1 to #10) and acmeplumbing.example is lower or not in the top 100.</li>
+<li><strong>Competitors:</strong> rivalplumbing.example and citydrains.example.</li>
+<li><strong>Where:</strong> Google in the United States, English. Rankings are national, not what someone searching from one city sees.</li>
+<li><strong>When:</strong> Data pulled October 8, 2026.</li>
+<li><strong>Source:</strong> DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls.</li>
+<li><strong>Sorting:</strong> A term is about your work when it contains a topic word: Plumbing (plumber, plumbing, pipe, repipe, leak, drain, sewer, toilet); Water heaters (water heater); Pumps (sump pump, disposal). Terms with “Acme Plumbing” count as your name. A search for another business or place counts as another name. Everything else is unrelated.</li>
+<li><strong>Filter:</strong> For each competitor, up to 100 of its most-searched page-one terms that you also rank for, and up to 100 that you don’t. Terms shared between competitors count once, which leaves 25 terms. 6 are in this report. Left out: 3 terms naming a competitor or another business (like “rival plumbing coupons”), 12 unrelated to your work (like “zip code finder”) and 4 where you already rank ahead.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">One line per topic, most searched first. Where you rank, improving the page listed is the usual fix. Where you don’t, it’s usually a page that answers the search.</p>
+<ol id="actions">
+<li><strong>Water heaters:</strong> 2 terms, 5,720 searches a month. The biggest is “tankless water heater”: rivalplumbing.example is #3 and you’re #14 with <code>/services</code>. Your best position is on “water heater install”: rivalplumbing.example is #4 and you’re #8 with <code>/services</code>.</li>
+<li><strong>Plumbing:</strong> 3 terms, 2,170 searches a month. The biggest is “hydro jetting drain”: citydrains.example is #2 and you’re not in the top 100.</li>
+<li><strong>Pumps:</strong> 1 term, 900 searches a month. The biggest is “sump pump installation”: rivalplumbing.example is #7 and you’re not in the top 100.</li>
+</ol>
+<h2 id="themes-title">By topic</h2>
+<div class="dfs-table" id="themes" tabindex="0"><table>
+<thead><tr><th scope="col">Topic</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Behind</th><th scope="col" class="dfs-num">Not ranking</th><th scope="col">Ahead most often</th></tr></thead>
+<tbody>
+<tr><td>Water heaters</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:100"></span>5,720</td><td class="dfs-num">2</td><td class="dfs-num">0</td><td><code>rivalplumbing.example</code></td></tr>
+<tr><td>Plumbing</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:38"></span>2,170</td><td class="dfs-num">0</td><td class="dfs-num">3</td><td><code>citydrains.example</code></td></tr>
+<tr><td>Pumps</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:16"></span>900</td><td class="dfs-num">0</td><td class="dfs-num">1</td><td><code>rivalplumbing.example</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<h2 id="weak-title">Behind a competitor</h2>
+<p id="weak-note">Both sites rank and the competitor is higher. These are usually the quickest to improve, since Google already connects acmeplumbing.example to the search.</p>
+<div class="dfs-table" id="weak" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Ahead of you</th><th scope="col">You</th><th scope="col">Your page</th></tr></thead>
+<tbody>
+<tr><td>tankless water heater</td><td>Water heaters</td><td class="dfs-num">5,000</td><td>rivalplumbing.example #3</td><td><span class="dfs-badge">#14</span></td><td><code>/services</code></td></tr>
+<tr><td>water heater install</td><td>Water heaters</td><td class="dfs-num">720</td><td>rivalplumbing.example #4</td><td><span class="dfs-badge">#8</span></td><td><code>/services</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Ahead of you</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div></dl>
+<h2 id="missing-title">Not ranking</h2>
+<p id="missing-note">A competitor is on page one and acmeplumbing.example isn’t in the top 100, usually because no page covers the search.</p>
+<div class="dfs-table" id="missing" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Who ranks</th></tr></thead>
+<tbody>
+<tr><td>hydro jetting drain</td><td>Plumbing</td><td class="dfs-num">1,300</td><td>citydrains.example #2, rivalplumbing.example #9</td></tr>
+<tr><td>sump pump installation</td><td>Pumps</td><td class="dfs-num">900</td><td>rivalplumbing.example #7</td></tr>
+<tr><td>sewer backflow testing springfield</td><td>Plumbing</td><td class="dfs-num">480</td><td>citydrains.example #1</td></tr>
+<tr><td>slab leak repair</td><td>Plumbing</td><td class="dfs-num">390</td><td>rivalplumbing.example #6</td></tr>
+</tbody>
+</table></div>
+<h2 id="competitors-title">By competitor</h2>
+<div class="dfs-table" id="competitors" tabindex="0"><table>
+<thead><tr><th scope="col">Competitor</th><th scope="col" class="dfs-num">Ahead of you</th><th scope="col" class="dfs-num">Only they rank</th><th scope="col" class="dfs-num">Only they rank, any term</th></tr></thead>
+<tbody>
+<tr><td><code>rivalplumbing.example</code></td><td class="dfs-num">2</td><td class="dfs-num">3</td><td class="dfs-num">140</td></tr>
+<tr><td><code>citydrains.example</code></td><td class="dfs-num">0</td><td class="dfs-num">2</td><td class="dfs-num">38</td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Only they rank, any term</dt><dd>Every term where they’re on page one and acmeplumbing.example isn’t in the top 100, before terms unrelated to your work are left out.</dd></div></dl>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the local-visibility report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Local visibility · October 8, 2026</p><h1>Acme Plumbing on Google Maps</h1></hgroup>
+<p id="answer" class="dfs-lg">Acme Plumbing is in the Google Maps top 3 for 1 of 3 searches checked in Springfield, Illinois, United States.</p>
+<dl class="dfs-terms"><div><dt>Google Maps top 3</dt><dd>The three listings Google shows with the map at the top of local results. Most taps go to these.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>In the top 3</dt><dd class="dfs-value"><a href="#results-title">1</a></dd><dd class="dfs-note">of 3 searches checked</dd></div>
+<div class="dfs-stat dfs-warn"><dt>Listed lower</dt><dd class="dfs-value"><a href="#results-title">1</a></dd><dd class="dfs-note">#4 to #20</dd></div>
+<div class="dfs-stat dfs-bad"><dt>Not found</dt><dd class="dfs-value"><a href="#results-title">1</a></dd><dd class="dfs-note">outside the top 20</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Where Acme Plumbing shows in Google Maps for “plumber”, “water heater repair” and “drain cleaning”, and who holds the top 3.</li>
+<li><strong>Where:</strong> Searched from the center of Springfield, Illinois, United States, in English. Maps results change with the searcher’s location, so this is one snapshot.</li>
+<li><strong>When:</strong> Searched October 8, 2026.</li>
+<li><strong>Matching:</strong> A listing counts as yours when its website is acmeplumbing.example or its name matches “Acme Plumbing”. Your best-placed listing is shown.</li>
+<li><strong>Depth:</strong> The top 20 Maps results for each search.</li>
+<li><strong>Source:</strong> DataForSEO, which runs the search on Google Maps and returns the listings.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">Searches where you’re not in the top 3, and who is. Google ranks Maps listings by relevance to the search, distance from the searcher and prominence, which includes reviews.</p>
+<ul id="actions">
+<li>“water heater repair”: Acme Plumbing is #7. The top 3 are Rival Plumbing (4.8 stars, 312 reviews), Hot Water Heroes (4.9 stars, 88 reviews) and Pipe Pros (4.6 stars, 120 reviews).</li>
+<li>“drain cleaning”: not in the top 20. The top 3 are City Drains (4.7 stars, 540 reviews), Rooter Bros (no rating) and Rival Plumbing (4.8 stars, 312 reviews).</li>
+</ul>
+<h2 id="results-title">Results by search</h2>
+<div class="dfs-table" id="results" tabindex="0"><table>
+<thead><tr><th scope="col">Search</th><th scope="col">You</th><th scope="col">Your listing</th><th scope="col">#1</th><th scope="col">#2</th><th scope="col">#3</th></tr></thead>
+<tbody>
+<tr><td>plumber</td><td><span class="dfs-badge">#2</span></td><td>Acme Plumbing · 4.6★</td><td>Rival Plumbing</td><td>Acme Plumbing</td><td>Pipe Pros</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#7</span></td><td>Acme Plumbing · 4.6★</td><td>Rival Plumbing</td><td>Hot Water Heroes</td><td>Pipe Pros</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge dfs-bad">Not found</span></td><td></td><td>City Drains</td><td>Rooter Bros</td><td>Rival Plumbing</td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>You</dt><dd>Your best Maps position for the search, out of the top 20.</dd></div></dl>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Google Maps (Springfield, Illinois, United States, English), October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the rank-baseline report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Ranking baseline · October 8, 2026</p><h1>acmeplumbing.example rankings: the starting point</h1></hgroup>
+<p id="answer" class="dfs-lg">This baseline saves the 15 search terms that bring acmeplumbing.example the most estimated visits, with each term’s position on October 8, 2026. Later ranking checks compare against it.</p>
+<dl class="dfs-terms"><div><dt>estimated visits</dt><dd>An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.</dd></div><div><dt>position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>Terms tracked</dt><dd class="dfs-value"><a href="#tracked-title">15</a></dd></div>
+<div class="dfs-stat"><dt>In the top 3</dt><dd class="dfs-value"><a href="#tracked-title">4</a></dd><dd class="dfs-note">positions #1 to #3</dd></div>
+<div class="dfs-stat"><dt>On page one</dt><dd class="dfs-value"><a href="#tracked-title">9</a></dd><dd class="dfs-note">positions #1 to #10</dd></div>
+<div class="dfs-stat"><dt>Est. visits a month</dt><dd class="dfs-value"><a href="#tracked-title">1,097</a></dd><dd class="dfs-note">from these terms</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> The 15 search terms with the most estimated visits, up to 100, with position, searches a month and the ranking page. acmeplumbing.example shows up for 312 terms in all.</li>
+<li><strong>When:</strong> Data pulled October 8, 2026.</li>
+<li><strong>Where:</strong> Google in the United States, English. Rankings are national, not what someone searching from one city sees.</li>
+<li><strong>Source:</strong> DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls. It refreshes rankings about monthly.</li>
+</ul>
+</details>
+<h2 id="actions-title">Next step</h2>
+<p id="next">Run the ranking check after November 7, 2026, once DataForSEO has fresh rankings, then monthly. If the site is relaunching, run one after launch too.</p>
+<h2 id="tracked-title">What’s tracked</h2>
+<p id="tracked-note">The 15 search terms that bring acmeplumbing.example the most estimated visits, with the position each had on October 8, 2026.</p>
+<div class="dfs-table" id="tracked" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><code>/</code></td></tr>
+<tr><td>emergency plumber</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><code>/</code></td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><code>/water-heaters</code></td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><code>/drains</code></td></tr>
+<tr><td>sewer line repair springfield</td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><code>/sewer</code></td></tr>
+<tr><td>tankless water heater install</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><code>/water-heaters/tankless</code></td></tr>
+<tr><td>garbage disposal repair</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><code>/disposals</code></td></tr>
+<tr><td>leak detection</td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><code>/leaks</code></td></tr>
+<tr><td>toilet repair</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><code>/toilets</code></td></tr>
+<tr><td>sump pump</td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><code>/sump-pumps</code></td></tr>
+<tr><td>repipe house cost</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><code>/blog/repipe-cost-guide-for-older-homes</code></td></tr>
+<tr><td>frozen pipes</td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><code>/blog/frozen-pipes</code></td></tr>
+<tr><td>acme plumbing reviews</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><code>/reviews</code></td></tr>
+<tr><td>riverside coffee</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><code>/blog/2023/03/riverside-coffee-opens/</code></td></tr>
+<tr><td>best podcasts 2026</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><code>/blog/podcasts</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the rank-check report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Ranking check · October 8, 2026</p><h1>acmeplumbing.example rankings since September 1, 2026</h1></hgroup>
+<p id="answer" class="dfs-lg">Since September 1, 2026, 2 tracked terms moved up, 2 moved down and 7 held their position. 1 left the tracked set and 2 joined it.</p>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat dfs-good"><dt>Moved up</dt><dd class="dfs-value"><a href="#up-title">2</a></dd></div>
+<div class="dfs-stat dfs-warn"><dt>Moved down</dt><dd class="dfs-value"><a href="#down-title">2</a></dd></div>
+<div class="dfs-stat dfs-bad"><dt>Left the set</dt><dd class="dfs-value"><a href="#dropped-title">1</a></dd></div>
+<div class="dfs-stat dfs-good"><dt>Joined the set</dt><dd class="dfs-value"><a href="#new-title">2</a></dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Positions of the top 12 terms by estimated visits, compared with the baseline saved September 1, 2026. A term that leaves the top 12 counts as left, even if it still ranks lower.</li>
+<li><strong>When:</strong> Data pulled October 8, 2026; baseline data pulled September 1, 2026.</li>
+<li><strong>Where:</strong> Google in the United States, English. Rankings are national, not what someone searching from one city sees.</li>
+<li><strong>Source:</strong> DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls. It refreshes rankings about monthly.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">Terms that left the tracked set, then terms that fell three or more places.</p>
+<ul id="actions">
+<li>“emergency plumber” left the tracked set (was #8, 3,600 searches a month). Check that <code>/</code> still loads.</li>
+<li>“water heater repair” fell from #6 to #12 (1,900 searches a month).</li>
+</ul>
+<h2 id="dropped-title">Left the tracked set (1)</h2>
+<p id="dropped-note">In the top 12 by estimated visits on September 1, 2026, but not on October 8, 2026.</p>
+<div class="dfs-table" id="dropped" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>emergency plumber</td><td class="dfs-num">#8</td><td><span class="dfs-badge dfs-bad">Left the set</span></td><td class="dfs-num">3,600</td><td><code>/</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Was</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<h2 id="down-title">Moved down (2)</h2>
+<p id="down-note">A higher number is a lower spot on the page.</p>
+<div class="dfs-table" id="down" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>water heater repair</td><td class="dfs-num">#6</td><td><span class="dfs-badge">#12</span></td><td class="dfs-num">1,900</td><td><code>/water-heaters</code></td></tr>
+<tr><td>drain cleaning</td><td class="dfs-num">#14</td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">880</td><td><code>/drains</code></td></tr>
+</tbody>
+</table></div>
+<h2 id="up-title">Moved up (2)</h2>
+<p id="up-note">Higher on the page than on September 1, 2026.</p>
+<div class="dfs-table" id="up" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td class="dfs-num">#4</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td><code>/</code></td></tr>
+<tr><td>toilet repair</td><td class="dfs-num">#3</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td><code>/toilets</code></td></tr>
+</tbody>
+</table></div>
+<h2 id="new-title">Joined the tracked set (2)</h2>
+<p id="new-note">Not in the top 12 by estimated visits on September 1, 2026.</p>
+<div class="dfs-table" id="new" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>hydro jetting</td><td class="dfs-num"></td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">1,300</td><td><code>/drains/jetting</code></td></tr>
+<tr><td>backflow testing</td><td class="dfs-num"></td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">480</td><td><code>/backflow</code></td></tr>
+</tbody>
+</table></div>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the rank-check-same-data report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Ranking check · October 8, 2026</p><h1>acmeplumbing.example rankings: nothing to compare until November 7, 2026</h1></hgroup>
+<p id="answer" class="dfs-lg">Nothing to compare. This check got the same rankings data as the October 8, 2026 baseline, so no position could change.</p>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>Terms tracked</dt><dd class="dfs-value"><a href="#next">15</a></dd></div>
+<div class="dfs-stat"><dt>Baseline</dt><dd class="dfs-value"><a href="#method">October 8, 2026</a></dd><dd class="dfs-note">the list this check compares with</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Compares the position of each tracked term with the baseline saved October 8, 2026.</li>
+<li><strong>When:</strong> Data pulled October 8, 2026, the same pull as the baseline.</li>
+<li><strong>Where:</strong> Google in the United States, English. Rankings are national, not what someone searching from one city sees.</li>
+<li><strong>Source:</strong> DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls. It refreshes rankings about monthly.</li>
+</ul>
+</details>
+<h2 id="actions-title">Next step</h2>
+<p id="next">Run the check again after November 7, 2026, once DataForSEO has refreshed its rankings. The tracked terms are on the baseline page.</p>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the seo-snapshot report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">SEO snapshot · October 8, 2026</p><h1>acmeplumbing.example on Google</h1></hgroup>
+<p id="answer" class="dfs-lg">acmeplumbing.example gets about 1,241 estimated visits a month from Google, across 312 search terms. 58 of those terms are on page one. 7% of the visits from the top 15 terms come from searches that aren’t about Acme Plumbing’s work, like “riverside coffee” and “best podcasts 2026”.</p>
+<dl class="dfs-terms"><div><dt>estimated visits</dt><dd>An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.</dd></div><div><dt>page one</dt><dd>Positions #1 to #10, the first page of results. Few people click past it.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>Est. visits a month</dt><dd class="dfs-value"><a href="#top-terms-title">1,241</a></dd><dd class="dfs-note">from Google, not analytics</dd></div>
+<div class="dfs-stat"><dt>Search terms</dt><dd class="dfs-value"><a href="#positions-title">312</a></dd><dd class="dfs-note">the site shows up for</dd></div>
+<div class="dfs-stat"><dt>On page one</dt><dd class="dfs-value"><a href="#positions-title">58</a></dd><dd class="dfs-note">positions #1 to #10, 18 in the top 3</dd></div>
+<div class="dfs-stat"><dt>Visits not about your work</dt><dd class="dfs-value"><a href="#off-topic-title">7%</a></dd><dd class="dfs-note">of the top 15 terms’ visits</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Every search term acmeplumbing.example shows up for in Google’s top 100, with its position and estimated visits. The tables list the 15 terms that bring the most visits.</li>
+<li><strong>Where:</strong> Google in the United States, English. Rankings are national, not what someone searching from one city sees.</li>
+<li><strong>When:</strong> Data pulled October 8, 2026.</li>
+<li><strong>Source:</strong> DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls.</li>
+<li><strong>Sorting:</strong> A term is about your work when it contains a topic word: Plumbing (plumber, plumbing, pipe, repipe, leak, drain, sewer, toilet); Water heaters (water heater); Pumps (sump pump, disposal). Terms with “Acme Plumbing” count as your name. A search for another business or place counts as another name. Everything else is unrelated.</li>
+<li><strong>Not measured:</strong> Actual visits, which only Google Search Console or analytics can show, and searches outside Google.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">Search terms about Acme Plumbing’s work where acmeplumbing.example is on page one or two but outside the top 3, one per page. The top 3 get most of the clicks. Searches for a service or an answer come first, then the most searched.</p>
+<div class="dfs-table" id="actions" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page to improve</th></tr></thead>
+<tbody>
+<tr><td>emergency plumber</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td><code>/</code></td></tr>
+<tr><td>water heater repair</td><td>Water heaters</td><td></td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td><code>/water-heaters</code></td></tr>
+<tr><td>drain cleaning</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td><code>/drains</code></td></tr>
+<tr><td>tankless water heater install</td><td>Water heaters</td><td></td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td><code>/water-heaters/tankless</code></td></tr>
+<tr><td>garbage disposal repair</td><td>Pumps</td><td></td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td><code>/disposals</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Searcher wants</dt><dd>What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.</dd></div><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<h2 id="off-topic-title">Searches that aren’t about your work</h2>
+<p id="off-topic-note">2 of the top 15 terms bring about 75 estimated visits a month (7%). They’re searches for another business or place, another area or something unrelated. People making them rarely want what acmeplumbing.example offers, so the visit total overstates the traffic that matters. They need no work.</p>
+<div class="dfs-table" id="off-topic" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">About</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>riverside coffee</td><td>Another name or place</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><code>/blog/2023/03/riverside-coffee-opens/</code></td></tr>
+<tr><td>best podcasts 2026</td><td>Unrelated</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><code>/blog/podcasts</code></td></tr>
+</tbody>
+</table></div>
+<h2 id="positions-title">Rankings by position</h2>
+<p id="positions-note">11% of the 312 terms are on page three or later, where almost nobody clicks. Most visits come from page one.</p>
+<div class="dfs-table" id="positions" tabindex="0"><table>
+<thead><tr><th scope="col">Position</th><th scope="col">What it means</th><th scope="col" class="dfs-num">Search terms</th></tr></thead>
+<tbody>
+<tr><td>#1 to #3</td><td>Top of page one. Most clicks go here.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:36"></span>18</td></tr>
+<tr><td>#4 to #10</td><td>Rest of page one.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:80"></span>40</td></tr>
+<tr><td>#11 to #20</td><td>Page two. Few people look this far.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:100"></span>50</td></tr>
+<tr><td>#21 to #100</td><td>Page three or later. Almost no clicks.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:68"></span>34</td></tr>
+</tbody>
+</table></div>
+<h2 id="top-terms-title">Top search terms</h2>
+<p id="top-terms-note">The 15 terms that bring the most estimated visits.</p>
+<div class="dfs-table" id="top-terms" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">About</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td>Plumbing</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><code>/</code></td></tr>
+<tr><td>emergency plumber</td><td>Plumbing</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><code>/</code></td></tr>
+<tr><td>water heater repair</td><td>Water heaters</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><code>/water-heaters</code></td></tr>
+<tr><td>drain cleaning</td><td>Plumbing</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><code>/drains</code></td></tr>
+<tr><td>sewer line repair springfield</td><td>Plumbing</td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><code>/sewer</code></td></tr>
+<tr><td>tankless water heater install</td><td>Water heaters</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><code>/water-heaters/tankless</code></td></tr>
+<tr><td>garbage disposal repair</td><td>Pumps</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><code>/disposals</code></td></tr>
+<tr><td>leak detection</td><td>Plumbing</td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><code>/leaks</code></td></tr>
+<tr><td>toilet repair</td><td>Plumbing</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><code>/toilets</code></td></tr>
+<tr><td>sump pump</td><td>Pumps</td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><code>/sump-pumps</code></td></tr>
+<tr><td>repipe house cost</td><td>Plumbing</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><code>/blog/repipe-cost-guide-for-older-homes</code></td></tr>
+<tr><td>frozen pipes</td><td>Plumbing</td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><code>/blog/frozen-pipes</code></td></tr>
+<tr><td>acme plumbing reviews</td><td>Your name</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><code>/reviews</code></td></tr>
+<tr><td>riverside coffee</td><td>Another name or place</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><code>/blog/2023/03/riverside-coffee-opens/</code></td></tr>
+<tr><td>best podcasts 2026</td><td>Unrelated</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><code>/blog/podcasts</code></td></tr>
+</tbody>
+</table></div>
+<h2 id="top-pages-title">Top pages</h2>
+<p id="top-pages-note">Pages ranked by the estimated visits those 15 terms bring them.</p>
+<div class="dfs-table" id="top-pages" tabindex="0"><table>
+<thead><tr><th scope="col">Page</th><th scope="col" class="dfs-num">Search terms</th><th scope="col" class="dfs-num">Est. visits</th></tr></thead>
+<tbody>
+<tr><td><code>/</code></td><td class="dfs-num">2</td><td class="dfs-num">590</td></tr>
+<tr><td><code>/sewer</code></td><td class="dfs-num">1</td><td class="dfs-num">140</td></tr>
+<tr><td><code>/water-heaters</code></td><td class="dfs-num">1</td><td class="dfs-num">120</td></tr>
+</tbody>
+</table></div>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toMarkdown > renders every block type 1`] = `
+"# Example report
+
+_Sample · October 8, 2026_
+
+The **answer**, with \`code\` and a [link](https://example.com).
+
+_answer_: The one line at the top.
+
+- Visits: **1,241** (a month)
+- Share: **7%**
+
+## Rows
+
+| Term | Position | Visits | Share | Page |
+| --- | --- | ---: | ---: | --- |
+| plumber | #2 | 2,400 | 50 | \`/\` |
+| drain | #14 |  | 25 | \`/drains\` |
+
+_Position_: Where it ranks.
+
+> **Check this.** One page redirects home.
+
+> **Note.** No title, so the tone names it.
+
+1. First
+2. Second
+
+### How this was measured
+
+- **What:** everything
+
+**Visits by month**
+
+|  | Visits |
+| --- | ---: |
+| Sep | 1,100 |
+| Oct | 1,241 |
+
+---
+
+<sub>Data: example, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the ai-visibility report 1`] = `
+"# Acme Plumbing in AI answers
+
+_AI visibility · October 8, 2026_
+
+AI answers in DataForSEO’s sample link acmeplumbing.example as a source 3 times and name Acme Plumbing once.
+
+- Citations: **3** (answers linking acmeplumbing.example)
+- Mentions: **1** (answers naming Acme Plumbing)
+- Topics checked: **2** (acmeplumbing.example a top source in 1)
+- Pages cited: **1** (in 1 top question)
+
+## How this was measured
+
+- **What:** How often AI answers name Acme Plumbing (a mention) and link a page on acmeplumbing.example as a source (a citation).
+- **Where:** ChatGPT and Google AI Overviews, United States, English.
+- **When:** Data pulled October 8, 2026.
+- **Source:** DataForSEO LLM Mentions, a large sample of AI answers to real questions. Counts are answers in that sample, not every conversation, and the same question can get a different answer each time.
+- **Name matching:** An answer counts as a mention when it contains “Acme Plumbing”. A name made of common words also matches generic phrases, so the mention count can run high.
+- **Topics:** For questions containing “water heater repair” and “sewer line repair”, the sites the answers cite most.
+- **Questions:** The question with the most AI searches a month whose answers cite acmeplumbing.example.
+
+## What to do
+
+AI tools tend to link pages that answer one question plainly.
+
+- For questions about “water heater repair”, AI answers cite rivalplumbing.example, forum.example and hardware.example most. acmeplumbing.example isn’t in the top 3.
+
+## By platform
+
+A mention is the name in the answer’s text. A citation is a link to the site among its sources. Either can happen without the other.
+
+_mention_: The AI answer names the organization in its text, with or without a link.
+
+_citation_: The AI answer links a page on the site as one of its sources.
+
+| Platform | Mentions | Citations |
+| --- | ---: | ---: |
+| ChatGPT | 1 | 0 |
+| Google AI Overviews | 0 | 3 |
+
+## Topics checked
+
+The sites AI answers cite most often for questions containing each topic. “No” means acmeplumbing.example isn’t among those top sites, not that it’s never cited. “Too few answers” means under 10 answers in the sample.
+
+| Topic | acmeplumbing.example a top source | Answers found | Most cited sites |
+| --- | --- | ---: | --- |
+| water heater repair | No | 90 | rivalplumbing.example, forum.example, hardware.example |
+| sewer line repair | Yes | 40 | acmeplumbing.example |
+
+_Answers found_: Answers in the sample to questions that contain the topic.
+
+## Pages AI cites
+
+From the question with the most AI searches a month whose answers link acmeplumbing.example.
+
+| Page | Questions | AI searches a month |
+| --- | ---: | ---: |
+| \`/sewer\` | 1 | 260 |
+
+_AI searches a month_: DataForSEO’s estimate of how often people ask AI tools that question in a month.
+
+## Answers that cite the site
+
+| Question | Where | AI searches a month | Page cited |
+| --- | --- | ---: | --- |
+| who fixes sewer lines in springfield | Google AI Overviews | 260 | \`/sewer\` |
+
+---
+
+<sub>Data: DataForSEO LLM Mentions, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the backlink-redirects report 1`] = `
+"# acmeplumbing.example links that fail today
+
+_Broken link check · October 8, 2026_
+
+3 addresses that other sites link to fail on the live site, https://staging.acmeplumbing.example. Counted per address, they have 62 linking sites.
+
+_linking site_: Other websites with at least one link to that address. Each site counts once.
+
+- Broken: **3** (62 linking sites)
+- Redirecting: **3** (land on a live page)
+- Unchanged: **1** (same address, still live)
+- Behind a login: **1** (couldn’t be checked)
+
+## How this was measured
+
+- **What:** The 100 old acmeplumbing.example addresses with the most linking sites, of 170 that have any. Variants that differ only by http, www, subdomain or tracking tags count as one, which leaves 8 addresses.
+- **How:** Each address is requested on https://staging.acmeplumbing.example and followed through any redirects to where it ends up.
+- **Results:** Broken: ends on a missing page or an error. Redirecting: forwards to a live page. Unchanged: same address, still live. Behind a login: hit a sign-in page, so it couldn’t be checked.
+- **When:** Links counted October 8, 2026; addresses checked October 8, 2026.
+- **Source:** DataForSEO Backlinks for the linked addresses and their linking sites. The checks run directly against the site.
+
+## Fix
+
+Each needs a redirect to its closest match, starting with the most linked. Links to a missing page pass no search value, and visitors who follow them land on an error.
+
+| Old address | Type | Result | Linking sites |
+| --- | --- | --- | ---: |
+| \`/coupons/spring-2019\` | Page | 404 | 46 |
+| \`/services/water-heaters/\` | Page | 404 | 11 |
+| \`/old-blog/frozen-pipes\` | Page | No response | 5 |
+
+_Result_: 404 means page not found. Any other number is an error the server returned.
+
+> **Sent to the homepage.** 1 inner page redirects to the homepage, which Google treats like a missing page. Point it at its closest match.
+
+## Behind a login
+
+These hit a sign-in page, so they couldn’t be checked.
+
+| Old address | Lands on | Linking sites |
+| --- | --- | ---: |
+| \`/account\` | \`/login?next=%2Faccount\` | 4 |
+
+## Redirecting
+
+Old addresses that forward to a live page. Check each lands somewhere a visitor would expect.
+
+| Old address | Lands on | Linking sites |
+| --- | --- | ---: |
+| \`/about-us/\` | \`/about\` | 59 |
+| \`/blog/2020/03/hello\` | \`/\` | 3 |
+| \`/drains/\` | \`/services/drains\` | 8 |
+
+## Unchanged
+
+| Address | Linking sites |
+| --- | ---: |
+| \`/\` | 300 |
+
+---
+
+<sub>Data: DataForSEO Backlinks, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the competitor-gap report 1`] = `
+"# acmeplumbing.example against competitors on Google
+
+_Competitor gap · October 8, 2026_
+
+rivalplumbing.example and citydrains.example are on Google’s page one for 6 search terms about your work where acmeplumbing.example ranks lower: 2 where it’s further down and 4 where it isn’t in the top 100. Those terms get about 8,790 searches a month.
+
+_page one_: Positions #1 to #10, the first page of results. Few people click past it.
+
+- Behind a competitor: **2** (both rank, the competitor higher)
+- Not ranking: **4** (you’re not in the top 100)
+- Searches a month: **8,790** (across those terms)
+- Competitors: **2** (compared)
+
+## How this was measured
+
+- **What:** Search terms where at least one competitor is on page one (#1 to #10) and acmeplumbing.example is lower or not in the top 100.
+- **Competitors:** rivalplumbing.example and citydrains.example.
+- **Where:** Google in the United States, English. Rankings are national, not what someone searching from one city sees.
+- **When:** Data pulled October 8, 2026.
+- **Source:** DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls.
+- **Sorting:** A term is about your work when it contains a topic word: Plumbing (plumber, plumbing, pipe, repipe, leak, drain, sewer, toilet); Water heaters (water heater); Pumps (sump pump, disposal). Terms with “Acme Plumbing” count as your name. A search for another business or place counts as another name. Everything else is unrelated.
+- **Filter:** For each competitor, up to 100 of its most-searched page-one terms that you also rank for, and up to 100 that you don’t. Terms shared between competitors count once, which leaves 25 terms. 6 are in this report. Left out: 3 terms naming a competitor or another business (like “rival plumbing coupons”), 12 unrelated to your work (like “zip code finder”) and 4 where you already rank ahead.
+
+## What to do
+
+One line per topic, most searched first. Where you rank, improving the page listed is the usual fix. Where you don’t, it’s usually a page that answers the search.
+
+1. **Water heaters:** 2 terms, 5,720 searches a month. The biggest is “tankless water heater”: rivalplumbing.example is #3 and you’re #14 with \`/services\`. Your best position is on “water heater install”: rivalplumbing.example is #4 and you’re #8 with \`/services\`.
+2. **Plumbing:** 3 terms, 2,170 searches a month. The biggest is “hydro jetting drain”: citydrains.example is #2 and you’re not in the top 100.
+3. **Pumps:** 1 term, 900 searches a month. The biggest is “sump pump installation”: rivalplumbing.example is #7 and you’re not in the top 100.
+
+## By topic
+
+| Topic | Searches a month | Behind | Not ranking | Ahead most often |
+| --- | ---: | ---: | ---: | --- |
+| Water heaters | 5,720 | 2 | 0 | \`rivalplumbing.example\` |
+| Plumbing | 2,170 | 0 | 3 | \`citydrains.example\` |
+| Pumps | 900 | 0 | 1 | \`rivalplumbing.example\` |
+
+_Searches a month_: Average Google searches a month for the term across the United States.
+
+## Behind a competitor
+
+Both sites rank and the competitor is higher. These are usually the quickest to improve, since Google already connects acmeplumbing.example to the search.
+
+| Search term | Topic | Searches a month | Ahead of you | You | Your page |
+| --- | --- | ---: | --- | --- | --- |
+| tankless water heater | Water heaters | 5,000 | rivalplumbing.example #3 | #14 | \`/services\` |
+| water heater install | Water heaters | 720 | rivalplumbing.example #4 | #8 | \`/services\` |
+
+_Ahead of you_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+## Not ranking
+
+A competitor is on page one and acmeplumbing.example isn’t in the top 100, usually because no page covers the search.
+
+| Search term | Topic | Searches a month | Who ranks |
+| --- | --- | ---: | --- |
+| hydro jetting drain | Plumbing | 1,300 | citydrains.example #2, rivalplumbing.example #9 |
+| sump pump installation | Pumps | 900 | rivalplumbing.example #7 |
+| sewer backflow testing springfield | Plumbing | 480 | citydrains.example #1 |
+| slab leak repair | Plumbing | 390 | rivalplumbing.example #6 |
+
+## By competitor
+
+| Competitor | Ahead of you | Only they rank | Only they rank, any term |
+| --- | ---: | ---: | ---: |
+| \`rivalplumbing.example\` | 2 | 3 | 140 |
+| \`citydrains.example\` | 0 | 2 | 38 |
+
+_Only they rank, any term_: Every term where they’re on page one and acmeplumbing.example isn’t in the top 100, before terms unrelated to your work are left out.
+
+---
+
+<sub>Data: DataForSEO Labs, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the local-visibility report 1`] = `
+"# Acme Plumbing on Google Maps
+
+_Local visibility · October 8, 2026_
+
+Acme Plumbing is in the Google Maps top 3 for 1 of 3 searches checked in Springfield, Illinois, United States.
+
+_Google Maps top 3_: The three listings Google shows with the map at the top of local results. Most taps go to these.
+
+- In the top 3: **1** (of 3 searches checked)
+- Listed lower: **1** (#4 to #20)
+- Not found: **1** (outside the top 20)
+
+## How this was measured
+
+- **What:** Where Acme Plumbing shows in Google Maps for “plumber”, “water heater repair” and “drain cleaning”, and who holds the top 3.
+- **Where:** Searched from the center of Springfield, Illinois, United States, in English. Maps results change with the searcher’s location, so this is one snapshot.
+- **When:** Searched October 8, 2026.
+- **Matching:** A listing counts as yours when its website is acmeplumbing.example or its name matches “Acme Plumbing”. Your best-placed listing is shown.
+- **Depth:** The top 20 Maps results for each search.
+- **Source:** DataForSEO, which runs the search on Google Maps and returns the listings.
+
+## What to do
+
+Searches where you’re not in the top 3, and who is. Google ranks Maps listings by relevance to the search, distance from the searcher and prominence, which includes reviews.
+
+- “water heater repair”: Acme Plumbing is #7. The top 3 are Rival Plumbing (4.8 stars, 312 reviews), Hot Water Heroes (4.9 stars, 88 reviews) and Pipe Pros (4.6 stars, 120 reviews).
+- “drain cleaning”: not in the top 20. The top 3 are City Drains (4.7 stars, 540 reviews), Rooter Bros (no rating) and Rival Plumbing (4.8 stars, 312 reviews).
+
+## Results by search
+
+| Search | You | Your listing | #1 | #2 | #3 |
+| --- | --- | --- | --- | --- | --- |
+| plumber | #2 | Acme Plumbing · 4.6★ | Rival Plumbing | Acme Plumbing | Pipe Pros |
+| water heater repair | #7 | Acme Plumbing · 4.6★ | Rival Plumbing | Hot Water Heroes | Pipe Pros |
+| drain cleaning | Not found |  | City Drains | Rooter Bros | Rival Plumbing |
+
+_You_: Your best Maps position for the search, out of the top 20.
+
+---
+
+<sub>Data: DataForSEO Google Maps (Springfield, Illinois, United States, English), October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the rank-baseline report 1`] = `
+"# acmeplumbing.example rankings: the starting point
+
+_Ranking baseline · October 8, 2026_
+
+This baseline saves the 15 search terms that bring acmeplumbing.example the most estimated visits, with each term’s position on October 8, 2026. Later ranking checks compare against it.
+
+_estimated visits_: An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.
+
+_position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+- Terms tracked: **15**
+- In the top 3: **4** (positions #1 to #3)
+- On page one: **9** (positions #1 to #10)
+- Est. visits a month: **1,097** (from these terms)
+
+## How this was measured
+
+- **What:** The 15 search terms with the most estimated visits, up to 100, with position, searches a month and the ranking page. acmeplumbing.example shows up for 312 terms in all.
+- **When:** Data pulled October 8, 2026.
+- **Where:** Google in the United States, English. Rankings are national, not what someone searching from one city sees.
+- **Source:** DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls. It refreshes rankings about monthly.
+
+## Next step
+
+Run the ranking check after November 7, 2026, once DataForSEO has fresh rankings, then monthly. If the site is relaunching, run one after launch too.
+
+## What’s tracked
+
+The 15 search terms that bring acmeplumbing.example the most estimated visits, with the position each had on October 8, 2026.
+
+| Search term | Position | Searches a month | Est. visits | Page |
+| --- | --- | ---: | ---: | --- |
+| plumber springfield | #2 | 2,400 | 500 | \`/\` |
+| emergency plumber | #8 | 3,600 | 90 | \`/\` |
+| water heater repair | #6 | 1,900 | 120 | \`/water-heaters\` |
+| drain cleaning | #14 | 880 | 20 | \`/drains\` |
+| sewer line repair springfield | #3 | 590 | 140 | \`/sewer\` |
+| tankless water heater install | #11 | 480 | 12 | \`/water-heaters/tankless\` |
+| garbage disposal repair | #5 | 320 | 30 | \`/disposals\` |
+| leak detection | #19 | 260 | 3 | \`/leaks\` |
+| toilet repair | #1 | 210 | 60 | \`/toilets\` |
+| sump pump | #24 | 170 | 1 | \`/sump-pumps\` |
+| repipe house cost | #9 | 140 | 6 | \`/blog/repipe-cost-guide-for-older-homes\` |
+| frozen pipes | #32 | 90 | 0 | \`/blog/frozen-pipes\` |
+| acme plumbing reviews | #1 | 90 | 40 | \`/reviews\` |
+| riverside coffee | #4 | 1,300 | 70 | \`/blog/2023/03/riverside-coffee-opens/\` |
+| best podcasts 2026 | #18 | 900 | 5 | \`/blog/podcasts\` |
+
+_Searches a month_: Average Google searches a month for the term across the United States.
+
+---
+
+<sub>Data: DataForSEO Labs, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the rank-check report 1`] = `
+"# acmeplumbing.example rankings since September 1, 2026
+
+_Ranking check · October 8, 2026_
+
+Since September 1, 2026, 2 tracked terms moved up, 2 moved down and 7 held their position. 1 left the tracked set and 2 joined it.
+
+- Moved up: **2**
+- Moved down: **2**
+- Left the set: **1**
+- Joined the set: **2**
+
+## How this was measured
+
+- **What:** Positions of the top 12 terms by estimated visits, compared with the baseline saved September 1, 2026. A term that leaves the top 12 counts as left, even if it still ranks lower.
+- **When:** Data pulled October 8, 2026; baseline data pulled September 1, 2026.
+- **Where:** Google in the United States, English. Rankings are national, not what someone searching from one city sees.
+- **Source:** DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls. It refreshes rankings about monthly.
+
+## What to do
+
+Terms that left the tracked set, then terms that fell three or more places.
+
+- “emergency plumber” left the tracked set (was #8, 3,600 searches a month). Check that \`/\` still loads.
+- “water heater repair” fell from #6 to #12 (1,900 searches a month).
+
+## Left the tracked set (1)
+
+In the top 12 by estimated visits on September 1, 2026, but not on October 8, 2026.
+
+| Search term | Was | Now | Searches a month | Page |
+| --- | ---: | --- | ---: | --- |
+| emergency plumber | #8 | Left the set | 3,600 | \`/\` |
+
+_Was_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+_Searches a month_: Average Google searches a month for the term across the United States.
+
+## Moved down (2)
+
+A higher number is a lower spot on the page.
+
+| Search term | Was | Now | Searches a month | Page |
+| --- | ---: | --- | ---: | --- |
+| water heater repair | #6 | #12 | 1,900 | \`/water-heaters\` |
+| drain cleaning | #14 | #15 | 880 | \`/drains\` |
+
+## Moved up (2)
+
+Higher on the page than on September 1, 2026.
+
+| Search term | Was | Now | Searches a month | Page |
+| --- | ---: | --- | ---: | --- |
+| plumber springfield | #4 | #2 | 2,400 | \`/\` |
+| toilet repair | #3 | #1 | 210 | \`/toilets\` |
+
+## Joined the tracked set (2)
+
+Not in the top 12 by estimated visits on September 1, 2026.
+
+| Search term | Was | Now | Searches a month | Page |
+| --- | ---: | --- | ---: | --- |
+| hydro jetting |  | #9 | 1,300 | \`/drains/jetting\` |
+| backflow testing |  | #15 | 480 | \`/backflow\` |
+
+---
+
+<sub>Data: DataForSEO Labs, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the rank-check-same-data report 1`] = `
+"# acmeplumbing.example rankings: nothing to compare until November 7, 2026
+
+_Ranking check · October 8, 2026_
+
+Nothing to compare. This check got the same rankings data as the October 8, 2026 baseline, so no position could change.
+
+- Terms tracked: **15**
+- Baseline: **October 8, 2026** (the list this check compares with)
+
+## How this was measured
+
+- **What:** Compares the position of each tracked term with the baseline saved October 8, 2026.
+- **When:** Data pulled October 8, 2026, the same pull as the baseline.
+- **Where:** Google in the United States, English. Rankings are national, not what someone searching from one city sees.
+- **Source:** DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls. It refreshes rankings about monthly.
+
+## Next step
+
+Run the check again after November 7, 2026, once DataForSEO has refreshed its rankings. The tracked terms are on the baseline page.
+
+---
+
+<sub>Data: DataForSEO Labs, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the seo-snapshot report 1`] = `
+"# acmeplumbing.example on Google
+
+_SEO snapshot · October 8, 2026_
+
+acmeplumbing.example gets about 1,241 estimated visits a month from Google, across 312 search terms. 58 of those terms are on page one. 7% of the visits from the top 15 terms come from searches that aren’t about Acme Plumbing’s work, like “riverside coffee” and “best podcasts 2026”.
+
+_estimated visits_: An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.
+
+_page one_: Positions #1 to #10, the first page of results. Few people click past it.
+
+- Est. visits a month: **1,241** (from Google, not analytics)
+- Search terms: **312** (the site shows up for)
+- On page one: **58** (positions #1 to #10, 18 in the top 3)
+- Visits not about your work: **7%** (of the top 15 terms’ visits)
+
+## How this was measured
+
+- **What:** Every search term acmeplumbing.example shows up for in Google’s top 100, with its position and estimated visits. The tables list the 15 terms that bring the most visits.
+- **Where:** Google in the United States, English. Rankings are national, not what someone searching from one city sees.
+- **When:** Data pulled October 8, 2026.
+- **Source:** DataForSEO Labs, which estimates rankings, searches and visits from its own regular Google crawls.
+- **Sorting:** A term is about your work when it contains a topic word: Plumbing (plumber, plumbing, pipe, repipe, leak, drain, sewer, toilet); Water heaters (water heater); Pumps (sump pump, disposal). Terms with “Acme Plumbing” count as your name. A search for another business or place counts as another name. Everything else is unrelated.
+- **Not measured:** Actual visits, which only Google Search Console or analytics can show, and searches outside Google.
+
+## What to do
+
+Search terms about Acme Plumbing’s work where acmeplumbing.example is on page one or two but outside the top 3, one per page. The top 3 get most of the clicks. Searches for a service or an answer come first, then the most searched.
+
+| Search term | Topic | Searcher wants | Position | Searches a month | Page to improve |
+| --- | --- | --- | --- | ---: | --- |
+| emergency plumber | Plumbing |  | #8 | 3,600 | \`/\` |
+| water heater repair | Water heaters |  | #6 | 1,900 | \`/water-heaters\` |
+| drain cleaning | Plumbing |  | #14 | 880 | \`/drains\` |
+| tankless water heater install | Water heaters |  | #11 | 480 | \`/water-heaters/tankless\` |
+| garbage disposal repair | Pumps |  | #5 | 320 | \`/disposals\` |
+
+_Searcher wants_: What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.
+
+_Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+_Searches a month_: Average Google searches a month for the term across the United States.
+
+## Searches that aren’t about your work
+
+2 of the top 15 terms bring about 75 estimated visits a month (7%). They’re searches for another business or place, another area or something unrelated. People making them rarely want what acmeplumbing.example offers, so the visit total overstates the traffic that matters. They need no work.
+
+| Search term | About | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | ---: | ---: | --- |
+| riverside coffee | Another name or place | #4 | 1,300 | 70 | \`/blog/2023/03/riverside-coffee-opens/\` |
+| best podcasts 2026 | Unrelated | #18 | 900 | 5 | \`/blog/podcasts\` |
+
+## Rankings by position
+
+11% of the 312 terms are on page three or later, where almost nobody clicks. Most visits come from page one.
+
+| Position | What it means | Search terms |
+| --- | --- | ---: |
+| #1 to #3 | Top of page one. Most clicks go here. | 18 |
+| #4 to #10 | Rest of page one. | 40 |
+| #11 to #20 | Page two. Few people look this far. | 50 |
+| #21 to #100 | Page three or later. Almost no clicks. | 34 |
+
+## Top search terms
+
+The 15 terms that bring the most estimated visits.
+
+| Search term | About | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | ---: | ---: | --- |
+| plumber springfield | Plumbing | #2 | 2,400 | 500 | \`/\` |
+| emergency plumber | Plumbing | #8 | 3,600 | 90 | \`/\` |
+| water heater repair | Water heaters | #6 | 1,900 | 120 | \`/water-heaters\` |
+| drain cleaning | Plumbing | #14 | 880 | 20 | \`/drains\` |
+| sewer line repair springfield | Plumbing | #3 | 590 | 140 | \`/sewer\` |
+| tankless water heater install | Water heaters | #11 | 480 | 12 | \`/water-heaters/tankless\` |
+| garbage disposal repair | Pumps | #5 | 320 | 30 | \`/disposals\` |
+| leak detection | Plumbing | #19 | 260 | 3 | \`/leaks\` |
+| toilet repair | Plumbing | #1 | 210 | 60 | \`/toilets\` |
+| sump pump | Pumps | #24 | 170 | 1 | \`/sump-pumps\` |
+| repipe house cost | Plumbing | #9 | 140 | 6 | \`/blog/repipe-cost-guide-for-older-homes\` |
+| frozen pipes | Plumbing | #32 | 90 | 0 | \`/blog/frozen-pipes\` |
+| acme plumbing reviews | Your name | #1 | 90 | 40 | \`/reviews\` |
+| riverside coffee | Another name or place | #4 | 1,300 | 70 | \`/blog/2023/03/riverside-coffee-opens/\` |
+| best podcasts 2026 | Unrelated | #18 | 900 | 5 | \`/blog/podcasts\` |
+
+## Top pages
+
+Pages ranked by the estimated visits those 15 terms bring them.
+
+| Page | Search terms | Est. visits |
+| --- | ---: | ---: |
+| \`/\` | 2 | 590 |
+| \`/sewer\` | 1 | 140 |
+| \`/water-heaters\` | 1 | 120 |
+
+---
+
+<sub>Data: DataForSEO Labs, October 8, 2026.</sub>
+"
+`;

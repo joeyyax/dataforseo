@@ -28,22 +28,86 @@ export interface TableColumn {
   help?: string;
 }
 
-type BlockBody =
-  | { type: 'heading'; text: string; level?: 1 | 2 | 3; kicker?: string }
-  | { type: 'text'; text: string; size?: 'lg' | 'base' | 'sm'; terms?: Terms }
-  | { type: 'stats'; items: StatItem[] }
-  | { type: 'table'; columns: TableColumn[]; rows: Record<string, string | number | null>[]; sortable?: boolean; visible?: number }
-  | { type: 'callout'; tone: 'info' | 'good' | 'warn' | 'bad'; title?: string; text: string; terms?: Terms }
-  | { type: 'list'; items: string[]; ordered?: boolean; terms?: Terms }
-  | { type: 'details'; summary: string; blocks: Block[]; open?: boolean }
-  | { type: 'chart'; kind: 'bar' | 'line' | 'pie'; labels: string[]; series: { name: string; values: number[] }[]; title?: string }
-  | { type: 'footer'; text: string };
+/** A title. `kicker` is a short line shown over it, such as the report type and date. */
+export interface HeadingBlock {
+  type: 'heading';
+  text: string;
+  /** 2 when unset. */
+  level?: 1 | 2 | 3;
+  kicker?: string;
+}
+
+/** A paragraph. `size: 'lg'` marks the one-line answer at the top. */
+export interface TextBlock {
+  type: 'text';
+  text: string;
+  size?: 'lg' | 'base' | 'sm';
+  terms?: Terms;
+}
+
+/** A row of stat tiles. */
+export interface StatsBlock {
+  type: 'stats';
+  items: StatItem[];
+}
+
+/** Rows keyed by column `key`. `visible` is how many rows to show before a "show more". */
+export interface TableBlock {
+  type: 'table';
+  columns: TableColumn[];
+  rows: Record<string, string | number | null>[];
+  sortable?: boolean;
+  visible?: number;
+}
+
+/** A note set apart from the text. `title` is optional; `tone` says why it's there. */
+export interface CalloutBlock {
+  type: 'callout';
+  tone: 'info' | 'good' | 'warn' | 'bad';
+  title?: string;
+  text: string;
+  terms?: Terms;
+}
+
+/** A bulleted list, or numbered when `ordered`. */
+export interface ListBlock {
+  type: 'list';
+  items: string[];
+  ordered?: boolean;
+  terms?: Terms;
+}
+
+/** Blocks behind a summary line, closed unless `open`. */
+export interface DetailsBlock {
+  type: 'details';
+  summary: string;
+  blocks: Block[];
+  open?: boolean;
+}
+
+/** One value per label for each series. */
+export interface ChartBlock {
+  type: 'chart';
+  kind: 'bar' | 'line' | 'pie';
+  labels: string[];
+  series: { name: string; values: number[] }[];
+  title?: string;
+}
+
+/** The closing line: where the data came from and when. */
+export interface FooterBlock {
+  type: 'footer';
+  text: string;
+}
 
 /**
  * Report content as data for any renderer. Text fields take inline **bold**, `code` and [links].
  * `id` is stable across runs, so it works as an anchor or an update key.
  */
-export type Block = BlockBody & { id?: string };
+export type Block = (HeadingBlock | TextBlock | StatsBlock | TableBlock | CalloutBlock | ListBlock | DetailsBlock | ChartBlock | FooterBlock) & { id?: string };
+
+/** Turns blocks into output: a string, a request, anything. `spec` carries the date, kind and cost when a renderer needs them. */
+export type Renderer<T> = (blocks: Block[], spec?: ReportSpec) => T;
 
 /** One line of "How this was measured": a short label and what it covered. */
 export interface MethodLine {
