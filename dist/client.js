@@ -1,9 +1,12 @@
 import { createHash } from 'node:crypto';
 import { createDiskCacheStore } from './cache.js';
 const BASE_URL = 'https://api.dataforseo.com/v3';
+/** How long paid responses stay cached: 7 days. */
 export const DEFAULT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+/** Per-request timeout: 30 seconds. */
 export const DEFAULT_TIMEOUT_MS = 30_000;
 const OK = 20000;
+/** DataForSEO's status code for a used-up daily spend limit. */
 export const DAILY_LIMIT_STATUS = 40203;
 /** 40203 as a plain message, e.g. "money limit per day has been exceeded: 1.09792 >= 1". */
 export function costLimitMessage(statusMessage) {
@@ -16,20 +19,32 @@ export function nextUtcMidnight(at = Date.now()) {
     const d = new Date(at);
     return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1));
 }
+/** A DataForSEO error response. `status` is DataForSEO's status code, or the HTTP status when the body isn't JSON. */
+export class DataForSeoError extends Error {
+    status;
+    endpoint;
+    constructor(message, status, endpoint) {
+        super(message);
+        this.status = status;
+        this.endpoint = endpoint;
+        this.name = 'DataForSeoError';
+    }
+}
 /** Status 40203: the account's daily spend limit is used up. */
-export class DailyLimitError extends Error {
-    status = DAILY_LIMIT_STATUS;
-    constructor(statusMessage) {
-        super(costLimitMessage(statusMessage));
+export class DailyLimitError extends DataForSeoError {
+    constructor(statusMessage, endpoint = '') {
+        super(costLimitMessage(statusMessage), DAILY_LIMIT_STATUS, endpoint);
         this.name = 'DailyLimitError';
     }
 }
 function isEntry(v) {
     return !!v && typeof v === 'object' && typeof v.fetched_at === 'string' && 'result' in v;
 }
+/** SHA-256 hex digest of the endpoint and request body. */
 export function cacheKey(endpoint, body) {
     return createHash('sha256').update(`${endpoint}\n${JSON.stringify(body)}`).digest('hex');
 }
+/** A DataForSEO client that caches paid responses. */
 export function createDataForSeoClient(opts) {
     const fetchFn = opts.fetchFn ?? fetch;
     const now = opts.now ?? Date.now;
@@ -57,18 +72,20 @@ export function createDataForSeoClient(opts) {
             data = JSON.parse(text);
         }
         catch {
-            throw new Error(`DataForSEO ${endpoint} ${res.status}: ${text.slice(0, 300)}`);
+            throw new DataForSeoError(`DataForSEO ${endpoint} ${res.status}: ${text.slice(0, 300)}`, res.status, endpoint);
         }
         if (data?.status_code === DAILY_LIMIT_STATUS)
-            throw new DailyLimitError(data.status_message);
+            throw new DailyLimitError(data.status_message, endpoint);
         if (!res.ok || data?.status_code !== OK) {
-            throw new Error(`DataForSEO ${endpoint} ${data?.status_code ?? res.status}: ${data?.status_message ?? text.slice(0, 300)}`);
+            const status = data?.status_code ?? res.status;
+            throw new DataForSeoError(`DataForSEO ${endpoint} ${status}: ${data?.status_message ?? text.slice(0, 300)}`, status, endpoint);
         }
         const task = data.tasks?.[0];
         if (task?.status_code === DAILY_LIMIT_STATUS)
-            throw new DailyLimitError(task.status_message);
+            throw new DailyLimitError(task.status_message, endpoint);
         if (!task || task.status_code !== OK) {
-            throw new Error(`DataForSEO ${endpoint} task ${task?.status_code ?? 'missing'}: ${task?.status_message ?? 'no task in response'}`);
+            const message = `DataForSEO ${endpoint} task ${task?.status_code ?? 'missing'}: ${task?.status_message ?? 'no task in response'}`;
+            throw new DataForSeoError(message, task?.status_code ?? null, endpoint);
         }
         return { result: task.result?.[0] ?? null, cost: Number(data.cost ?? 0) };
     }

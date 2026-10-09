@@ -1,7 +1,10 @@
+/** Color intent for a stat tile. */
 export type Tone = 'neutral' | 'good' | 'warn' | 'bad';
+/** Color intent for a table badge. */
 export type BadgeTone = Tone | 'info';
 /** Term → definition, opened in a popover from its first use. */
 export type Terms = Record<string, string>;
+/** One stat tile. */
 export interface StatItem {
     label: string;
     value: string | number;
@@ -10,6 +13,7 @@ export interface StatItem {
     /** `#id` of the section the tile summarizes. */
     href?: string;
 }
+/** One table column and how to format its cells. */
 export interface TableColumn {
     key: string;
     label: string;
@@ -69,8 +73,8 @@ type BlockBody = {
     text: string;
 };
 /**
- * Report content as data, a subset of the artifact store's block schema. Text fields take inline
- * **bold**, `code` and [links]. `id` lets a merge republish replace one block and doubles as an anchor.
+ * Report content as data for any renderer. Text fields take inline **bold**, `code` and [links].
+ * `id` is stable across runs, so it works as an anchor or an update key.
  */
 export type Block = BlockBody & {
     id?: string;
@@ -80,6 +84,7 @@ export interface MethodLine {
     label: string;
     text: string;
 }
+/** A report before layout. `buildReport` turns it into blocks. */
 export interface ReportSpec {
     /** Report type for the kicker, e.g. "SEO snapshot". */
     kind: string;
@@ -102,7 +107,7 @@ export interface ReportSpec {
     allClear?: string;
     sections?: Block[];
     source: string;
-    /** What the run cost, for the tool result. Client pages don't show it. */
+    /** What the run cost in USD. `buildReport` leaves it off the page. */
     cost: number;
     cached?: boolean;
     note?: string;
@@ -113,6 +118,7 @@ export declare function buildReport(spec: ReportSpec): Block[];
 export declare function tonesFor(rows: Record<string, string | number | null>[], key: string, tone: (value: string) => BadgeTone): Record<string, BadgeTone>;
 /** Wraps a URL path in inline code. */
 export declare function code(s: string): string;
+/** `$0`, `$0.0020`, `$0.028`. */
 export declare function usd(n: number): string;
 /** Whole number with US thousands separators. */
 export declare function count(n: number | null | undefined): string;
@@ -124,7 +130,9 @@ export declare function every(n: number, one: string, many?: string): string;
 export declare function times(n: number): string;
 /** "The question", "The 25 questions". */
 export declare function theTop(n: number, one: string, many?: string): string;
+/** Uppercases the first letter. */
 export declare function capitalize(s: string): string;
+/** The `YYYY-MM-DD` part of an ISO timestamp. */
 export declare function day(iso: string): string;
 /** `2026-11-08` → "November 8, 2026". */
 export declare function longDate(iso: string): string;

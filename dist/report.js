@@ -36,6 +36,7 @@ export function tonesFor(rows, key, tone) {
 export function code(s) {
     return `\`${s.replace(/`/g, '')}\``;
 }
+/** `$0`, `$0.0020`, `$0.028`. */
 export function usd(n) {
     if (n === 0)
         return '$0';
@@ -61,9 +62,11 @@ export function times(n) {
 export function theTop(n, one, many = `${one}s`) {
     return n === 1 ? `The ${one}` : `The ${plural(n, one, many)}`;
 }
+/** Uppercases the first letter. */
 export function capitalize(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
+/** The `YYYY-MM-DD` part of an ISO timestamp. */
 export function day(iso) {
     return iso.slice(0, 10);
 }

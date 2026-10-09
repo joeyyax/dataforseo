@@ -3,11 +3,14 @@ import { createDiskCacheStore, type CacheStore } from './cache.js';
 
 const BASE_URL = 'https://api.dataforseo.com/v3';
 
+/** How long paid responses stay cached: 7 days. */
 export const DEFAULT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
+/** Per-request timeout: 30 seconds. */
 export const DEFAULT_TIMEOUT_MS = 30_000;
 
 const OK = 20000;
+/** DataForSEO's status code for a used-up daily spend limit. */
 export const DAILY_LIMIT_STATUS = 40203;
 
 /** 40203 as a plain message, e.g. "money limit per day has been exceeded: 1.09792 >= 1". */
@@ -23,11 +26,19 @@ export function nextUtcMidnight(at: number = Date.now()): Date {
   return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1));
 }
 
+/** A DataForSEO error response. `status` is DataForSEO's status code, or the HTTP status when the body isn't JSON. */
+export class DataForSeoError extends Error {
+  constructor(message: string, readonly status: number | null, readonly endpoint: string) {
+    super(message);
+    this.name = 'DataForSeoError';
+  }
+}
+
 /** Status 40203: the account's daily spend limit is used up. */
-export class DailyLimitError extends Error {
-  readonly status = DAILY_LIMIT_STATUS;
-  constructor(statusMessage: unknown) {
-    super(costLimitMessage(statusMessage));
+export class DailyLimitError extends DataForSeoError {
+  declare readonly status: typeof DAILY_LIMIT_STATUS;
+  constructor(statusMessage: unknown, endpoint = '') {
+    super(costLimitMessage(statusMessage), DAILY_LIMIT_STATUS, endpoint);
     this.name = 'DailyLimitError';
   }
 }
@@ -40,6 +51,7 @@ export interface Charged<T = any> {
   fetched_at: string;
 }
 
+/** The client the checks take. */
 export interface DataForSeoClient {
   /** Account money and limits. The endpoint is free, so it is never cached. */
   userData(): Promise<Charged>;
@@ -47,18 +59,23 @@ export interface DataForSeoClient {
   live(endpoint: string, task: Record<string, unknown>, opts?: { refresh?: boolean; timeoutMs?: number }): Promise<Charged>;
 }
 
+/** Options for `createDataForSeoClient`. */
 export interface DataForSeoOptions {
+  /** API login from the DataForSEO dashboard. */
   login: string;
+  /** API password, not the account password. */
   password: string;
   /** Where paid responses are cached. Takes precedence over `cacheDir`. */
   cache?: CacheStore;
   /** Shorthand for a disk cache in this directory. */
   cacheDir?: string;
+  /** Default: `DEFAULT_TTL_MS`. */
   ttlMs?: number;
+  /** Default: `DEFAULT_TIMEOUT_MS`. */
   timeoutMs?: number;
   fetchFn?: typeof fetch;
   now?: () => number;
-  /** Where cache failures are reported. */
+  /** Where cache failures are reported. Default: `console.error`. */
   onCacheError?: (op: 'get' | 'set', err: unknown) => void;
 }
 
@@ -74,10 +91,12 @@ function isEntry(v: unknown): v is CacheEntry {
   return !!v && typeof v === 'object' && typeof (v as CacheEntry).fetched_at === 'string' && 'result' in v;
 }
 
+/** SHA-256 hex digest of the endpoint and request body. */
 export function cacheKey(endpoint: string, body: unknown): string {
   return createHash('sha256').update(`${endpoint}\n${JSON.stringify(body)}`).digest('hex');
 }
 
+/** A DataForSEO client that caches paid responses. */
 export function createDataForSeoClient(opts: DataForSeoOptions): DataForSeoClient {
   const fetchFn = opts.fetchFn ?? fetch;
   const now = opts.now ?? Date.now;
@@ -106,16 +125,18 @@ export function createDataForSeoClient(opts: DataForSeoOptions): DataForSeoClien
     try {
       data = JSON.parse(text);
     } catch {
-      throw new Error(`DataForSEO ${endpoint} ${res.status}: ${text.slice(0, 300)}`);
+      throw new DataForSeoError(`DataForSEO ${endpoint} ${res.status}: ${text.slice(0, 300)}`, res.status, endpoint);
     }
-    if (data?.status_code === DAILY_LIMIT_STATUS) throw new DailyLimitError(data.status_message);
+    if (data?.status_code === DAILY_LIMIT_STATUS) throw new DailyLimitError(data.status_message, endpoint);
     if (!res.ok || data?.status_code !== OK) {
-      throw new Error(`DataForSEO ${endpoint} ${data?.status_code ?? res.status}: ${data?.status_message ?? text.slice(0, 300)}`);
+      const status = data?.status_code ?? res.status;
+      throw new DataForSeoError(`DataForSEO ${endpoint} ${status}: ${data?.status_message ?? text.slice(0, 300)}`, status, endpoint);
     }
     const task = data.tasks?.[0];
-    if (task?.status_code === DAILY_LIMIT_STATUS) throw new DailyLimitError(task.status_message);
+    if (task?.status_code === DAILY_LIMIT_STATUS) throw new DailyLimitError(task.status_message, endpoint);
     if (!task || task.status_code !== OK) {
-      throw new Error(`DataForSEO ${endpoint} task ${task?.status_code ?? 'missing'}: ${task?.status_message ?? 'no task in response'}`);
+      const message = `DataForSEO ${endpoint} task ${task?.status_code ?? 'missing'}: ${task?.status_message ?? 'no task in response'}`;
+      throw new DataForSeoError(message, task?.status_code ?? null, endpoint);
     }
     return { result: task.result?.[0] ?? null, cost: Number(data.cost ?? 0) };
   }

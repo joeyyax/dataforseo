@@ -1,9 +1,12 @@
+/** Color intent for a stat tile. */
 export type Tone = 'neutral' | 'good' | 'warn' | 'bad';
+/** Color intent for a table badge. */
 export type BadgeTone = Tone | 'info';
 
 /** Term → definition, opened in a popover from its first use. */
 export type Terms = Record<string, string>;
 
+/** One stat tile. */
 export interface StatItem {
   label: string;
   value: string | number;
@@ -13,6 +16,7 @@ export interface StatItem {
   href?: string;
 }
 
+/** One table column and how to format its cells. */
 export interface TableColumn {
   key: string;
   label: string;
@@ -36,8 +40,8 @@ type BlockBody =
   | { type: 'footer'; text: string };
 
 /**
- * Report content as data, a subset of the artifact store's block schema. Text fields take inline
- * **bold**, `code` and [links]. `id` lets a merge republish replace one block and doubles as an anchor.
+ * Report content as data for any renderer. Text fields take inline **bold**, `code` and [links].
+ * `id` is stable across runs, so it works as an anchor or an update key.
  */
 export type Block = BlockBody & { id?: string };
 
@@ -47,6 +51,7 @@ export interface MethodLine {
   text: string;
 }
 
+/** A report before layout. `buildReport` turns it into blocks. */
 export interface ReportSpec {
   /** Report type for the kicker, e.g. "SEO snapshot". */
   kind: string;
@@ -69,7 +74,7 @@ export interface ReportSpec {
   allClear?: string;
   sections?: Block[];
   source: string;
-  /** What the run cost, for the tool result. Client pages don't show it. */
+  /** What the run cost in USD. `buildReport` leaves it off the page. */
   cost: number;
   cached?: boolean;
   note?: string;
@@ -115,6 +120,7 @@ export function code(s: string): string {
   return `\`${s.replace(/`/g, '')}\``;
 }
 
+/** `$0`, `$0.0020`, `$0.028`. */
 export function usd(n: number): string {
   if (n === 0) return '$0';
   return `$${n < 0.01 ? n.toFixed(4) : n.toFixed(3)}`;
@@ -145,10 +151,12 @@ export function theTop(n: number, one: string, many = `${one}s`): string {
   return n === 1 ? `The ${one}` : `The ${plural(n, one, many)}`;
 }
 
+/** Uppercases the first letter. */
 export function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+/** The `YYYY-MM-DD` part of an ISO timestamp. */
 export function day(iso: string): string {
   return iso.slice(0, 10);
 }

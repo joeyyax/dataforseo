@@ -4,6 +4,7 @@ export function normalizeDomain(input: string): string {
   return host.replace(/^www\./i, '').toLowerCase();
 }
 
+/** `Promise.all` over `items` with at most `limit` calls in flight; results keep input order. */
 export async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out: R[] = new Array(items.length);
   let next = 0;
@@ -17,6 +18,7 @@ export async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) =>
   return out;
 }
 
+/** Rounds USD to six decimals, DataForSEO's precision. */
 export function money(n: number): number {
   return Math.round(n * 1e6) / 1e6;
 }

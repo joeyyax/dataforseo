@@ -3,14 +3,17 @@ export interface CacheStore {
     get(key: string): Promise<unknown | null>;
     set(key: string, value: unknown, ttlMs: number): Promise<void>;
 }
-/** One JSON file per key. */
+/** A cache in `dir`, one JSON file per key. */
 export declare function createDiskCacheStore(dir: string, now?: () => number): CacheStore;
+/** Options for `createHttpCacheStore`. */
 export interface HttpCacheStoreOptions {
     /** Base URL; keys go after it, e.g. `https://cache.example.com/dataforseo`. */
     url: string;
+    /** Sent as `Authorization: Bearer <token>`. */
     token: string;
-    /** Per-request timeouts. Defaults: 3s for get, 10s for set. */
+    /** Default: 3 seconds. */
     getTimeoutMs?: number;
+    /** Default: 10 seconds. */
     setTimeoutMs?: number;
     fetchFn?: typeof fetch;
 }

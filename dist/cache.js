@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 const KEY_RE = /^[a-f0-9]{16,128}$/;
-/** One JSON file per key. */
+/** A cache in `dir`, one JSON file per key. */
 export function createDiskCacheStore(dir, now = Date.now) {
     const pathFor = (key) => {
         if (!KEY_RE.test(key))

@@ -3,20 +3,28 @@ import { mapLimit, money, normalizeDomain } from './util.js';
 import { diffSnapshots, snapshotId, snapshotLimit, trimSnapshot, type RankedKeyword, type RankSnapshot, type SnapshotDiff, type SnapshotStore } from './snapshots.js';
 import { classify, domainStem, intentOf, isBrandKeyword, relevanceFor, squash, type Relevance, type TermKind, type Topic } from './relevance.js';
 
-
+/** DataForSEO location name used when none is given. */
 export const DEFAULT_LOCATION = 'United States';
+/** DataForSEO language name used when none is given. */
 export const DEFAULT_LANGUAGE = 'English';
+/** Maps results read per search. */
 export const MAPS_DEPTH = 20;
 /** Snapshot and baseline pull the same 100 terms, so one cached call serves both. */
 export const DEFAULT_SNAPSHOT_LIMIT = 100;
+/** Terms a ranking baseline tracks. */
 export const DEFAULT_BASELINE_LIMIT = 100;
+/** Terms pulled per competitor and gap type. */
 export const DEFAULT_GAP_LIMIT = 100;
 /** A competitor term counts only when the competitor is on page one for it. */
 export const GAP_MAX_POSITION = 10;
+/** Competitor candidates returned. */
 export const DEFAULT_CANDIDATES = 10;
 const CANDIDATE_POOL = 30;
+/** Search terms competitor discovery compares on. */
 export const DISCOVERY_KEYWORDS = 20;
+/** Maps searches `localVisibility` runs before it refuses. */
 export const DEFAULT_MAX_KEYWORDS = 5;
+/** AI prompts pulled by default: none, since that call costs extra. */
 export const DEFAULT_PROMPTS = 0;
 
 const LABS = '/dataforseo_labs/google';
@@ -24,6 +32,7 @@ const LLM = '/ai_optimization/llm_mentions';
 /** LLM Mentions calls can take up to 120 seconds. */
 const LLM_TIMEOUT_MS = 130_000;
 
+/** What a check cost and how fresh its data is. */
 export interface Spend {
   cost: number;
   cached: boolean;
@@ -59,7 +68,19 @@ export function daySpend(day: any): { date?: string; total?: number } | undefine
   return { date: day.value, total: typeof day.total === 'number' ? day.total : undefined };
 }
 
-export async function balance(client: DataForSeoClient) {
+/** Account balance and spend from `balance`. Amounts are USD. */
+export interface Balance {
+  login?: string;
+  balance?: number;
+  deposited?: number;
+  spent?: number;
+  today?: { date?: string; total?: number };
+  cost: number;
+  cached: boolean;
+}
+
+/** Account balance, total deposits and spend, from the free user_data call. */
+export async function balance(client: DataForSeoClient): Promise<Balance> {
   const res = await client.userData();
   const m = res.result?.money ?? {};
   return {
@@ -81,6 +102,7 @@ export interface DailyBudget {
   left: number | null;
 }
 
+/** Today's spend against the daily limit. Free. */
 export async function dailyBudget(client: DataForSeoClient, now: () => number = Date.now): Promise<DailyBudget> {
   const res = await client.userData();
   const m = res.result?.money ?? {};
@@ -94,6 +116,7 @@ export async function dailyBudget(client: DataForSeoClient, now: () => number = 
 
 // Ranked keywords
 
+/** Ranking terms per position band. */
 export interface Positions {
   top_3: number;
   '4_10': number;
@@ -101,6 +124,7 @@ export interface Positions {
   '21_100': number;
 }
 
+/** One ranked_keywords item as a `RankedKeyword`, or null when it has no keyword or result. */
 export function parseRankedItem(item: any): RankedKeyword | null {
   const keyword = item?.keyword_data?.keyword;
   const serp = item?.ranked_serp_element?.serp_item;
@@ -164,14 +188,19 @@ export function topPages(keywords: RankedKeyword[]): { url: string; keywords: nu
   return [...pages.values()].map((p) => ({ ...p, etv: Math.round(p.etv) })).sort((a, b) => b.etv - a.etv);
 }
 
-interface Market {
+/** Where to search and whether to skip the cache. */
+export interface Market {
+  /** DataForSEO location name. Default: `DEFAULT_LOCATION`. */
   location?: string;
+  /** DataForSEO language name. Default: `DEFAULT_LANGUAGE`. */
   language?: string;
+  /** Pay for fresh data instead of using the cache. */
   refresh?: boolean;
 }
 
 // Snapshot
 
+/** A ranking term with its `TermKind` and topic. */
 export type ClassifiedKeyword = RankedKeyword & { kind: TermKind; theme?: string };
 
 /** What the relevance filter was given, so a report can say how terms were sorted. */
@@ -182,6 +211,7 @@ export interface RelevanceInput {
   area: string[];
 }
 
+/** What `seoSnapshot` returns. */
 export interface SnapshotResult extends Spend {
   domain: string;
   location: string;
@@ -195,20 +225,35 @@ export interface SnapshotResult extends Spend {
   top_pages: { url: string; keywords: number; etv: number }[];
 }
 
-interface RelevanceArgs {
+/** How to sort terms by relevance. Without `topics`, terms stay unsorted. */
+export interface RelevanceOptions {
+  /** The business name as people search for it. */
   brand?: string;
+  /** Other names for the business. */
   aliases?: string[];
+  /** `"Label: word, word"` or a bare word. */
   topics?: string[];
+  /** Places the business serves. Terms naming other US places count as `elsewhere`. */
   area?: string[];
 }
 
-function relevanceInput(args: RelevanceArgs, r: Relevance): RelevanceInput {
+/** Input for `seoSnapshot`. */
+export interface SnapshotInput extends Market, RelevanceOptions {
+  domain: string;
+  /** Default: `DEFAULT_SNAPSHOT_LIMIT`. */
+  limit?: number;
+  /** Their names count as `other-name`. */
+  competitors?: string[];
+}
+
+function relevanceInput(args: RelevanceOptions, r: Relevance): RelevanceInput {
   return { ...(args.brand?.trim() ? { brand: args.brand.trim() } : {}), aliases: (args.aliases ?? []).map((a) => a.trim()).filter(Boolean), topics: r.topics, area: r.area };
 }
 
+/** A domain's Google rankings, estimated visits and top pages: one Labs call. */
 export async function seoSnapshot(
   client: DataForSeoClient,
-  input: Market & RelevanceArgs & { domain: string; limit?: number; competitors?: string[] },
+  input: SnapshotInput,
   now: () => number = Date.now,
 ): Promise<SnapshotResult> {
   const domain = normalizeDomain(input.domain);
@@ -236,6 +281,7 @@ export async function seoSnapshot(
  */
 export type GapKind = 'weak' | 'missing';
 
+/** One search term where a competitor is ahead. */
 export interface GapTerm {
   keyword: string;
   search_volume: number;
@@ -250,6 +296,7 @@ export interface GapTerm {
   competitors: { domain: string; position: number; url: string }[];
 }
 
+/** One domain_intersection result, as `mergeGaps` takes it. */
 export interface GapPull {
   domain: string;
   /** `true` for terms both rank for, `false` for terms only the competitor ranks for. */
@@ -290,6 +337,7 @@ export function mergeGaps(pulls: GapPull[], r: Relevance): GapTerm[] {
   return [...terms.values()].sort((a, b) => b.search_volume - a.search_volume || b.competitors.length - a.competitors.length);
 }
 
+/** Per-competitor totals in a gap result. */
 export interface GapCompetitor {
   domain: string;
   /** Page-one terms the competitor ranks for that the domain doesn't, any topic, from DataForSEO's count. */
@@ -300,6 +348,7 @@ export interface GapCompetitor {
   checked: number;
 }
 
+/** What `competitorGap` returns. */
 export interface GapResult extends Spend {
   domain: string;
   location: string;
@@ -318,13 +367,22 @@ export interface GapResult extends Spend {
   gap_search_volume: number;
 }
 
+/** Input for `competitorGap`. */
+export interface GapInput extends Market, RelevanceOptions {
+  domain: string;
+  /** At least one, other than the domain. */
+  competitors: string[];
+  /** Default: `DEFAULT_GAP_LIMIT`. */
+  limit?: number;
+}
+
 /**
  * Search terms where a named competitor is on Google's page one and the domain is behind it or absent:
  * two Labs domain_intersection calls per competitor, then the relevance filter.
  */
 export async function competitorGap(
   client: DataForSeoClient,
-  input: Market & RelevanceArgs & { domain: string; competitors: string[]; limit?: number },
+  input: GapInput,
   now: () => number = Date.now,
 ): Promise<GapResult> {
   const domain = normalizeDomain(input.domain);
@@ -403,10 +461,12 @@ const NOISE_DOMAINS = [
 
 const NOISE_TLD = /\.(gov|edu|mil|int)(\.[a-z]{2})?$|\.(k12|gov|state)\.[a-z]{2}\.us$/;
 
+/** True for directories, social sites, reference sites and public bodies. */
 export function isNoiseCompetitor(domain: string): boolean {
   return NOISE_TLD.test(domain) || NOISE_DOMAINS.some((n) => sameSite(domain, n));
 }
 
+/** A domain that ranks for the same terms. */
 export interface CompetitorCandidate {
   domain: string;
   /** How many of the discovery keywords the domain ranks for. */
@@ -416,6 +476,7 @@ export interface CompetitorCandidate {
   etv: number;
 }
 
+/** A term competitor discovery compared on. */
 export interface DiscoveryKeyword {
   keyword: string;
   search_volume: number;
@@ -423,6 +484,7 @@ export interface DiscoveryKeyword {
   position?: number;
 }
 
+/** What `competitorCandidates` returns. */
 export interface CandidatesResult extends Spend {
   domain: string;
   location: string;
@@ -434,13 +496,24 @@ export interface CandidatesResult extends Spend {
   note: string;
 }
 
+/** Input for `competitorCandidates`. */
+export interface CandidatesInput extends Market {
+  domain: string;
+  /** Terms with this name are left out of discovery. */
+  brand?: string;
+  /** Terms to compare on. Default: the domain's top non-brand terms. */
+  keywords?: string[];
+  /** Default: `DEFAULT_CANDIDATES`. */
+  limit?: number;
+}
+
 /**
  * Domains ranking for the same search terms: the caller's keywords, or the domain's own top
- * non-brand keywords from the same ranked_keywords pull as seo_snapshot, so a recent snapshot makes that step free.
+ * non-brand keywords from the same ranked_keywords pull as `seoSnapshot`, so a recent snapshot makes that step free.
  */
 export async function competitorCandidates(
   client: DataForSeoClient,
-  input: Market & { domain: string; brand?: string; keywords?: string[]; limit?: number },
+  input: CandidatesInput,
   now: () => number = Date.now,
 ): Promise<CandidatesResult> {
   const domain = normalizeDomain(input.domain);
@@ -505,13 +578,14 @@ export async function competitorCandidates(
     ...base,
     candidates: candidates.slice(0, input.limit ?? DEFAULT_CANDIDATES),
     filtered_out,
-    note: 'Pick the real competitors and call again with competitors set to run the gap check. No report for this step.',
+    note: 'Pick the real competitors and pass them to competitorGap.',
     ...combine(charges, new Date(now()).toISOString()),
   };
 }
 
 // Local visibility
 
+/** One Google Maps result. */
 export interface MapsListing {
   position: number;
   title: string;
@@ -521,6 +595,7 @@ export interface MapsListing {
   category: string | null;
 }
 
+/** The Maps listings in a maps/live/advanced result, ads left out. */
 export function parseMapsItems(result: any): MapsListing[] {
   return itemsOf(result).filter((i) => i?.type === 'maps_search').map((i) => ({
     position: Number(i.rank_group ?? 0),
@@ -547,6 +622,7 @@ export function matchesBusiness(listing: MapsListing, business: string, domain?:
 
 const COORDINATE_RE = /^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?(,\s*\d+(\.\d+)?z?)?$/;
 
+/** What `localVisibility` returns. */
 export interface LocalResult extends Spend {
   business: string;
   domain?: string;
@@ -556,9 +632,27 @@ export interface LocalResult extends Spend {
   summary: { top_3: number; lower: number; not_found: number };
 }
 
+/** Input for `localVisibility`. */
+export interface LocalInput {
+  /** The business name as it appears on Google Maps. */
+  business: string;
+  /** Matches listings by website. Default: `business` when it looks like a domain. */
+  domain?: string;
+  /** One paid Maps search each. */
+  keywords: string[];
+  /** A DataForSEO location name or `lat,lng[,zoom]`. */
+  location: string;
+  /** Default: `DEFAULT_LANGUAGE`. */
+  language?: string;
+  /** Throws before any call when there are more keywords. Default: `DEFAULT_MAX_KEYWORDS`. */
+  max_keywords?: number;
+  refresh?: boolean;
+}
+
+/** Where a business shows in Google Maps for each search: one call per keyword. */
 export async function localVisibility(
   client: DataForSeoClient,
-  input: { business: string; domain?: string; keywords: string[]; location: string; language?: string; max_keywords?: number; refresh?: boolean },
+  input: LocalInput,
   now: () => number = Date.now,
 ): Promise<LocalResult> {
   const keywords = [...new Set((input.keywords ?? []).map((k) => k.trim()).filter(Boolean))];
@@ -596,6 +690,7 @@ export async function localVisibility(
 
 // AI visibility
 
+/** Answer counts, total and per AI platform. */
 export interface MentionCounts {
   total: number;
   by_platform: Record<string, number>;
@@ -610,6 +705,7 @@ function countPlatforms(groups: any): MentionCounts {
   return { total: Object.values(by).reduce((s, n) => s + n, 0), by_platform: by };
 }
 
+/** AI answers to questions containing one topic, and the sites they cite most. */
 export interface AiTopic {
   keyword: string;
   mentions: number;
@@ -617,6 +713,7 @@ export interface AiTopic {
   top_sources: { domain: string; mentions: number }[];
 }
 
+/** A question whose AI answer cites the domain. */
 export interface AiPrompt {
   question: string;
   platform: string;
@@ -624,6 +721,7 @@ export interface AiPrompt {
   url: string | null;
 }
 
+/** What `aiVisibility` returns. */
 export interface AiResult extends Spend {
   domain: string;
   brand?: string;
@@ -633,9 +731,22 @@ export interface AiResult extends Spend {
   top_prompts: AiPrompt[];
 }
 
+/** Input for `aiVisibility`. */
+export interface AiInput {
+  domain: string;
+  /** Counts answers that name it. */
+  brand?: string;
+  /** Topics to check who AI answers cite. */
+  keywords?: string[];
+  /** Top questions citing the domain to pull, in one extra call. Default: `DEFAULT_PROMPTS`. */
+  prompts?: number;
+  refresh?: boolean;
+}
+
+/** How often ChatGPT and Google AI Overviews cite the domain and name the brand. */
 export async function aiVisibility(
   client: DataForSeoClient,
-  input: { domain: string; brand?: string; keywords?: string[]; prompts?: number; refresh?: boolean },
+  input: AiInput,
   now: () => number = Date.now,
 ): Promise<AiResult> {
   const domain = normalizeDomain(input.domain);
@@ -701,6 +812,7 @@ export async function aiVisibility(
 
 // Rank baseline
 
+/** What `rankBaseline` returns. */
 export interface BaselineResult extends Spend {
   snapshot_id: string;
   domain: string;
@@ -723,10 +835,22 @@ function latestComparable(all: RankSnapshot[], cur: RankSnapshot, limit: number)
   return earlier.filter((s) => snapshotLimit(s) >= limit).at(-1) ?? earlier.at(-1);
 }
 
+/** Input for `rankBaseline`. */
+export interface BaselineInput extends Market {
+  domain: string;
+  /** Added to the snapshot id, e.g. "Pre launch". */
+  label?: string;
+  /** A snapshot id to compare with. Default: the latest earlier one for the same market. */
+  compare_to?: string;
+  /** Default: `DEFAULT_BASELINE_LIMIT`. */
+  limit?: number;
+}
+
+/** Saves the domain's top terms and positions, then diffs them against an earlier snapshot. */
 export async function rankBaseline(
   client: DataForSeoClient,
   snapshots: SnapshotStore,
-  input: Market & { domain: string; label?: string; compare_to?: string; limit?: number },
+  input: BaselineInput,
   now: () => number = Date.now,
 ): Promise<BaselineResult> {
   const domain = normalizeDomain(input.domain);

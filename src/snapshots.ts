@@ -4,6 +4,7 @@ import { join } from 'node:path';
 const DOMAIN_RE = /^[a-z0-9][a-z0-9.-]{0,252}$/;
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9-]{0,127}$/;
 
+/** One ranking term. `etv` is estimated monthly visits from it. */
 export interface RankedKeyword {
   keyword: string;
   position: number;
@@ -14,6 +15,7 @@ export interface RankedKeyword {
   intent?: string;
 }
 
+/** A saved set of rankings for one domain and market. */
 export interface RankSnapshot {
   id: string;
   domain: string;
@@ -30,6 +32,7 @@ export interface RankSnapshot {
   keywords: RankedKeyword[];
 }
 
+/** One term's position change. `null` means outside the tracked set. */
 export interface KeywordMove {
   keyword: string;
   search_volume: number;
@@ -38,6 +41,7 @@ export interface KeywordMove {
   url: string;
 }
 
+/** Changes between two snapshots, each list most searched first. */
 export interface SnapshotDiff {
   gained: KeywordMove[];
   lost: KeywordMove[];
@@ -46,6 +50,7 @@ export interface SnapshotDiff {
   unchanged: number;
 }
 
+/** Where `rankBaseline` saves and finds snapshots. */
 export interface SnapshotStore {
   save(snapshot: RankSnapshot): Promise<void>;
   get(domain: string, id: string): Promise<RankSnapshot>;
@@ -70,7 +75,8 @@ export function snapshotId(createdIso: string, label?: string): string {
   return tag ? `${stamp}-${tag}` : stamp;
 }
 
-export function createSnapshotStore(dir: string): SnapshotStore {
+/** A snapshot store in `dir`, one folder per domain and one JSON file per snapshot. */
+export function createDiskSnapshotStore(dir: string): SnapshotStore {
   const domainDir = (domain: string) => join(dir, assertDomain(domain));
   return {
     async save(snapshot) {
@@ -105,6 +111,9 @@ export function createSnapshotStore(dir: string): SnapshotStore {
     },
   };
 }
+
+/** @deprecated Use `createDiskSnapshotStore`. */
+export const createSnapshotStore = createDiskSnapshotStore;
 
 /** Lower position is better. Gained and lost are relative to the tracked set, not all of Google. */
 export function diffSnapshots(prev: RankSnapshot, cur: RankSnapshot): SnapshotDiff {

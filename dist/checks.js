@@ -1,19 +1,28 @@
 import { mapLimit, money, normalizeDomain } from './util.js';
 import { diffSnapshots, snapshotId, snapshotLimit, trimSnapshot } from './snapshots.js';
 import { classify, domainStem, intentOf, isBrandKeyword, relevanceFor, squash } from './relevance.js';
+/** DataForSEO location name used when none is given. */
 export const DEFAULT_LOCATION = 'United States';
+/** DataForSEO language name used when none is given. */
 export const DEFAULT_LANGUAGE = 'English';
+/** Maps results read per search. */
 export const MAPS_DEPTH = 20;
 /** Snapshot and baseline pull the same 100 terms, so one cached call serves both. */
 export const DEFAULT_SNAPSHOT_LIMIT = 100;
+/** Terms a ranking baseline tracks. */
 export const DEFAULT_BASELINE_LIMIT = 100;
+/** Terms pulled per competitor and gap type. */
 export const DEFAULT_GAP_LIMIT = 100;
 /** A competitor term counts only when the competitor is on page one for it. */
 export const GAP_MAX_POSITION = 10;
+/** Competitor candidates returned. */
 export const DEFAULT_CANDIDATES = 10;
 const CANDIDATE_POOL = 30;
+/** Search terms competitor discovery compares on. */
 export const DISCOVERY_KEYWORDS = 20;
+/** Maps searches `localVisibility` runs before it refuses. */
 export const DEFAULT_MAX_KEYWORDS = 5;
+/** AI prompts pulled by default: none, since that call costs extra. */
 export const DEFAULT_PROMPTS = 0;
 const LABS = '/dataforseo_labs/google';
 const LLM = '/ai_optimization/llm_mentions';
@@ -46,6 +55,7 @@ export function daySpend(day) {
         return undefined;
     return { date: day.value, total: typeof day.total === 'number' ? day.total : undefined };
 }
+/** Account balance, total deposits and spend, from the free user_data call. */
 export async function balance(client) {
     const res = await client.userData();
     const m = res.result?.money ?? {};
@@ -59,6 +69,7 @@ export async function balance(client) {
         cached: false,
     };
 }
+/** Today's spend against the daily limit. Free. */
 export async function dailyBudget(client, now = Date.now) {
     const res = await client.userData();
     const m = res.result?.money ?? {};
@@ -69,6 +80,7 @@ export async function dailyBudget(client, now = Date.now) {
     const limit = Number.isFinite(cap) && cap > 0 ? cap : null;
     return { date, spent: money(spent), limit, left: limit === null ? null : money(Math.max(0, limit - spent)) };
 }
+/** One ranked_keywords item as a `RankedKeyword`, or null when it has no keyword or result. */
 export function parseRankedItem(item) {
     const keyword = item?.keyword_data?.keyword;
     const serp = item?.ranked_serp_element?.serp_item;
@@ -122,6 +134,7 @@ export function topPages(keywords) {
 function relevanceInput(args, r) {
     return { ...(args.brand?.trim() ? { brand: args.brand.trim() } : {}), aliases: (args.aliases ?? []).map((a) => a.trim()).filter(Boolean), topics: r.topics, area: r.area };
 }
+/** A domain's Google rankings, estimated visits and top pages: one Labs call. */
 export async function seoSnapshot(client, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
     const location = input.location ?? DEFAULT_LOCATION;
@@ -250,12 +263,13 @@ const NOISE_DOMAINS = [
     'patch.com', 'nytimes.com', 'usnews.com', 'forbes.com', 'webmd.com', 'healthline.com', 'mayoclinic.org',
 ];
 const NOISE_TLD = /\.(gov|edu|mil|int)(\.[a-z]{2})?$|\.(k12|gov|state)\.[a-z]{2}\.us$/;
+/** True for directories, social sites, reference sites and public bodies. */
 export function isNoiseCompetitor(domain) {
     return NOISE_TLD.test(domain) || NOISE_DOMAINS.some((n) => sameSite(domain, n));
 }
 /**
  * Domains ranking for the same search terms: the caller's keywords, or the domain's own top
- * non-brand keywords from the same ranked_keywords pull as seo_snapshot, so a recent snapshot makes that step free.
+ * non-brand keywords from the same ranked_keywords pull as `seoSnapshot`, so a recent snapshot makes that step free.
  */
 export async function competitorCandidates(client, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
@@ -317,10 +331,11 @@ export async function competitorCandidates(client, input, now = Date.now) {
         ...base,
         candidates: candidates.slice(0, input.limit ?? DEFAULT_CANDIDATES),
         filtered_out,
-        note: 'Pick the real competitors and call again with competitors set to run the gap check. No report for this step.',
+        note: 'Pick the real competitors and pass them to competitorGap.',
         ...combine(charges, new Date(now()).toISOString()),
     };
 }
+/** The Maps listings in a maps/live/advanced result, ads left out. */
 export function parseMapsItems(result) {
     return itemsOf(result).filter((i) => i?.type === 'maps_search').map((i) => ({
         position: Number(i.rank_group ?? 0),
@@ -345,6 +360,7 @@ export function matchesBusiness(listing, business, domain) {
     return got.includes(want) || want.includes(got);
 }
 const COORDINATE_RE = /^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?(,\s*\d+(\.\d+)?z?)?$/;
+/** Where a business shows in Google Maps for each search: one call per keyword. */
 export async function localVisibility(client, input, now = Date.now) {
     const keywords = [...new Set((input.keywords ?? []).map((k) => k.trim()).filter(Boolean))];
     const max = input.max_keywords ?? DEFAULT_MAX_KEYWORDS;
@@ -384,6 +400,7 @@ function countPlatforms(groups) {
     }
     return { total: Object.values(by).reduce((s, n) => s + n, 0), by_platform: by };
 }
+/** How often ChatGPT and Google AI Overviews cite the domain and name the brand. */
 export async function aiVisibility(client, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
     const brand = input.brand?.trim() || undefined;
@@ -448,6 +465,7 @@ function latestComparable(all, cur, limit) {
     const earlier = all.filter((s) => s.location === cur.location && s.language === cur.language && s.created < cur.created && s.id !== cur.id);
     return earlier.filter((s) => snapshotLimit(s) >= limit).at(-1) ?? earlier.at(-1);
 }
+/** Saves the domain's top terms and positions, then diffs them against an earlier snapshot. */
 export async function rankBaseline(client, snapshots, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
     const location = input.location ?? DEFAULT_LOCATION;

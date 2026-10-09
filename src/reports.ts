@@ -113,7 +113,6 @@ function termTable(id: string, list: ClassifiedKeyword[], opts: { about?: boolea
   return { id, type: 'table', columns, rows: rows.map(({ about: a, ...rest }) => (opts.about === false ? rest : { about: a, ...rest })), sortable: rows.length > visible, ...(rows.length > visible ? { visible } : {}) };
 }
 
-/** Terms about the client's work at #4 to #20, most searched first: page one or two, not yet top 3. */
 /**
  * Terms about the client's work at #4 to #20: page one or two, not yet top 3. One per page, since the fix is the page.
  * Searches for a specific place or site come last; people looking for a service or an answer come first.
@@ -139,6 +138,7 @@ const LOOKING_FOR: Record<string, string> = {
   transactional: 'To buy, book or sign up',
 };
 
+/** Report for `seoSnapshot`. */
 export function snapshotReport(r: SnapshotResult, date: string): ReportSpec {
   const kw = r.top_keywords;
   const name = r.relevance.brand ?? r.domain;
@@ -301,6 +301,7 @@ function gapTable(id: string, list: GapTerm[], weak: boolean, sorted: boolean): 
   };
 }
 
+/** Report for `competitorGap`. */
 export function gapReport(r: GapResult, date: string): ReportSpec {
   const name = r.relevance.brand ?? r.domain;
   const sorted = r.relevance.topics.length > 0;
@@ -446,6 +447,7 @@ function place(location: string): string {
   return location.replace(/,(?=\S)/g, ', ');
 }
 
+/** Report for `localVisibility`. */
 export function localReport(r: LocalResult, date: string): ReportSpec {
   const yours = (l: MapsListing) => matchesBusiness(l, r.business, r.domain);
   const actions = r.results.filter((x) => x.position === null || x.position > 3).map((x) => {
@@ -538,6 +540,7 @@ function topicActions(uncited: AiResult['topics'], domain: string): string[] {
   return [...lines, ...uncited.filter((t) => !t.top_sources.length).map((t) => `AI answers about ${quote(t.keyword)} cite no sources in the sample, so there’s no site to compare with.`)];
 }
 
+/** Report for `aiVisibility`. */
 export function aiReport(r: AiResult, date: string): ReportSpec {
   const brand = r.brand ?? r.domain;
   const platforms = [...new Set([...Object.keys(r.citations.by_platform), ...Object.keys(r.brand_mentions?.by_platform ?? {})])]
@@ -686,6 +689,7 @@ function trackedTable(id: string, keywords: RankedKeyword[]): Block {
   return termTable(id, keywords.map((k) => ({ ...k, kind: 'unsorted' as const })), { about: false });
 }
 
+/** Report for `rankBaseline`: the baseline itself, a same-data notice or the changes since. */
 export function baselineReport(r: BaselineResult, date: string): ReportSpec {
   const source = 'DataForSEO Labs';
   const next = longDate(addDays(r.fetched_at, CHECK_INTERVAL_DAYS));
@@ -859,6 +863,7 @@ export function funnels(pages: PathCheck[], min = 3): { lands: string; from: Pat
     .sort((a, b) => b.from.length - a.from.length);
 }
 
+/** Report for `backlinkRedirects`: a migration check, or a broken link check when the origin is the live site. */
 export function redirectReport(r: BacklinkRedirectsResult, date: string): ReportSpec {
   const fix = r.pages.filter((p) => p.verdict === '404' || p.verdict === 'other');
   const gated = r.pages.filter((p) => p.verdict === 'gated');

@@ -24,11 +24,13 @@ export const US_PLACES = [
   'canada', 'british columbia', 'bc',
 ];
 
+/** A topic label and the words that mark a term as on it. */
 export interface Topic {
   label: string;
   words: string[];
 }
 
+/** The parsed filter `classify` sorts terms with. Build it with `relevanceFor`. */
 export interface Relevance {
   /** Squashed names that mean the client: domain stem, brand, aliases. */
   brand: string[];
@@ -39,6 +41,7 @@ export interface Relevance {
   area: string[];
 }
 
+/** What `classify` returns. */
 export interface Classified {
   kind: TermKind;
   /** The topic label, for `topic` terms. */
@@ -47,6 +50,7 @@ export interface Classified {
 
 const SECOND_LEVEL = new Set(['co', 'com', 'org', 'net', 'gov', 'ac', 'edu', 'ltd', 'plc']);
 
+/** Lowercase letters and digits only: `Acme-Plumbing` → `acmeplumbing`. */
 export function squash(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '');
 }
@@ -84,6 +88,7 @@ export function mentions(keyword: string, word: string): boolean {
   return new RegExp(`(^|[^a-z0-9])${escape(word)}(s|es)?($|[^a-z0-9])`, 'i').test(keyword);
 }
 
+/** Builds the relevance filter from the domain, names, competitors, topics and service area. */
 export function relevanceFor(input: { domain: string; brand?: string; aliases?: string[]; competitors?: string[]; topics?: string[]; area?: string[] }): Relevance {
   return {
     brand: [domainStem(input.domain), ...[input.brand, ...(input.aliases ?? [])].filter((s): s is string => !!s?.trim()).map(squash)],
@@ -100,6 +105,7 @@ export function elsewhere(keyword: string, area: string[]): string | undefined {
   return US_PLACES.find((p) => mentions(k, p) && !area.some((a) => a.includes(p) || p.includes(a)));
 }
 
+/** Sorts one search term into a `TermKind`. */
 export function classify(keyword: string, intent: string | undefined, r: Relevance): Classified {
   // Another area wins over a name: "acme plumbing vancouver bc" is a search for somewhere else.
   if (elsewhere(keyword, r.area)) return { kind: 'elsewhere' };

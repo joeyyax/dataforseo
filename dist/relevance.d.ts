@@ -6,10 +6,12 @@
 export type TermKind = 'brand' | 'topic' | 'elsewhere' | 'other-name' | 'unrelated' | 'unsorted';
 /** US states, large or capital cities and Canada, to spot a search aimed at another area. */
 export declare const US_PLACES: string[];
+/** A topic label and the words that mark a term as on it. */
 export interface Topic {
     label: string;
     words: string[];
 }
+/** The parsed filter `classify` sorts terms with. Build it with `relevanceFor`. */
 export interface Relevance {
     /** Squashed names that mean the client: domain stem, brand, aliases. */
     brand: string[];
@@ -19,11 +21,13 @@ export interface Relevance {
     /** Places the client serves, lowercased. Empty means no area check. */
     area: string[];
 }
+/** What `classify` returns. */
 export interface Classified {
     kind: TermKind;
     /** The topic label, for `topic` terms. */
     theme?: string;
 }
+/** Lowercase letters and digits only: `Acme-Plumbing` → `acmeplumbing`. */
 export declare function squash(s: string): string;
 /** `acme-plumbing.co.uk` → `acmeplumbing`: the label before the public suffix. */
 export declare function domainStem(domain: string): string;
@@ -33,6 +37,7 @@ export declare function isBrandKeyword(keyword: string, stems: string[]): boolea
 export declare function parseTopics(input: string[] | undefined): Topic[];
 /** Whole-word match that also takes a plain plural: "pipe" matches "pipes", not "bagpipe". */
 export declare function mentions(keyword: string, word: string): boolean;
+/** Builds the relevance filter from the domain, names, competitors, topics and service area. */
 export declare function relevanceFor(input: {
     domain: string;
     brand?: string;
@@ -43,6 +48,7 @@ export declare function relevanceFor(input: {
 }): Relevance;
 /** A US place the term names that isn't part of the client's area, if any. */
 export declare function elsewhere(keyword: string, area: string[]): string | undefined;
+/** Sorts one search term into a `TermKind`. */
 export declare function classify(keyword: string, intent: string | undefined, r: Relevance): Classified;
 /** DataForSEO's main intent for a keyword_data object, when it has one. */
 export declare function intentOf(keywordData: any): string | undefined;

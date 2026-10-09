@@ -1,8 +1,10 @@
 import { DEFAULT_TIMEOUT_MS } from './client.js';
 import { mapLimit, normalizeDomain } from './util.js';
+/** Linked pages pulled per `backlinkRedirects` run. */
 export const DEFAULT_REDIRECT_LIMIT = 100;
 const PATH_CHECK_CONCURRENCY = 5;
 const SEVERITY = { '404': 0, other: 1, gated: 1, 'redirect-ok': 2, ok: 3 };
+/** The verdict for a final HTTP status. */
 export function verdictFor(status, redirected) {
     if (status === 404)
         return '404';

@@ -1,5 +1,7 @@
 import { type DataForSeoClient } from './client.js';
+/** Linked pages pulled per `backlinkRedirects` run. */
 export declare const DEFAULT_REDIRECT_LIMIT = 100;
+/** How a path check ended. `gated` means it hit a login page. */
 export type RedirectVerdict = 'ok' | 'redirect-ok' | '404' | 'gated' | 'other';
 /** Old URLs that land on the same path on the new origin. `referring_domains` is their sum. */
 export interface PathTarget {
@@ -7,6 +9,7 @@ export interface PathTarget {
     old_urls: string[];
     referring_domains: number;
 }
+/** One path's result on the new origin. */
 export interface PathCheck extends PathTarget {
     final_status: number | null;
     final_url: string | null;
@@ -20,6 +23,7 @@ export interface PathCheck extends PathTarget {
     }[];
     error?: string;
 }
+/** The verdict for a final HTTP status. */
 export declare function verdictFor(status: number, redirected: boolean): RedirectVerdict;
 /** A 401, or a redirect that lands on a login page or carries the requested path back as a return param. */
 export declare function isGated(checkedUrl: string, finalUrl: string, status: number): boolean;
@@ -36,9 +40,13 @@ export declare function groupByPath(pages: {
 export declare function sortWorstFirst(checks: PathCheck[]): PathCheck[];
 /** The first value of a Location header, since some proxies join duplicates with ", ". */
 export declare function firstLocation(header: string | null): string | null;
+/** Input for `backlinkRedirects`. */
 export interface BacklinkRedirectsInput {
+    /** The old domain, whose linked pages come from DataForSEO Backlinks. */
     domain: string;
+    /** Where each path is requested, e.g. `https://staging.example.com`. */
     new_origin: string;
+    /** Default: `DEFAULT_REDIRECT_LIMIT`. */
     limit?: number;
     refresh?: boolean;
     /** Sent on the path checks only. */
@@ -46,6 +54,7 @@ export interface BacklinkRedirectsInput {
     fetchFn?: typeof fetch;
     onProgress?: (message: string) => Promise<void> | void;
 }
+/** What `backlinkRedirects` returns. */
 export interface BacklinkRedirectsResult {
     domain: string;
     new_origin: string;

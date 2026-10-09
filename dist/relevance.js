@@ -16,6 +16,7 @@ export const US_PLACES = [
     'canada', 'british columbia', 'bc',
 ];
 const SECOND_LEVEL = new Set(['co', 'com', 'org', 'net', 'gov', 'ac', 'edu', 'ltd', 'plc']);
+/** Lowercase letters and digits only: `Acme-Plumbing` → `acmeplumbing`. */
 export function squash(s) {
     return s.toLowerCase().replace(/[^a-z0-9]+/g, '');
 }
@@ -47,6 +48,7 @@ function escape(s) {
 export function mentions(keyword, word) {
     return new RegExp(`(^|[^a-z0-9])${escape(word)}(s|es)?($|[^a-z0-9])`, 'i').test(keyword);
 }
+/** Builds the relevance filter from the domain, names, competitors, topics and service area. */
 export function relevanceFor(input) {
     return {
         brand: [domainStem(input.domain), ...[input.brand, ...(input.aliases ?? [])].filter((s) => !!s?.trim()).map(squash)],
@@ -62,6 +64,7 @@ export function elsewhere(keyword, area) {
     const k = keyword.toLowerCase();
     return US_PLACES.find((p) => mentions(k, p) && !area.some((a) => a.includes(p) || p.includes(a)));
 }
+/** Sorts one search term into a `TermKind`. */
 export function classify(keyword, intent, r) {
     // Another area wins over a name: "acme plumbing vancouver bc" is a search for somewhere else.
     if (elsewhere(keyword, r.area))

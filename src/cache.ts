@@ -14,7 +14,7 @@ interface DiskEntry {
 
 const KEY_RE = /^[a-f0-9]{16,128}$/;
 
-/** One JSON file per key. */
+/** A cache in `dir`, one JSON file per key. */
 export function createDiskCacheStore(dir: string, now: () => number = Date.now): CacheStore {
   const pathFor = (key: string) => {
     if (!KEY_RE.test(key)) throw new Error(`Invalid cache key "${key}".`);
@@ -40,12 +40,15 @@ export function createDiskCacheStore(dir: string, now: () => number = Date.now):
   };
 }
 
+/** Options for `createHttpCacheStore`. */
 export interface HttpCacheStoreOptions {
   /** Base URL; keys go after it, e.g. `https://cache.example.com/dataforseo`. */
   url: string;
+  /** Sent as `Authorization: Bearer <token>`. */
   token: string;
-  /** Per-request timeouts. Defaults: 3s for get, 10s for set. */
+  /** Default: 3 seconds. */
   getTimeoutMs?: number;
+  /** Default: 10 seconds. */
   setTimeoutMs?: number;
   fetchFn?: typeof fetch;
 }

@@ -18,7 +18,8 @@ export function snapshotId(createdIso, label) {
     const tag = (label ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
     return tag ? `${stamp}-${tag}` : stamp;
 }
-export function createSnapshotStore(dir) {
+/** A snapshot store in `dir`, one folder per domain and one JSON file per snapshot. */
+export function createDiskSnapshotStore(dir) {
     const domainDir = (domain) => join(dir, assertDomain(domain));
     return {
         async save(snapshot) {
@@ -55,6 +56,8 @@ export function createSnapshotStore(dir) {
         },
     };
 }
+/** @deprecated Use `createDiskSnapshotStore`. */
+export const createSnapshotStore = createDiskSnapshotStore;
 /** Lower position is better. Gained and lost are relative to the tracked set, not all of Google. */
 export function diffSnapshots(prev, cur) {
     const before = new Map(prev.keywords.map((k) => [k.keyword, k]));

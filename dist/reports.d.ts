@@ -16,7 +16,6 @@ export declare const GLOSSARY: {
     readonly mapsTop3: "The three listings Google shows with the map at the top of local results. Most taps go to these.";
     readonly aiSearches: "DataForSEO’s estimate of how often people ask AI tools that question in a month.";
 };
-/** Terms about the client's work at #4 to #20, most searched first: page one or two, not yet top 3. */
 /**
  * Terms about the client's work at #4 to #20: page one or two, not yet top 3. One per page, since the fix is the page.
  * Searches for a specific place or site come last; people looking for a service or an answer come first.
@@ -24,10 +23,15 @@ export declare const GLOSSARY: {
 export declare function snapshotOpportunities(keywords: ClassifiedKeyword[]): (ClassifiedKeyword & {
     similar: number;
 })[];
+/** Report for `seoSnapshot`. */
 export declare function snapshotReport(r: SnapshotResult, date: string): ReportSpec;
+/** Report for `competitorGap`. */
 export declare function gapReport(r: GapResult, date: string): ReportSpec;
+/** Report for `localVisibility`. */
 export declare function localReport(r: LocalResult, date: string): ReportSpec;
+/** Report for `aiVisibility`. */
 export declare function aiReport(r: AiResult, date: string): ReportSpec;
+/** Report for `rankBaseline`: the baseline itself, a same-data notice or the changes since. */
 export declare function baselineReport(r: BaselineResult, date: string): ReportSpec;
 /** "/a → /b → /c" when a check took two or more redirects, else null. */
 export declare function chain(p: PathCheck): string | null;
@@ -36,4 +40,5 @@ export declare function funnels(pages: PathCheck[], min?: number): {
     lands: string;
     from: PathCheck[];
 }[];
+/** Report for `backlinkRedirects`: a migration check, or a broken link check when the origin is the live site. */
 export declare function redirectReport(r: BacklinkRedirectsResult, date: string): ReportSpec;
