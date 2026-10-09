@@ -225,7 +225,7 @@ Every export has a doc comment. The full list is in [`src/index.ts`](src/index.t
 
 ## Versioning
 
-Releases are Git tags with semantic version numbers, and changes are in [`CHANGELOG.md`](CHANGELOG.md). An npm release comes later. To release, bump `version`, run `pnpm test && pnpm check:dist`, commit `dist/` and tag `v<version>`.
+Releases are Git tags with semantic version numbers, and changes are in [`CHANGELOG.md`](CHANGELOG.md). To release, bump `version`, run `pnpm test && pnpm check:dist`, commit `dist/` and tag `v<version>`.
 
 ## License
 
