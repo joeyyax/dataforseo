@@ -9,7 +9,7 @@
   "exports": {
     ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": ["dist", "README.md", "CHANGELOG.md", "LICENSE"],
   "sideEffects": false,
   "engines": { "node": ">=22" },
   "repository": { "type": "git", "url": "git+https://github.com/joeyyax/dataforseo.git" },
@@ -17,7 +17,7 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "check:dist": "pnpm build && git diff --exit-code -- dist"
+    "check:dist": "pnpm build && git diff --exit-code -- dist && test -z \"$(git status --porcelain -- dist)\""
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
