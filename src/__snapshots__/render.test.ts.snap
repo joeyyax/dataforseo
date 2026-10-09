@@ -67,7 +67,7 @@ exports[`toHtml > renders the ai-visibility report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">AI tools tend to link pages that answer one question plainly.</p>
 <ul id="actions">
-<li>For questions about “water heater repair”, AI answers cite rivalplumbing.example, forum.example and hardware.example most. acmeplumbing.example isn’t in the top 3.</li>
+<li>For questions about “water heater repair”, AI answers cite <a href="https://rivalplumbing.example" rel="noopener">rivalplumbing.example</a>, <a href="https://forum.example" rel="noopener">forum.example</a> and <a href="https://hardware.example" rel="noopener">hardware.example</a> most. acmeplumbing.example isn’t in the top 3.</li>
 </ul>
 <h2 id="platforms-title">By platform</h2>
 <p id="platforms-note">A mention is the name in the answer’s text. A citation is a link to the site among its sources. Either can happen without the other.</p>
@@ -84,17 +84,17 @@ exports[`toHtml > renders the ai-visibility report 1`] = `
 <div class="dfs-table" id="topics" tabindex="0"><table>
 <thead><tr><th scope="col">Topic</th><th scope="col">acmeplumbing.example a top source</th><th scope="col" class="dfs-num">Answers found</th><th scope="col">Most cited sites</th></tr></thead>
 <tbody>
-<tr><td>water heater repair</td><td><span class="dfs-badge dfs-warn">No</span></td><td class="dfs-num">90</td><td>rivalplumbing.example, forum.example, hardware.example</td></tr>
-<tr><td>sewer line repair</td><td><span class="dfs-badge dfs-good">Yes</span></td><td class="dfs-num">40</td><td>acmeplumbing.example</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge dfs-warn">No</span></td><td class="dfs-num">90</td><td><a href="https://rivalplumbing.example" rel="noopener">rivalplumbing.example</a> (30), <a href="https://forum.example" rel="noopener">forum.example</a> (20), <a href="https://hardware.example" rel="noopener">hardware.example</a> (9)</td></tr>
+<tr><td>sewer line repair</td><td><span class="dfs-badge dfs-good">Yes</span></td><td class="dfs-num">40</td><td><a href="https://acmeplumbing.example" rel="noopener">acmeplumbing.example</a> (3)</td></tr>
 </tbody>
 </table></div>
-<dl class="dfs-terms"><div><dt>Answers found</dt><dd>Answers in the sample to questions that contain the topic.</dd></div></dl>
+<dl class="dfs-terms"><div><dt>Answers found</dt><dd>Answers in the sample to questions that contain the topic.</dd></div><div><dt>Most cited sites</dt><dd>The sites AI answers cite most for the topic, with how many answers cite each.</dd></div></dl>
 <h2 id="pages-title">Pages AI cites</h2>
 <p id="pages-note">From the question with the most AI searches a month whose answers link acmeplumbing.example.</p>
 <div class="dfs-table" id="pages" tabindex="0"><table>
 <thead><tr><th scope="col">Page</th><th scope="col" class="dfs-num">Questions</th><th scope="col" class="dfs-num">AI searches a month</th></tr></thead>
 <tbody>
-<tr><td><code>/sewer</code></td><td class="dfs-num">1</td><td class="dfs-num">260</td></tr>
+<tr><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td><td class="dfs-num">1</td><td class="dfs-num">260</td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>AI searches a month</dt><dd>DataForSEO’s estimate of how often people ask AI tools that question in a month.</dd></div></dl>
@@ -102,7 +102,7 @@ exports[`toHtml > renders the ai-visibility report 1`] = `
 <div class="dfs-table" id="prompts" tabindex="0"><table>
 <thead><tr><th scope="col">Question</th><th scope="col">Where</th><th scope="col" class="dfs-num">AI searches a month</th><th scope="col">Page cited</th></tr></thead>
 <tbody>
-<tr><td>who fixes sewer lines in springfield</td><td>Google AI Overviews</td><td class="dfs-num">260</td><td><code>/sewer</code></td></tr>
+<tr><td>who fixes sewer lines in springfield</td><td>Google AI Overviews</td><td class="dfs-num">260</td><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td></tr>
 </tbody>
 </table></div>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO LLM Mentions, October 8, 2026.</p></footer>
@@ -134,21 +134,27 @@ exports[`toHtml > renders the backlink-redirects report 1`] = `
 <h2 id="actions-title">Fix</h2>
 <p id="actions-intro">Each needs a redirect to its closest match, starting with the most linked. Links to a missing page pass no search value, and visitors who follow them land on an error.</p>
 <div class="dfs-table" id="fix" tabindex="0"><table>
-<thead><tr><th scope="col">Old address</th><th scope="col">Type</th><th scope="col">Result</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
+<thead><tr><th scope="col">Old address</th><th scope="col">Type</th><th scope="col">Result</th><th scope="col">Why</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
 <tbody>
-<tr><td><code>/coupons/spring-2019</code></td><td>Page</td><td><span class="dfs-badge">404</span></td><td class="dfs-num">46</td></tr>
-<tr><td><code>/services/water-heaters/</code></td><td>Page</td><td><span class="dfs-badge">404</span></td><td class="dfs-num">11</td></tr>
-<tr><td><code>/old-blog/frozen-pipes</code></td><td>Page</td><td><span class="dfs-badge">No response</span></td><td class="dfs-num">5</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/coupons/spring-2019" rel="noopener"><code>/coupons/spring-2019</code></a></td><td>Page</td><td><span class="dfs-badge">404</span></td><td></td><td class="dfs-num">46</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/services/water-heaters/" rel="noopener"><code>/services/water-heaters/</code></a></td><td>Page</td><td><span class="dfs-badge">404</span></td><td></td><td class="dfs-num">11</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/old-blog/frozen-pipes" rel="noopener"><code>/old-blog/frozen-pipes</code></a></td><td>Page</td><td><span class="dfs-badge">No response</span></td><td>fetch failed</td><td class="dfs-num">5</td></tr>
 </tbody>
 </table></div>
-<dl class="dfs-terms"><div><dt>Result</dt><dd>404 means page not found. Any other number is an error the server returned.</dd></div></dl>
+<dl class="dfs-terms"><div><dt>Result</dt><dd>404 means page not found. Any other number is an error the server returned.</dd></div><div><dt>Why</dt><dd>What went wrong when the server gave no response.</dd></div></dl>
 <aside class="dfs-callout dfs-warn" id="home-redirects"><p><strong>Sent to the homepage.</strong> 1 inner page redirects to the homepage, which Google treats like a missing page. Point it at its closest match.</p></aside>
+<div class="dfs-table" id="home" tabindex="0"><table>
+<thead><tr><th scope="col">Old address</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
+<tbody>
+<tr><td><a href="https://staging.acmeplumbing.example/blog/2020/03/hello" rel="noopener"><code>/blog/2020/03/hello</code></a></td><td class="dfs-num">3</td></tr>
+</tbody>
+</table></div>
 <h2 id="gated-title">Behind a login</h2>
 <p id="gated-note">These hit a sign-in page, so they couldn’t be checked.</p>
 <div class="dfs-table" id="gated" tabindex="0"><table>
 <thead><tr><th scope="col">Old address</th><th scope="col">Lands on</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
 <tbody>
-<tr><td><code>/account</code></td><td><code>/login?next=%2Faccount</code></td><td class="dfs-num">4</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/account" rel="noopener"><code>/account</code></a></td><td><a href="https://staging.acmeplumbing.example/login?next=%2Faccount" rel="noopener"><code>/login?next=%2Faccount</code></a></td><td class="dfs-num">4</td></tr>
 </tbody>
 </table></div>
 <h2 id="redirecting-title">Redirecting</h2>
@@ -156,16 +162,16 @@ exports[`toHtml > renders the backlink-redirects report 1`] = `
 <div class="dfs-table" id="redirecting" tabindex="0"><table>
 <thead><tr><th scope="col">Old address</th><th scope="col">Lands on</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
 <tbody>
-<tr><td><code>/about-us/</code></td><td><code>/about</code></td><td class="dfs-num">59</td></tr>
-<tr><td><code>/blog/2020/03/hello</code></td><td><code>/</code></td><td class="dfs-num">3</td></tr>
-<tr><td><code>/drains/</code></td><td><code>/services/drains</code></td><td class="dfs-num">8</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/about-us/" rel="noopener"><code>/about-us/</code></a></td><td><a href="https://staging.acmeplumbing.example/about" rel="noopener"><code>/about</code></a></td><td class="dfs-num">59</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/blog/2020/03/hello" rel="noopener"><code>/blog/2020/03/hello</code></a></td><td><a href="https://staging.acmeplumbing.example/" rel="noopener"><code>/</code></a></td><td class="dfs-num">3</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/drains/" rel="noopener"><code>/drains/</code></a></td><td><a href="https://staging.acmeplumbing.example/services/drains" rel="noopener"><code>/services/drains</code></a></td><td class="dfs-num">8</td></tr>
 </tbody>
 </table></div>
 <h2 id="unchanged-title">Unchanged</h2>
 <div class="dfs-table" id="unchanged" tabindex="0"><table>
 <thead><tr><th scope="col">Address</th><th scope="col" class="dfs-num">Linking sites</th></tr></thead>
 <tbody>
-<tr><td><code>/</code></td><td class="dfs-num">300</td></tr>
+<tr><td><a href="https://staging.acmeplumbing.example/" rel="noopener"><code>/</code></a></td><td class="dfs-num">300</td></tr>
 </tbody>
 </table></div>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Backlinks, October 8, 2026.</p></footer>
@@ -199,9 +205,9 @@ exports[`toHtml > renders the competitor-gap report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">One line per topic, most searched first. Where you rank, improving the page listed is the usual fix. Where you don’t, it’s usually a page that answers the search.</p>
 <ol id="actions">
-<li><strong>Water heaters:</strong> 2 terms, 5,720 searches a month. The biggest is “tankless water heater”: rivalplumbing.example is #3 and you’re #14 with <code>/services</code>. Your best position is on “water heater install”: rivalplumbing.example is #4 and you’re #8 with <code>/services</code>.</li>
-<li><strong>Plumbing:</strong> 3 terms, 2,170 searches a month. The biggest is “hydro jetting drain”: citydrains.example is #2 and you’re not in the top 100.</li>
-<li><strong>Pumps:</strong> 1 term, 900 searches a month. The biggest is “sump pump installation”: rivalplumbing.example is #7 and you’re not in the top 100.</li>
+<li><strong>Water heaters:</strong> 2 terms, 5,720 searches a month. The biggest is “tankless water heater”: <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a> is #3 and you’re #14 with <a href="https://acmeplumbing.example/services" rel="noopener"><code>/services</code></a>. Your best position is on “water heater install”: <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a> is #4 and you’re #8 with <a href="https://acmeplumbing.example/services" rel="noopener"><code>/services</code></a>.</li>
+<li><strong>Plumbing:</strong> 3 terms, 2,170 searches a month. The biggest is “hydro jetting drain”: <a href="https://citydrains.example/" rel="noopener">citydrains.example</a> is #2 and you’re not in the top 100.</li>
+<li><strong>Pumps:</strong> 1 term, 900 searches a month. The biggest is “sump pump installation”: <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a> is #7 and you’re not in the top 100.</li>
 </ol>
 <h2 id="themes-title">By topic</h2>
 <div class="dfs-table" id="themes" tabindex="0"><table>
@@ -218,8 +224,8 @@ exports[`toHtml > renders the competitor-gap report 1`] = `
 <div class="dfs-table" id="weak" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Ahead of you</th><th scope="col">You</th><th scope="col">Your page</th></tr></thead>
 <tbody>
-<tr><td>tankless water heater</td><td>Water heaters</td><td class="dfs-num">5,000</td><td>rivalplumbing.example #3</td><td><span class="dfs-badge">#14</span></td><td><code>/services</code></td></tr>
-<tr><td>water heater install</td><td>Water heaters</td><td class="dfs-num">720</td><td>rivalplumbing.example #4</td><td><span class="dfs-badge">#8</span></td><td><code>/services</code></td></tr>
+<tr><td>tankless water heater</td><td>Water heaters</td><td class="dfs-num">5,000</td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example #3</a></td><td><span class="dfs-badge">#14</span></td><td><a href="https://acmeplumbing.example/services" rel="noopener"><code>/services</code></a></td></tr>
+<tr><td>water heater install</td><td>Water heaters</td><td class="dfs-num">720</td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example #4</a></td><td><span class="dfs-badge">#8</span></td><td><a href="https://acmeplumbing.example/services" rel="noopener"><code>/services</code></a></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Ahead of you</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div></dl>
@@ -228,21 +234,21 @@ exports[`toHtml > renders the competitor-gap report 1`] = `
 <div class="dfs-table" id="missing" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Who ranks</th></tr></thead>
 <tbody>
-<tr><td>hydro jetting drain</td><td>Plumbing</td><td class="dfs-num">1,300</td><td>citydrains.example #2, rivalplumbing.example #9</td></tr>
-<tr><td>sump pump installation</td><td>Pumps</td><td class="dfs-num">900</td><td>rivalplumbing.example #7</td></tr>
-<tr><td>sewer backflow testing springfield</td><td>Plumbing</td><td class="dfs-num">480</td><td>citydrains.example #1</td></tr>
-<tr><td>slab leak repair</td><td>Plumbing</td><td class="dfs-num">390</td><td>rivalplumbing.example #6</td></tr>
+<tr><td>hydro jetting drain</td><td>Plumbing</td><td class="dfs-num">1,300</td><td><a href="https://citydrains.example/" rel="noopener">citydrains.example #2</a>, <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example #9</a></td></tr>
+<tr><td>sump pump installation</td><td>Pumps</td><td class="dfs-num">900</td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example #7</a></td></tr>
+<tr><td>sewer backflow testing springfield</td><td>Plumbing</td><td class="dfs-num">480</td><td><a href="https://citydrains.example/" rel="noopener">citydrains.example #1</a></td></tr>
+<tr><td>slab leak repair</td><td>Plumbing</td><td class="dfs-num">390</td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example #6</a></td></tr>
 </tbody>
 </table></div>
 <h2 id="competitors-title">By competitor</h2>
 <div class="dfs-table" id="competitors" tabindex="0"><table>
-<thead><tr><th scope="col">Competitor</th><th scope="col" class="dfs-num">Ahead of you</th><th scope="col" class="dfs-num">Only they rank</th><th scope="col" class="dfs-num">Only they rank, any term</th></tr></thead>
+<thead><tr><th scope="col">Competitor</th><th scope="col" class="dfs-num">Ahead of you</th><th scope="col" class="dfs-num">Only they rank</th><th scope="col" class="dfs-num">Both rank</th><th scope="col" class="dfs-num">Only they rank, any term</th></tr></thead>
 <tbody>
-<tr><td><code>rivalplumbing.example</code></td><td class="dfs-num">2</td><td class="dfs-num">3</td><td class="dfs-num">140</td></tr>
-<tr><td><code>citydrains.example</code></td><td class="dfs-num">0</td><td class="dfs-num">2</td><td class="dfs-num">38</td></tr>
+<tr><td><a href="https://rivalplumbing.example" rel="noopener">rivalplumbing.example</a></td><td class="dfs-num">2</td><td class="dfs-num">3</td><td class="dfs-num">60</td><td class="dfs-num">140</td></tr>
+<tr><td><a href="https://citydrains.example" rel="noopener">citydrains.example</a></td><td class="dfs-num">0</td><td class="dfs-num">2</td><td class="dfs-num">12</td><td class="dfs-num">38</td></tr>
 </tbody>
 </table></div>
-<dl class="dfs-terms"><div><dt>Only they rank, any term</dt><dd>Every term where they’re on page one and acmeplumbing.example isn’t in the top 100, before terms unrelated to your work are left out.</dd></div></dl>
+<dl class="dfs-terms"><div><dt>Both rank</dt><dd>Every term where they’re on page one and acmeplumbing.example ranks too, in either order and on any topic.</dd></div><div><dt>Only they rank, any term</dt><dd>Every term where they’re on page one and acmeplumbing.example isn’t in the top 100, before terms unrelated to your work are left out.</dd></div></dl>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
 </article>
 "
@@ -273,18 +279,18 @@ exports[`toHtml > renders the live-rank-check report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">Search terms where acmeplumbing.example isn’t on page one, closest first.</p>
 <ul id="actions">
-<li>“drain cleaning”: #14, with <code>/drains</code>. #1 is <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>.</li>
+<li>“drain cleaning”: #14, with <a href="https://www.acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a>. #1 is <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>.</li>
 <li>“emergency plumber”: not in the top 20. #1 is <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>.</li>
 </ul>
 <h2 id="results-title">Results by search</h2>
 <div class="dfs-table" id="results" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">Top 3</th><th scope="col">Also on the page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td><a href="https://acmeplumbing.example/" rel="noopener">acmeplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, Questions</td></tr>
-<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Ads</td></tr>
-<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><a href="https://www.acmeplumbing.example/" rel="noopener"><code>/</code></a></td><td><a href="https://acmeplumbing.example/" rel="noopener">acmeplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, Questions</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><a href="https://www.acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Ads</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><a href="https://www.acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
 <tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, AI Overview</td></tr>
-<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
+<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><a href="https://www.acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Also on the page</dt><dd>Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.</dd></div></dl>
@@ -318,14 +324,14 @@ exports[`toHtml > renders the live-rank-check-since report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">Terms that dropped out, then terms that fell three or more places.</p>
 <ul id="actions">
-<li>“emergency plumber” dropped out of the top 20 (was #7). Check that <code>/</code> still loads.</li>
+<li>“emergency plumber” dropped out of the top 20 (was #7). Check that <a href="https://www.acmeplumbing.example/" rel="noopener"><code>/</code></a> still loads.</li>
 </ul>
 <h2 id="dropped-title">Dropped out (1)</h2>
 <p id="dropped-note">In the top 20 on September 8, 2026, not now.</p>
 <div class="dfs-table" id="dropped" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>emergency plumber</td><td class="dfs-num">#7</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td><code>/</code></td></tr>
+<tr><td>emergency plumber</td><td class="dfs-num">#7</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td><a href="https://www.acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Was</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div></dl>
@@ -334,8 +340,8 @@ exports[`toHtml > renders the live-rank-check-since report 1`] = `
 <div class="dfs-table" id="up" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Places</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>drain cleaning</td><td class="dfs-num">#18</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">4</td><td><code>/drains</code></td></tr>
-<tr><td>plumber springfield</td><td class="dfs-num">#2</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">1</td><td><code>/</code></td></tr>
+<tr><td>drain cleaning</td><td class="dfs-num">#18</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">4</td><td><a href="https://www.acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
+<tr><td>plumber springfield</td><td class="dfs-num">#2</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">1</td><td><a href="https://www.acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Places</dt><dd>Places gained. A negative number is places lost.</dd></div></dl>
@@ -344,18 +350,18 @@ exports[`toHtml > renders the live-rank-check-since report 1`] = `
 <div class="dfs-table" id="entered" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>sump pump install</td><td class="dfs-num">Not in top 20</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td></tr>
+<tr><td>sump pump install</td><td class="dfs-num">Not in top 20</td><td><span class="dfs-badge">#9</span></td><td><a href="https://www.acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td></tr>
 </tbody>
 </table></div>
 <h2 id="results-title">Results by search</h2>
 <div class="dfs-table" id="results" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">Top 3</th><th scope="col">Also on the page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td><a href="https://acmeplumbing.example/" rel="noopener">acmeplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, Questions</td></tr>
-<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Ads</td></tr>
-<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><a href="https://www.acmeplumbing.example/" rel="noopener"><code>/</code></a></td><td><a href="https://acmeplumbing.example/" rel="noopener">acmeplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, Questions</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><a href="https://www.acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Ads</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><a href="https://www.acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
 <tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, AI Overview</td></tr>
-<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
+<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><a href="https://www.acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Also on the page</dt><dd>Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.</dd></div></dl>
@@ -388,19 +394,19 @@ exports[`toHtml > renders the local-visibility report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">Searches where you’re not in the top 3, and who is. Google ranks Maps listings by relevance to the search, distance from the searcher and prominence, which includes reviews.</p>
 <ul id="actions">
-<li>“water heater repair”: Acme Plumbing is #7. The top 3 are Rival Plumbing (4.8 stars, 312 reviews), Hot Water Heroes (4.9 stars, 88 reviews) and Pipe Pros (4.6 stars, 120 reviews).</li>
-<li>“drain cleaning”: not in the top 20. The top 3 are City Drains (4.7 stars, 540 reviews), Rooter Bros (no rating) and Rival Plumbing (4.8 stars, 312 reviews).</li>
+<li>“water heater repair”: Acme Plumbing is #7. The top 3 are <a href="https://www.google.com/maps?cid=123" rel="noopener">Rival Plumbing</a> (4.8 stars, 312 reviews), Hot Water Heroes (4.9 stars, 88 reviews) and Pipe Pros (4.6 stars, 120 reviews).</li>
+<li>“drain cleaning”: not in the top 20. The top 3 are City Drains (4.7 stars, 540 reviews), Rooter Bros (no rating) and <a href="https://www.google.com/maps?cid=123" rel="noopener">Rival Plumbing</a> (4.8 stars, 312 reviews).</li>
 </ul>
 <h2 id="results-title">Results by search</h2>
 <div class="dfs-table" id="results" tabindex="0"><table>
 <thead><tr><th scope="col">Search</th><th scope="col">You</th><th scope="col">Your listing</th><th scope="col">#1</th><th scope="col">#2</th><th scope="col">#3</th></tr></thead>
 <tbody>
-<tr><td>plumber</td><td><span class="dfs-badge">#2</span></td><td>Acme Plumbing · 4.6★</td><td>Rival Plumbing</td><td>Acme Plumbing</td><td>Pipe Pros</td></tr>
-<tr><td>water heater repair</td><td><span class="dfs-badge">#7</span></td><td>Acme Plumbing · 4.6★</td><td>Rival Plumbing</td><td>Hot Water Heroes</td><td>Pipe Pros</td></tr>
-<tr><td>drain cleaning</td><td><span class="dfs-badge dfs-bad">Not found</span></td><td></td><td>City Drains</td><td>Rooter Bros</td><td>Rival Plumbing</td></tr>
+<tr><td>plumber</td><td><span class="dfs-badge">#2</span></td><td>Acme Plumbing · 4.6★ (120)</td><td><a href="https://www.google.com/maps?cid=123" rel="noopener">Rival Plumbing</a> · 4.8★ (312)</td><td>Acme Plumbing · 4.6★ (120)</td><td>Pipe Pros · 4.6★ (120)</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#7</span></td><td>Acme Plumbing · 4.6★ (120)</td><td><a href="https://www.google.com/maps?cid=123" rel="noopener">Rival Plumbing</a> · 4.8★ (312)</td><td>Hot Water Heroes · 4.9★ (88)</td><td>Pipe Pros · 4.6★ (120)</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge dfs-bad">Not found</span></td><td></td><td>City Drains · 4.7★ (540)</td><td>Rooter Bros</td><td><a href="https://www.google.com/maps?cid=123" rel="noopener">Rival Plumbing</a> · 4.8★ (312)</td></tr>
 </tbody>
 </table></div>
-<dl class="dfs-terms"><div><dt>You</dt><dd>Your best Maps position for the search, out of the top 20.</dd></div></dl>
+<dl class="dfs-terms"><div><dt>You</dt><dd>Your best Maps position for the search, out of the top 20.</dd></div><div><dt>Your listing</dt><dd>Name, Google rating and number of reviews.</dd></div></dl>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Google Maps (Springfield, Illinois, United States, English), October 8, 2026.</p></footer>
 </article>
 "
@@ -415,7 +421,7 @@ exports[`toHtml > renders the rank-baseline report 1`] = `
 <div class="dfs-stat"><dt>Terms tracked</dt><dd class="dfs-value"><a href="#tracked-title">15</a></dd></div>
 <div class="dfs-stat"><dt>In the top 3</dt><dd class="dfs-value"><a href="#tracked-title">4</a></dd><dd class="dfs-note">positions #1 to #3</dd></div>
 <div class="dfs-stat"><dt>On page one</dt><dd class="dfs-value"><a href="#tracked-title">9</a></dd><dd class="dfs-note">positions #1 to #10</dd></div>
-<div class="dfs-stat"><dt>Est. visits a month</dt><dd class="dfs-value"><a href="#tracked-title">1,097</a></dd><dd class="dfs-note">from these terms</dd></div>
+<div class="dfs-stat"><dt>Est. visits a month</dt><dd class="dfs-value"><a href="#tracked-title">1,097</a></dd><dd class="dfs-note">from these terms, of 1,241 in all</dd></div>
 </dl>
 <details id="method">
 <summary>How this was measured</summary>
@@ -431,26 +437,36 @@ exports[`toHtml > renders the rank-baseline report 1`] = `
 <h2 id="tracked-title">What’s tracked</h2>
 <p id="tracked-note">The 15 search terms that bring acmeplumbing.example the most estimated visits, with the position each had on October 8, 2026.</p>
 <div class="dfs-table" id="tracked" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><code>/</code></td></tr>
-<tr><td>emergency plumber</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><code>/</code></td></tr>
-<tr><td>water heater repair</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><code>/water-heaters</code></td></tr>
-<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><code>/drains</code></td></tr>
-<tr><td>sewer line repair springfield</td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><code>/sewer</code></td></tr>
-<tr><td>tankless water heater install</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><code>/water-heaters/tankless</code></td></tr>
-<tr><td>garbage disposal repair</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><code>/disposals</code></td></tr>
-<tr><td>leak detection</td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><code>/leaks</code></td></tr>
-<tr><td>toilet repair</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><code>/toilets</code></td></tr>
-<tr><td>sump pump</td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><code>/sump-pumps</code></td></tr>
-<tr><td>repipe house cost</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><code>/blog/repipe-cost-guide-for-older-homes</code></td></tr>
-<tr><td>frozen pipes</td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><code>/blog/frozen-pipes</code></td></tr>
-<tr><td>acme plumbing reviews</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><code>/reviews</code></td></tr>
-<tr><td>riverside coffee</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><code>/blog/2023/03/riverside-coffee-opens/</code></td></tr>
-<tr><td>best podcasts 2026</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><code>/blog/podcasts</code></td></tr>
+<tr><td>plumber springfield</td><td></td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>emergency plumber</td><td></td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>water heater repair</td><td></td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td></tr>
+<tr><td>drain cleaning</td><td></td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><a href="https://acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
+<tr><td>sewer line repair springfield</td><td></td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td></tr>
+<tr><td>tankless water heater install</td><td></td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><a href="https://acmeplumbing.example/water-heaters/tankless" rel="noopener"><code>/water-heaters/tankless</code></a></td></tr>
+<tr><td>garbage disposal repair</td><td></td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><a href="https://acmeplumbing.example/disposals" rel="noopener"><code>/disposals</code></a></td></tr>
+<tr><td>leak detection</td><td></td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><a href="https://acmeplumbing.example/leaks" rel="noopener"><code>/leaks</code></a></td></tr>
+<tr><td>toilet repair</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><a href="https://acmeplumbing.example/toilets" rel="noopener"><code>/toilets</code></a></td></tr>
+<tr><td>sump pump</td><td></td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><a href="https://acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td></tr>
+<tr><td>repipe house cost</td><td></td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><a href="https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes" rel="noopener"><code>/blog/repipe-cost-guide-for-older-homes</code></a></td></tr>
+<tr><td>frozen pipes</td><td></td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><a href="https://acmeplumbing.example/blog/frozen-pipes" rel="noopener"><code>/blog/frozen-pipes</code></a></td></tr>
+<tr><td>acme plumbing reviews</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><a href="https://acmeplumbing.example/reviews" rel="noopener"><code>/reviews</code></a></td></tr>
+<tr><td>riverside coffee</td><td>A specific place or site</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><a href="https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/" rel="noopener"><code>/blog/2023/03/riverside-coffee-opens/</code></a></td></tr>
+<tr><td>best podcasts 2026</td><td>An answer</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><a href="https://acmeplumbing.example/blog/podcasts" rel="noopener"><code>/blog/podcasts</code></a></td></tr>
 </tbody>
 </table></div>
-<dl class="dfs-terms"><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<dl class="dfs-terms"><div><dt>Searcher wants</dt><dd>What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<h2 id="positions-title">All 312 terms by position</h2>
+<div class="dfs-table" id="positions" tabindex="0"><table>
+<thead><tr><th scope="col">Position</th><th scope="col">What it means</th><th scope="col" class="dfs-num">Search terms</th></tr></thead>
+<tbody>
+<tr><td>#1 to #3</td><td>Top of page one. Most clicks go here.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:36"></span>18</td></tr>
+<tr><td>#4 to #10</td><td>Rest of page one.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:80"></span>40</td></tr>
+<tr><td>#11 to #20</td><td>Page two. Few people look this far.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:100"></span>50</td></tr>
+<tr><td>#21 to #100</td><td>Page three or later. Almost no clicks.</td><td class="dfs-num"><span class="dfs-bar" aria-hidden="true" style="--w:68"></span>34</td></tr>
+</tbody>
+</table></div>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
 </article>
 "
@@ -478,7 +494,7 @@ exports[`toHtml > renders the rank-check report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">Terms that left the tracked set, then terms that fell three or more places.</p>
 <ul id="actions">
-<li>“emergency plumber” left the tracked set (was #8, 3,600 searches a month). Check that <code>/</code> still loads.</li>
+<li>“emergency plumber” left the tracked set (was #8, 3,600 searches a month). Check that <a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a> still loads.</li>
 <li>“water heater repair” fell from #6 to #12 (1,900 searches a month).</li>
 </ul>
 <h2 id="dropped-title">Left the tracked set (1)</h2>
@@ -486,7 +502,7 @@ exports[`toHtml > renders the rank-check report 1`] = `
 <div class="dfs-table" id="dropped" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>emergency plumber</td><td class="dfs-num">#8</td><td><span class="dfs-badge dfs-bad">Left the set</span></td><td class="dfs-num">3,600</td><td><code>/</code></td></tr>
+<tr><td>emergency plumber</td><td class="dfs-num">#8</td><td><span class="dfs-badge dfs-bad">Left the set</span></td><td class="dfs-num">3,600</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Was</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
@@ -495,8 +511,8 @@ exports[`toHtml > renders the rank-check report 1`] = `
 <div class="dfs-table" id="down" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>water heater repair</td><td class="dfs-num">#6</td><td><span class="dfs-badge">#12</span></td><td class="dfs-num">1,900</td><td><code>/water-heaters</code></td></tr>
-<tr><td>drain cleaning</td><td class="dfs-num">#14</td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">880</td><td><code>/drains</code></td></tr>
+<tr><td>water heater repair</td><td class="dfs-num">#6</td><td><span class="dfs-badge">#12</span></td><td class="dfs-num">1,900</td><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td></tr>
+<tr><td>drain cleaning</td><td class="dfs-num">#14</td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">880</td><td><a href="https://acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
 </tbody>
 </table></div>
 <h2 id="up-title">Moved up (2)</h2>
@@ -504,8 +520,8 @@ exports[`toHtml > renders the rank-check report 1`] = `
 <div class="dfs-table" id="up" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td class="dfs-num">#4</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td><code>/</code></td></tr>
-<tr><td>toilet repair</td><td class="dfs-num">#3</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td><code>/toilets</code></td></tr>
+<tr><td>plumber springfield</td><td class="dfs-num">#4</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>toilet repair</td><td class="dfs-num">#3</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td><a href="https://acmeplumbing.example/toilets" rel="noopener"><code>/toilets</code></a></td></tr>
 </tbody>
 </table></div>
 <h2 id="new-title">Joined the tracked set (2)</h2>
@@ -513,10 +529,34 @@ exports[`toHtml > renders the rank-check report 1`] = `
 <div class="dfs-table" id="new" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>hydro jetting</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">1,300</td><td><code>/drains/jetting</code></td></tr>
-<tr><td>backflow testing</td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">480</td><td><code>/backflow</code></td></tr>
+<tr><td>hydro jetting</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">1,300</td><td><a href="https://acmeplumbing.example/drains/jetting" rel="noopener"><code>/drains/jetting</code></a></td></tr>
+<tr><td>backflow testing</td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">480</td><td><a href="https://acmeplumbing.example/backflow" rel="noopener"><code>/backflow</code></a></td></tr>
 </tbody>
 </table></div>
+<details id="tracked-details">
+<summary>All 15 tracked terms on October 8, 2026</summary>
+<div class="dfs-table" id="tracked" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td></td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>emergency plumber</td><td></td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>water heater repair</td><td></td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td></tr>
+<tr><td>drain cleaning</td><td></td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><a href="https://acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
+<tr><td>sewer line repair springfield</td><td></td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td></tr>
+<tr><td>tankless water heater install</td><td></td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><a href="https://acmeplumbing.example/water-heaters/tankless" rel="noopener"><code>/water-heaters/tankless</code></a></td></tr>
+<tr><td>garbage disposal repair</td><td></td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><a href="https://acmeplumbing.example/disposals" rel="noopener"><code>/disposals</code></a></td></tr>
+<tr><td>leak detection</td><td></td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><a href="https://acmeplumbing.example/leaks" rel="noopener"><code>/leaks</code></a></td></tr>
+<tr><td>toilet repair</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><a href="https://acmeplumbing.example/toilets" rel="noopener"><code>/toilets</code></a></td></tr>
+<tr><td>sump pump</td><td></td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><a href="https://acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td></tr>
+<tr><td>repipe house cost</td><td></td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><a href="https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes" rel="noopener"><code>/blog/repipe-cost-guide-for-older-homes</code></a></td></tr>
+<tr><td>frozen pipes</td><td></td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><a href="https://acmeplumbing.example/blog/frozen-pipes" rel="noopener"><code>/blog/frozen-pipes</code></a></td></tr>
+<tr><td>acme plumbing reviews</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><a href="https://acmeplumbing.example/reviews" rel="noopener"><code>/reviews</code></a></td></tr>
+<tr><td>riverside coffee</td><td>A specific place or site</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><a href="https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/" rel="noopener"><code>/blog/2023/03/riverside-coffee-opens/</code></a></td></tr>
+<tr><td>best podcasts 2026</td><td>An answer</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><a href="https://acmeplumbing.example/blog/podcasts" rel="noopener"><code>/blog/podcasts</code></a></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Searcher wants</dt><dd>What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.</dd></div><div><dt>Est. visits</dt><dd>An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.</dd></div></dl>
+</details>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
 </article>
 "
@@ -527,7 +567,7 @@ exports[`toHtml > renders the rank-check-same-data report 1`] = `
 <hgroup id="title"><p class="dfs-kicker">Ranking baseline · October 8, 2026</p><h1>acmeplumbing.example rankings: nothing to compare until November 7, 2026</h1></hgroup>
 <p id="answer" class="dfs-lg">Nothing to compare. This check got the same rankings data as the October 8, 2026 baseline, so no position could change.</p>
 <dl class="dfs-stats" id="stats">
-<div class="dfs-stat"><dt>Terms tracked</dt><dd class="dfs-value"><a href="#next">15</a></dd></div>
+<div class="dfs-stat"><dt>Terms tracked</dt><dd class="dfs-value"><a href="#tracked-details">15</a></dd></div>
 <div class="dfs-stat"><dt>Baseline</dt><dd class="dfs-value"><a href="#method">October 8, 2026</a></dd><dd class="dfs-note">the list this check compares with</dd></div>
 </dl>
 <details id="method">
@@ -540,7 +580,31 @@ exports[`toHtml > renders the rank-check-same-data report 1`] = `
 </ul>
 </details>
 <h2 id="actions-title">Next step</h2>
-<p id="next">Run the check again after November 7, 2026, once DataForSEO has refreshed its rankings. The tracked terms are on the baseline page.</p>
+<p id="next">Run the check again after November 7, 2026, once DataForSEO has refreshed its rankings.</p>
+<details id="tracked-details">
+<summary>All 15 tracked terms on October 8, 2026</summary>
+<div class="dfs-table" id="tracked" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td></td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>emergency plumber</td><td></td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>water heater repair</td><td></td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td></tr>
+<tr><td>drain cleaning</td><td></td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><a href="https://acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
+<tr><td>sewer line repair springfield</td><td></td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td></tr>
+<tr><td>tankless water heater install</td><td></td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><a href="https://acmeplumbing.example/water-heaters/tankless" rel="noopener"><code>/water-heaters/tankless</code></a></td></tr>
+<tr><td>garbage disposal repair</td><td></td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><a href="https://acmeplumbing.example/disposals" rel="noopener"><code>/disposals</code></a></td></tr>
+<tr><td>leak detection</td><td></td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><a href="https://acmeplumbing.example/leaks" rel="noopener"><code>/leaks</code></a></td></tr>
+<tr><td>toilet repair</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><a href="https://acmeplumbing.example/toilets" rel="noopener"><code>/toilets</code></a></td></tr>
+<tr><td>sump pump</td><td></td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><a href="https://acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td></tr>
+<tr><td>repipe house cost</td><td></td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><a href="https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes" rel="noopener"><code>/blog/repipe-cost-guide-for-older-homes</code></a></td></tr>
+<tr><td>frozen pipes</td><td></td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><a href="https://acmeplumbing.example/blog/frozen-pipes" rel="noopener"><code>/blog/frozen-pipes</code></a></td></tr>
+<tr><td>acme plumbing reviews</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><a href="https://acmeplumbing.example/reviews" rel="noopener"><code>/reviews</code></a></td></tr>
+<tr><td>riverside coffee</td><td>A specific place or site</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><a href="https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/" rel="noopener"><code>/blog/2023/03/riverside-coffee-opens/</code></a></td></tr>
+<tr><td>best podcasts 2026</td><td>An answer</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><a href="https://acmeplumbing.example/blog/podcasts" rel="noopener"><code>/blog/podcasts</code></a></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Searcher wants</dt><dd>What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.</dd></div><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div><div><dt>Est. visits</dt><dd>An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.</dd></div></dl>
+</details>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
 </article>
 "
@@ -573,23 +637,24 @@ exports[`toHtml > renders the seo-snapshot report 1`] = `
 <div class="dfs-table" id="actions" tabindex="0"><table>
 <thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page to improve</th></tr></thead>
 <tbody>
-<tr><td>emergency plumber</td><td>Plumbing</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td><code>/</code></td></tr>
-<tr><td>water heater repair</td><td>Water heaters</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td><code>/water-heaters</code></td></tr>
-<tr><td>drain cleaning</td><td>Plumbing</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td><code>/drains</code></td></tr>
-<tr><td>tankless water heater install</td><td>Water heaters</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td><code>/water-heaters/tankless</code></td></tr>
-<tr><td>garbage disposal repair</td><td>Pumps</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td><code>/disposals</code></td></tr>
+<tr><td>emergency plumber</td><td>Plumbing</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>water heater repair</td><td>Water heaters</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td></tr>
+<tr><td>drain cleaning</td><td>Plumbing</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td><a href="https://acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
+<tr><td>tankless water heater install</td><td>Water heaters</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td><a href="https://acmeplumbing.example/water-heaters/tankless" rel="noopener"><code>/water-heaters/tankless</code></a></td></tr>
+<tr><td>garbage disposal repair</td><td>Pumps</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td><a href="https://acmeplumbing.example/disposals" rel="noopener"><code>/disposals</code></a></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
 <h2 id="off-topic-title">Searches that aren’t about your work</h2>
 <p id="off-topic-note">2 of the top 15 terms bring about 75 estimated visits a month (7%). They’re searches for another business or place, another area or something unrelated. People making them rarely want what acmeplumbing.example offers, so the visit total overstates the traffic that matters. They need no work.</p>
 <div class="dfs-table" id="off-topic" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col">About</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">About</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>riverside coffee</td><td>Another name or place</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><code>/blog/2023/03/riverside-coffee-opens/</code></td></tr>
-<tr><td>best podcasts 2026</td><td>Unrelated</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><code>/blog/podcasts</code></td></tr>
+<tr><td>riverside coffee</td><td>Another name or place</td><td>A specific place or site</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><a href="https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/" rel="noopener"><code>/blog/2023/03/riverside-coffee-opens/</code></a></td></tr>
+<tr><td>best podcasts 2026</td><td>Unrelated</td><td>An answer</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><a href="https://acmeplumbing.example/blog/podcasts" rel="noopener"><code>/blog/podcasts</code></a></td></tr>
 </tbody>
 </table></div>
+<dl class="dfs-terms"><div><dt>Searcher wants</dt><dd>What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.</dd></div></dl>
 <h2 id="positions-title">Rankings by position</h2>
 <p id="positions-note">11% of the 312 terms are on page three or later, where almost nobody clicks. Most visits come from page one.</p>
 <div class="dfs-table" id="positions" tabindex="0"><table>
@@ -604,23 +669,23 @@ exports[`toHtml > renders the seo-snapshot report 1`] = `
 <h2 id="top-terms-title">Top search terms</h2>
 <p id="top-terms-note">The 15 terms that bring the most estimated visits.</p>
 <div class="dfs-table" id="top-terms" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col">About</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">About</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col" class="dfs-num">Est. visits</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td>Plumbing</td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><code>/</code></td></tr>
-<tr><td>emergency plumber</td><td>Plumbing</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><code>/</code></td></tr>
-<tr><td>water heater repair</td><td>Water heaters</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><code>/water-heaters</code></td></tr>
-<tr><td>drain cleaning</td><td>Plumbing</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><code>/drains</code></td></tr>
-<tr><td>sewer line repair springfield</td><td>Plumbing</td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><code>/sewer</code></td></tr>
-<tr><td>tankless water heater install</td><td>Water heaters</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><code>/water-heaters/tankless</code></td></tr>
-<tr><td>garbage disposal repair</td><td>Pumps</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><code>/disposals</code></td></tr>
-<tr><td>leak detection</td><td>Plumbing</td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><code>/leaks</code></td></tr>
-<tr><td>toilet repair</td><td>Plumbing</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><code>/toilets</code></td></tr>
-<tr><td>sump pump</td><td>Pumps</td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><code>/sump-pumps</code></td></tr>
-<tr><td>repipe house cost</td><td>Plumbing</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><code>/blog/repipe-cost-guide-for-older-homes</code></td></tr>
-<tr><td>frozen pipes</td><td>Plumbing</td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><code>/blog/frozen-pipes</code></td></tr>
-<tr><td>acme plumbing reviews</td><td>Your name</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><code>/reviews</code></td></tr>
-<tr><td>riverside coffee</td><td>Another name or place</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><code>/blog/2023/03/riverside-coffee-opens/</code></td></tr>
-<tr><td>best podcasts 2026</td><td>Unrelated</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><code>/blog/podcasts</code></td></tr>
+<tr><td>plumber springfield</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#2</span></td><td class="dfs-num">2,400</td><td class="dfs-num">500</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>emergency plumber</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td class="dfs-num">90</td><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td></tr>
+<tr><td>water heater repair</td><td>Water heaters</td><td></td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td class="dfs-num">120</td><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td></tr>
+<tr><td>drain cleaning</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td class="dfs-num">20</td><td><a href="https://acmeplumbing.example/drains" rel="noopener"><code>/drains</code></a></td></tr>
+<tr><td>sewer line repair springfield</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#3</span></td><td class="dfs-num">590</td><td class="dfs-num">140</td><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td></tr>
+<tr><td>tankless water heater install</td><td>Water heaters</td><td></td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td class="dfs-num">12</td><td><a href="https://acmeplumbing.example/water-heaters/tankless" rel="noopener"><code>/water-heaters/tankless</code></a></td></tr>
+<tr><td>garbage disposal repair</td><td>Pumps</td><td></td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td class="dfs-num">30</td><td><a href="https://acmeplumbing.example/disposals" rel="noopener"><code>/disposals</code></a></td></tr>
+<tr><td>leak detection</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#19</span></td><td class="dfs-num">260</td><td class="dfs-num">3</td><td><a href="https://acmeplumbing.example/leaks" rel="noopener"><code>/leaks</code></a></td></tr>
+<tr><td>toilet repair</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">210</td><td class="dfs-num">60</td><td><a href="https://acmeplumbing.example/toilets" rel="noopener"><code>/toilets</code></a></td></tr>
+<tr><td>sump pump</td><td>Pumps</td><td></td><td><span class="dfs-badge">#24</span></td><td class="dfs-num">170</td><td class="dfs-num">1</td><td><a href="https://acmeplumbing.example/sump-pumps" rel="noopener"><code>/sump-pumps</code></a></td></tr>
+<tr><td>repipe house cost</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">140</td><td class="dfs-num">6</td><td><a href="https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes" rel="noopener"><code>/blog/repipe-cost-guide-for-older-homes</code></a></td></tr>
+<tr><td>frozen pipes</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#32</span></td><td class="dfs-num">90</td><td class="dfs-num">0</td><td><a href="https://acmeplumbing.example/blog/frozen-pipes" rel="noopener"><code>/blog/frozen-pipes</code></a></td></tr>
+<tr><td>acme plumbing reviews</td><td>Your name</td><td></td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">90</td><td class="dfs-num">40</td><td><a href="https://acmeplumbing.example/reviews" rel="noopener"><code>/reviews</code></a></td></tr>
+<tr><td>riverside coffee</td><td>Another name or place</td><td>A specific place or site</td><td><span class="dfs-badge">#4</span></td><td class="dfs-num">1,300</td><td class="dfs-num">70</td><td><a href="https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/" rel="noopener"><code>/blog/2023/03/riverside-coffee-opens/</code></a></td></tr>
+<tr><td>best podcasts 2026</td><td>Unrelated</td><td>An answer</td><td><span class="dfs-badge">#18</span></td><td class="dfs-num">900</td><td class="dfs-num">5</td><td><a href="https://acmeplumbing.example/blog/podcasts" rel="noopener"><code>/blog/podcasts</code></a></td></tr>
 </tbody>
 </table></div>
 <h2 id="top-pages-title">Top pages</h2>
@@ -628,9 +693,9 @@ exports[`toHtml > renders the seo-snapshot report 1`] = `
 <div class="dfs-table" id="top-pages" tabindex="0"><table>
 <thead><tr><th scope="col">Page</th><th scope="col" class="dfs-num">Search terms</th><th scope="col" class="dfs-num">Est. visits</th></tr></thead>
 <tbody>
-<tr><td><code>/</code></td><td class="dfs-num">2</td><td class="dfs-num">590</td></tr>
-<tr><td><code>/sewer</code></td><td class="dfs-num">1</td><td class="dfs-num">140</td></tr>
-<tr><td><code>/water-heaters</code></td><td class="dfs-num">1</td><td class="dfs-num">120</td></tr>
+<tr><td><a href="https://acmeplumbing.example/" rel="noopener"><code>/</code></a></td><td class="dfs-num">2</td><td class="dfs-num">590</td></tr>
+<tr><td><a href="https://acmeplumbing.example/sewer" rel="noopener"><code>/sewer</code></a></td><td class="dfs-num">1</td><td class="dfs-num">140</td></tr>
+<tr><td><a href="https://acmeplumbing.example/water-heaters" rel="noopener"><code>/water-heaters</code></a></td><td class="dfs-num">1</td><td class="dfs-num">120</td></tr>
 </tbody>
 </table></div>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
@@ -709,7 +774,7 @@ AI answers in DataForSEO’s sample link acmeplumbing.example as a source 3 time
 
 AI tools tend to link pages that answer one question plainly.
 
-- For questions about “water heater repair”, AI answers cite rivalplumbing.example, forum.example and hardware.example most. acmeplumbing.example isn’t in the top 3.
+- For questions about “water heater repair”, AI answers cite [rivalplumbing.example](https://rivalplumbing.example), [forum.example](https://forum.example) and [hardware.example](https://hardware.example) most. acmeplumbing.example isn’t in the top 3.
 
 ## By platform
 
@@ -730,10 +795,12 @@ The sites AI answers cite most often for questions containing each topic. “No�
 
 | Topic | acmeplumbing.example a top source | Answers found | Most cited sites |
 | --- | --- | ---: | --- |
-| water heater repair | No | 90 | rivalplumbing.example, forum.example, hardware.example |
-| sewer line repair | Yes | 40 | acmeplumbing.example |
+| water heater repair | No | 90 | [rivalplumbing.example](https://rivalplumbing.example) (30), [forum.example](https://forum.example) (20), [hardware.example](https://hardware.example) (9) |
+| sewer line repair | Yes | 40 | [acmeplumbing.example](https://acmeplumbing.example) (3) |
 
 _Answers found_: Answers in the sample to questions that contain the topic.
+
+_Most cited sites_: The sites AI answers cite most for the topic, with how many answers cite each.
 
 ## Pages AI cites
 
@@ -741,7 +808,7 @@ From the question with the most AI searches a month whose answers link acmeplumb
 
 | Page | Questions | AI searches a month |
 | --- | ---: | ---: |
-| \`/sewer\` | 1 | 260 |
+| [\`/sewer\`](https://acmeplumbing.example/sewer) | 1 | 260 |
 
 _AI searches a month_: DataForSEO’s estimate of how often people ask AI tools that question in a month.
 
@@ -749,7 +816,7 @@ _AI searches a month_: DataForSEO’s estimate of how often people ask AI tools 
 
 | Question | Where | AI searches a month | Page cited |
 | --- | --- | ---: | --- |
-| who fixes sewer lines in springfield | Google AI Overviews | 260 | \`/sewer\` |
+| who fixes sewer lines in springfield | Google AI Overviews | 260 | [\`/sewer\`](https://acmeplumbing.example/sewer) |
 
 ---
 
@@ -783,15 +850,21 @@ _linking site_: Other websites with at least one link to that address. Each site
 
 Each needs a redirect to its closest match, starting with the most linked. Links to a missing page pass no search value, and visitors who follow them land on an error.
 
-| Old address | Type | Result | Linking sites |
-| --- | --- | --- | ---: |
-| \`/coupons/spring-2019\` | Page | 404 | 46 |
-| \`/services/water-heaters/\` | Page | 404 | 11 |
-| \`/old-blog/frozen-pipes\` | Page | No response | 5 |
+| Old address | Type | Result | Why | Linking sites |
+| --- | --- | --- | --- | ---: |
+| [\`/coupons/spring-2019\`](https://staging.acmeplumbing.example/coupons/spring-2019) | Page | 404 |  | 46 |
+| [\`/services/water-heaters/\`](https://staging.acmeplumbing.example/services/water-heaters/) | Page | 404 |  | 11 |
+| [\`/old-blog/frozen-pipes\`](https://staging.acmeplumbing.example/old-blog/frozen-pipes) | Page | No response | fetch failed | 5 |
 
 _Result_: 404 means page not found. Any other number is an error the server returned.
 
+_Why_: What went wrong when the server gave no response.
+
 > **Sent to the homepage.** 1 inner page redirects to the homepage, which Google treats like a missing page. Point it at its closest match.
+
+| Old address | Linking sites |
+| --- | ---: |
+| [\`/blog/2020/03/hello\`](https://staging.acmeplumbing.example/blog/2020/03/hello) | 3 |
 
 ## Behind a login
 
@@ -799,7 +872,7 @@ These hit a sign-in page, so they couldn’t be checked.
 
 | Old address | Lands on | Linking sites |
 | --- | --- | ---: |
-| \`/account\` | \`/login?next=%2Faccount\` | 4 |
+| [\`/account\`](https://staging.acmeplumbing.example/account) | [\`/login?next=%2Faccount\`](https://staging.acmeplumbing.example/login?next=%2Faccount) | 4 |
 
 ## Redirecting
 
@@ -807,15 +880,15 @@ Old addresses that forward to a live page. Check each lands somewhere a visitor 
 
 | Old address | Lands on | Linking sites |
 | --- | --- | ---: |
-| \`/about-us/\` | \`/about\` | 59 |
-| \`/blog/2020/03/hello\` | \`/\` | 3 |
-| \`/drains/\` | \`/services/drains\` | 8 |
+| [\`/about-us/\`](https://staging.acmeplumbing.example/about-us/) | [\`/about\`](https://staging.acmeplumbing.example/about) | 59 |
+| [\`/blog/2020/03/hello\`](https://staging.acmeplumbing.example/blog/2020/03/hello) | [\`/\`](https://staging.acmeplumbing.example/) | 3 |
+| [\`/drains/\`](https://staging.acmeplumbing.example/drains/) | [\`/services/drains\`](https://staging.acmeplumbing.example/services/drains) | 8 |
 
 ## Unchanged
 
 | Address | Linking sites |
 | --- | ---: |
-| \`/\` | 300 |
+| [\`/\`](https://staging.acmeplumbing.example/) | 300 |
 
 ---
 
@@ -851,9 +924,9 @@ _page one_: Positions #1 to #10, the first page of results. Few people click pas
 
 One line per topic, most searched first. Where you rank, improving the page listed is the usual fix. Where you don’t, it’s usually a page that answers the search.
 
-1. **Water heaters:** 2 terms, 5,720 searches a month. The biggest is “tankless water heater”: rivalplumbing.example is #3 and you’re #14 with \`/services\`. Your best position is on “water heater install”: rivalplumbing.example is #4 and you’re #8 with \`/services\`.
-2. **Plumbing:** 3 terms, 2,170 searches a month. The biggest is “hydro jetting drain”: citydrains.example is #2 and you’re not in the top 100.
-3. **Pumps:** 1 term, 900 searches a month. The biggest is “sump pump installation”: rivalplumbing.example is #7 and you’re not in the top 100.
+1. **Water heaters:** 2 terms, 5,720 searches a month. The biggest is “tankless water heater”: [rivalplumbing.example](https://rivalplumbing.example/) is #3 and you’re #14 with [\`/services\`](https://acmeplumbing.example/services). Your best position is on “water heater install”: [rivalplumbing.example](https://rivalplumbing.example/) is #4 and you’re #8 with [\`/services\`](https://acmeplumbing.example/services).
+2. **Plumbing:** 3 terms, 2,170 searches a month. The biggest is “hydro jetting drain”: [citydrains.example](https://citydrains.example/) is #2 and you’re not in the top 100.
+3. **Pumps:** 1 term, 900 searches a month. The biggest is “sump pump installation”: [rivalplumbing.example](https://rivalplumbing.example/) is #7 and you’re not in the top 100.
 
 ## By topic
 
@@ -871,8 +944,8 @@ Both sites rank and the competitor is higher. These are usually the quickest to 
 
 | Search term | Topic | Searches a month | Ahead of you | You | Your page |
 | --- | --- | ---: | --- | --- | --- |
-| tankless water heater | Water heaters | 5,000 | rivalplumbing.example #3 | #14 | \`/services\` |
-| water heater install | Water heaters | 720 | rivalplumbing.example #4 | #8 | \`/services\` |
+| tankless water heater | Water heaters | 5,000 | [rivalplumbing.example #3](https://rivalplumbing.example/) | #14 | [\`/services\`](https://acmeplumbing.example/services) |
+| water heater install | Water heaters | 720 | [rivalplumbing.example #4](https://rivalplumbing.example/) | #8 | [\`/services\`](https://acmeplumbing.example/services) |
 
 _Ahead of you_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 
@@ -882,17 +955,19 @@ A competitor is on page one and acmeplumbing.example isn’t in the top 100, usu
 
 | Search term | Topic | Searches a month | Who ranks |
 | --- | --- | ---: | --- |
-| hydro jetting drain | Plumbing | 1,300 | citydrains.example #2, rivalplumbing.example #9 |
-| sump pump installation | Pumps | 900 | rivalplumbing.example #7 |
-| sewer backflow testing springfield | Plumbing | 480 | citydrains.example #1 |
-| slab leak repair | Plumbing | 390 | rivalplumbing.example #6 |
+| hydro jetting drain | Plumbing | 1,300 | [citydrains.example #2](https://citydrains.example/), [rivalplumbing.example #9](https://rivalplumbing.example/) |
+| sump pump installation | Pumps | 900 | [rivalplumbing.example #7](https://rivalplumbing.example/) |
+| sewer backflow testing springfield | Plumbing | 480 | [citydrains.example #1](https://citydrains.example/) |
+| slab leak repair | Plumbing | 390 | [rivalplumbing.example #6](https://rivalplumbing.example/) |
 
 ## By competitor
 
-| Competitor | Ahead of you | Only they rank | Only they rank, any term |
-| --- | ---: | ---: | ---: |
-| \`rivalplumbing.example\` | 2 | 3 | 140 |
-| \`citydrains.example\` | 0 | 2 | 38 |
+| Competitor | Ahead of you | Only they rank | Both rank | Only they rank, any term |
+| --- | ---: | ---: | ---: | ---: |
+| [rivalplumbing.example](https://rivalplumbing.example) | 2 | 3 | 60 | 140 |
+| [citydrains.example](https://citydrains.example) | 0 | 2 | 12 | 38 |
+
+_Both rank_: Every term where they’re on page one and acmeplumbing.example ranks too, in either order and on any topic.
 
 _Only they rank, any term_: Every term where they’re on page one and acmeplumbing.example isn’t in the top 100, before terms unrelated to your work are left out.
 
@@ -931,18 +1006,18 @@ _top 3_: Positions #1 to #3, which get most of the clicks.
 
 Search terms where acmeplumbing.example isn’t on page one, closest first.
 
-- “drain cleaning”: #14, with \`/drains\`. #1 is [rivalplumbing.example](https://rivalplumbing.example/).
+- “drain cleaning”: #14, with [\`/drains\`](https://www.acmeplumbing.example/drains). #1 is [rivalplumbing.example](https://rivalplumbing.example/).
 - “emergency plumber”: not in the top 20. #1 is [rivalplumbing.example](https://rivalplumbing.example/).
 
 ## Results by search
 
 | Search term | Position | Page | Top 3 | Also on the page |
 | --- | --- | --- | --- | --- |
-| plumber springfield | #1 | \`/\` | [acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, Questions |
-| water heater repair | #4 | \`/water-heaters\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Ads |
-| drain cleaning | #14 | \`/drains\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
+| plumber springfield | #1 | [\`/\`](https://www.acmeplumbing.example/) | [acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, Questions |
+| water heater repair | #4 | [\`/water-heaters\`](https://www.acmeplumbing.example/water-heaters) | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Ads |
+| drain cleaning | #14 | [\`/drains\`](https://www.acmeplumbing.example/drains) | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
 | emergency plumber | Not in top 20 |  | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, AI Overview |
-| sump pump install | #9 | \`/sump-pumps\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
+| sump pump install | #9 | [\`/sump-pumps\`](https://www.acmeplumbing.example/sump-pumps) | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
 
 _Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 
@@ -980,7 +1055,7 @@ Since September 8, 2026, 2 search terms moved up, 0 moved down and 1 held. 1 ent
 
 Terms that dropped out, then terms that fell three or more places.
 
-- “emergency plumber” dropped out of the top 20 (was #7). Check that \`/\` still loads.
+- “emergency plumber” dropped out of the top 20 (was #7). Check that [\`/\`](https://www.acmeplumbing.example/) still loads.
 
 ## Dropped out (1)
 
@@ -988,7 +1063,7 @@ In the top 20 on September 8, 2026, not now.
 
 | Search term | Was | Now | Page |
 | --- | ---: | --- | --- |
-| emergency plumber | #7 | Not in top 20 | \`/\` |
+| emergency plumber | #7 | Not in top 20 | [\`/\`](https://www.acmeplumbing.example/) |
 
 _Was_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 
@@ -998,8 +1073,8 @@ Higher on the page than on September 8, 2026.
 
 | Search term | Was | Now | Places | Page |
 | --- | ---: | --- | ---: | --- |
-| drain cleaning | #18 | #14 | 4 | \`/drains\` |
-| plumber springfield | #2 | #1 | 1 | \`/\` |
+| drain cleaning | #18 | #14 | 4 | [\`/drains\`](https://www.acmeplumbing.example/drains) |
+| plumber springfield | #2 | #1 | 1 | [\`/\`](https://www.acmeplumbing.example/) |
 
 _Places_: Places gained. A negative number is places lost.
 
@@ -1009,17 +1084,17 @@ Not in the top 20 on September 8, 2026.
 
 | Search term | Was | Now | Page |
 | --- | ---: | --- | --- |
-| sump pump install | Not in top 20 | #9 | \`/sump-pumps\` |
+| sump pump install | Not in top 20 | #9 | [\`/sump-pumps\`](https://www.acmeplumbing.example/sump-pumps) |
 
 ## Results by search
 
 | Search term | Position | Page | Top 3 | Also on the page |
 | --- | --- | --- | --- | --- |
-| plumber springfield | #1 | \`/\` | [acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, Questions |
-| water heater repair | #4 | \`/water-heaters\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Ads |
-| drain cleaning | #14 | \`/drains\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
+| plumber springfield | #1 | [\`/\`](https://www.acmeplumbing.example/) | [acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, Questions |
+| water heater repair | #4 | [\`/water-heaters\`](https://www.acmeplumbing.example/water-heaters) | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Ads |
+| drain cleaning | #14 | [\`/drains\`](https://www.acmeplumbing.example/drains) | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
 | emergency plumber | Not in top 20 |  | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, AI Overview |
-| sump pump install | #9 | \`/sump-pumps\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
+| sump pump install | #9 | [\`/sump-pumps\`](https://www.acmeplumbing.example/sump-pumps) | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
 
 _Also on the page_: Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.
 
@@ -1055,18 +1130,20 @@ _Google Maps top 3_: The three listings Google shows with the map at the top of 
 
 Searches where you’re not in the top 3, and who is. Google ranks Maps listings by relevance to the search, distance from the searcher and prominence, which includes reviews.
 
-- “water heater repair”: Acme Plumbing is #7. The top 3 are Rival Plumbing (4.8 stars, 312 reviews), Hot Water Heroes (4.9 stars, 88 reviews) and Pipe Pros (4.6 stars, 120 reviews).
-- “drain cleaning”: not in the top 20. The top 3 are City Drains (4.7 stars, 540 reviews), Rooter Bros (no rating) and Rival Plumbing (4.8 stars, 312 reviews).
+- “water heater repair”: Acme Plumbing is #7. The top 3 are [Rival Plumbing](https://www.google.com/maps?cid=123) (4.8 stars, 312 reviews), Hot Water Heroes (4.9 stars, 88 reviews) and Pipe Pros (4.6 stars, 120 reviews).
+- “drain cleaning”: not in the top 20. The top 3 are City Drains (4.7 stars, 540 reviews), Rooter Bros (no rating) and [Rival Plumbing](https://www.google.com/maps?cid=123) (4.8 stars, 312 reviews).
 
 ## Results by search
 
 | Search | You | Your listing | #1 | #2 | #3 |
 | --- | --- | --- | --- | --- | --- |
-| plumber | #2 | Acme Plumbing · 4.6★ | Rival Plumbing | Acme Plumbing | Pipe Pros |
-| water heater repair | #7 | Acme Plumbing · 4.6★ | Rival Plumbing | Hot Water Heroes | Pipe Pros |
-| drain cleaning | Not found |  | City Drains | Rooter Bros | Rival Plumbing |
+| plumber | #2 | Acme Plumbing · 4.6★ (120) | [Rival Plumbing](https://www.google.com/maps?cid=123) · 4.8★ (312) | Acme Plumbing · 4.6★ (120) | Pipe Pros · 4.6★ (120) |
+| water heater repair | #7 | Acme Plumbing · 4.6★ (120) | [Rival Plumbing](https://www.google.com/maps?cid=123) · 4.8★ (312) | Hot Water Heroes · 4.9★ (88) | Pipe Pros · 4.6★ (120) |
+| drain cleaning | Not found |  | City Drains · 4.7★ (540) | Rooter Bros | [Rival Plumbing](https://www.google.com/maps?cid=123) · 4.8★ (312) |
 
 _You_: Your best Maps position for the search, out of the top 20.
+
+_Your listing_: Name, Google rating and number of reviews.
 
 ---
 
@@ -1088,7 +1165,7 @@ _position_: Where the page shows in Google’s results for that search. #1 is th
 - Terms tracked: **15**
 - In the top 3: **4** (positions #1 to #3)
 - On page one: **9** (positions #1 to #10)
-- Est. visits a month: **1,097** (from these terms)
+- Est. visits a month: **1,097** (from these terms, of 1,241 in all)
 
 ## How this was measured
 
@@ -1105,25 +1182,36 @@ Run the ranking check after November 7, 2026, once DataForSEO has fresh rankings
 
 The 15 search terms that bring acmeplumbing.example the most estimated visits, with the position each had on October 8, 2026.
 
-| Search term | Position | Searches a month | Est. visits | Page |
-| --- | --- | ---: | ---: | --- |
-| plumber springfield | #2 | 2,400 | 500 | \`/\` |
-| emergency plumber | #8 | 3,600 | 90 | \`/\` |
-| water heater repair | #6 | 1,900 | 120 | \`/water-heaters\` |
-| drain cleaning | #14 | 880 | 20 | \`/drains\` |
-| sewer line repair springfield | #3 | 590 | 140 | \`/sewer\` |
-| tankless water heater install | #11 | 480 | 12 | \`/water-heaters/tankless\` |
-| garbage disposal repair | #5 | 320 | 30 | \`/disposals\` |
-| leak detection | #19 | 260 | 3 | \`/leaks\` |
-| toilet repair | #1 | 210 | 60 | \`/toilets\` |
-| sump pump | #24 | 170 | 1 | \`/sump-pumps\` |
-| repipe house cost | #9 | 140 | 6 | \`/blog/repipe-cost-guide-for-older-homes\` |
-| frozen pipes | #32 | 90 | 0 | \`/blog/frozen-pipes\` |
-| acme plumbing reviews | #1 | 90 | 40 | \`/reviews\` |
-| riverside coffee | #4 | 1,300 | 70 | \`/blog/2023/03/riverside-coffee-opens/\` |
-| best podcasts 2026 | #18 | 900 | 5 | \`/blog/podcasts\` |
+| Search term | Searcher wants | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | ---: | ---: | --- |
+| plumber springfield |  | #2 | 2,400 | 500 | [\`/\`](https://acmeplumbing.example/) |
+| emergency plumber |  | #8 | 3,600 | 90 | [\`/\`](https://acmeplumbing.example/) |
+| water heater repair |  | #6 | 1,900 | 120 | [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) |
+| drain cleaning |  | #14 | 880 | 20 | [\`/drains\`](https://acmeplumbing.example/drains) |
+| sewer line repair springfield |  | #3 | 590 | 140 | [\`/sewer\`](https://acmeplumbing.example/sewer) |
+| tankless water heater install |  | #11 | 480 | 12 | [\`/water-heaters/tankless\`](https://acmeplumbing.example/water-heaters/tankless) |
+| garbage disposal repair |  | #5 | 320 | 30 | [\`/disposals\`](https://acmeplumbing.example/disposals) |
+| leak detection |  | #19 | 260 | 3 | [\`/leaks\`](https://acmeplumbing.example/leaks) |
+| toilet repair |  | #1 | 210 | 60 | [\`/toilets\`](https://acmeplumbing.example/toilets) |
+| sump pump |  | #24 | 170 | 1 | [\`/sump-pumps\`](https://acmeplumbing.example/sump-pumps) |
+| repipe house cost |  | #9 | 140 | 6 | [\`/blog/repipe-cost-guide-for-older-homes\`](https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes) |
+| frozen pipes |  | #32 | 90 | 0 | [\`/blog/frozen-pipes\`](https://acmeplumbing.example/blog/frozen-pipes) |
+| acme plumbing reviews |  | #1 | 90 | 40 | [\`/reviews\`](https://acmeplumbing.example/reviews) |
+| riverside coffee | A specific place or site | #4 | 1,300 | 70 | [\`/blog/2023/03/riverside-coffee-opens/\`](https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/) |
+| best podcasts 2026 | An answer | #18 | 900 | 5 | [\`/blog/podcasts\`](https://acmeplumbing.example/blog/podcasts) |
+
+_Searcher wants_: What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.
 
 _Searches a month_: Average Google searches a month for the term across the United States.
+
+## All 312 terms by position
+
+| Position | What it means | Search terms |
+| --- | --- | ---: |
+| #1 to #3 | Top of page one. Most clicks go here. | 18 |
+| #4 to #10 | Rest of page one. | 40 |
+| #11 to #20 | Page two. Few people look this far. | 50 |
+| #21 to #100 | Page three or later. Almost no clicks. | 34 |
 
 ---
 
@@ -1154,7 +1242,7 @@ Since September 1, 2026, 2 tracked terms moved up, 2 moved down and 7 held their
 
 Terms that left the tracked set, then terms that fell three or more places.
 
-- “emergency plumber” left the tracked set (was #8, 3,600 searches a month). Check that \`/\` still loads.
+- “emergency plumber” left the tracked set (was #8, 3,600 searches a month). Check that [\`/\`](https://acmeplumbing.example/) still loads.
 - “water heater repair” fell from #6 to #12 (1,900 searches a month).
 
 ## Left the tracked set (1)
@@ -1163,7 +1251,7 @@ In the top 12 by estimated visits on September 1, 2026, but not on October 8, 20
 
 | Search term | Was | Now | Searches a month | Page |
 | --- | ---: | --- | ---: | --- |
-| emergency plumber | #8 | Left the set | 3,600 | \`/\` |
+| emergency plumber | #8 | Left the set | 3,600 | [\`/\`](https://acmeplumbing.example/) |
 
 _Was_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 
@@ -1175,8 +1263,8 @@ A higher number is a lower spot on the page.
 
 | Search term | Was | Now | Searches a month | Page |
 | --- | ---: | --- | ---: | --- |
-| water heater repair | #6 | #12 | 1,900 | \`/water-heaters\` |
-| drain cleaning | #14 | #15 | 880 | \`/drains\` |
+| water heater repair | #6 | #12 | 1,900 | [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) |
+| drain cleaning | #14 | #15 | 880 | [\`/drains\`](https://acmeplumbing.example/drains) |
 
 ## Moved up (2)
 
@@ -1184,8 +1272,8 @@ Higher on the page than on September 1, 2026.
 
 | Search term | Was | Now | Searches a month | Page |
 | --- | ---: | --- | ---: | --- |
-| plumber springfield | #4 | #2 | 2,400 | \`/\` |
-| toilet repair | #3 | #1 | 210 | \`/toilets\` |
+| plumber springfield | #4 | #2 | 2,400 | [\`/\`](https://acmeplumbing.example/) |
+| toilet repair | #3 | #1 | 210 | [\`/toilets\`](https://acmeplumbing.example/toilets) |
 
 ## Joined the tracked set (2)
 
@@ -1193,8 +1281,32 @@ Not in the top 12 by estimated visits on September 1, 2026.
 
 | Search term | Now | Searches a month | Page |
 | --- | --- | ---: | --- |
-| hydro jetting | #9 | 1,300 | \`/drains/jetting\` |
-| backflow testing | #15 | 480 | \`/backflow\` |
+| hydro jetting | #9 | 1,300 | [\`/drains/jetting\`](https://acmeplumbing.example/drains/jetting) |
+| backflow testing | #15 | 480 | [\`/backflow\`](https://acmeplumbing.example/backflow) |
+
+### All 15 tracked terms on October 8, 2026
+
+| Search term | Searcher wants | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | ---: | ---: | --- |
+| plumber springfield |  | #2 | 2,400 | 500 | [\`/\`](https://acmeplumbing.example/) |
+| emergency plumber |  | #8 | 3,600 | 90 | [\`/\`](https://acmeplumbing.example/) |
+| water heater repair |  | #6 | 1,900 | 120 | [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) |
+| drain cleaning |  | #14 | 880 | 20 | [\`/drains\`](https://acmeplumbing.example/drains) |
+| sewer line repair springfield |  | #3 | 590 | 140 | [\`/sewer\`](https://acmeplumbing.example/sewer) |
+| tankless water heater install |  | #11 | 480 | 12 | [\`/water-heaters/tankless\`](https://acmeplumbing.example/water-heaters/tankless) |
+| garbage disposal repair |  | #5 | 320 | 30 | [\`/disposals\`](https://acmeplumbing.example/disposals) |
+| leak detection |  | #19 | 260 | 3 | [\`/leaks\`](https://acmeplumbing.example/leaks) |
+| toilet repair |  | #1 | 210 | 60 | [\`/toilets\`](https://acmeplumbing.example/toilets) |
+| sump pump |  | #24 | 170 | 1 | [\`/sump-pumps\`](https://acmeplumbing.example/sump-pumps) |
+| repipe house cost |  | #9 | 140 | 6 | [\`/blog/repipe-cost-guide-for-older-homes\`](https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes) |
+| frozen pipes |  | #32 | 90 | 0 | [\`/blog/frozen-pipes\`](https://acmeplumbing.example/blog/frozen-pipes) |
+| acme plumbing reviews |  | #1 | 90 | 40 | [\`/reviews\`](https://acmeplumbing.example/reviews) |
+| riverside coffee | A specific place or site | #4 | 1,300 | 70 | [\`/blog/2023/03/riverside-coffee-opens/\`](https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/) |
+| best podcasts 2026 | An answer | #18 | 900 | 5 | [\`/blog/podcasts\`](https://acmeplumbing.example/blog/podcasts) |
+
+_Searcher wants_: What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.
+
+_Est. visits_: An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.
 
 ---
 
@@ -1221,7 +1333,35 @@ Nothing to compare. This check got the same rankings data as the October 8, 2026
 
 ## Next step
 
-Run the check again after November 7, 2026, once DataForSEO has refreshed its rankings. The tracked terms are on the baseline page.
+Run the check again after November 7, 2026, once DataForSEO has refreshed its rankings.
+
+### All 15 tracked terms on October 8, 2026
+
+| Search term | Searcher wants | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | ---: | ---: | --- |
+| plumber springfield |  | #2 | 2,400 | 500 | [\`/\`](https://acmeplumbing.example/) |
+| emergency plumber |  | #8 | 3,600 | 90 | [\`/\`](https://acmeplumbing.example/) |
+| water heater repair |  | #6 | 1,900 | 120 | [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) |
+| drain cleaning |  | #14 | 880 | 20 | [\`/drains\`](https://acmeplumbing.example/drains) |
+| sewer line repair springfield |  | #3 | 590 | 140 | [\`/sewer\`](https://acmeplumbing.example/sewer) |
+| tankless water heater install |  | #11 | 480 | 12 | [\`/water-heaters/tankless\`](https://acmeplumbing.example/water-heaters/tankless) |
+| garbage disposal repair |  | #5 | 320 | 30 | [\`/disposals\`](https://acmeplumbing.example/disposals) |
+| leak detection |  | #19 | 260 | 3 | [\`/leaks\`](https://acmeplumbing.example/leaks) |
+| toilet repair |  | #1 | 210 | 60 | [\`/toilets\`](https://acmeplumbing.example/toilets) |
+| sump pump |  | #24 | 170 | 1 | [\`/sump-pumps\`](https://acmeplumbing.example/sump-pumps) |
+| repipe house cost |  | #9 | 140 | 6 | [\`/blog/repipe-cost-guide-for-older-homes\`](https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes) |
+| frozen pipes |  | #32 | 90 | 0 | [\`/blog/frozen-pipes\`](https://acmeplumbing.example/blog/frozen-pipes) |
+| acme plumbing reviews |  | #1 | 90 | 40 | [\`/reviews\`](https://acmeplumbing.example/reviews) |
+| riverside coffee | A specific place or site | #4 | 1,300 | 70 | [\`/blog/2023/03/riverside-coffee-opens/\`](https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/) |
+| best podcasts 2026 | An answer | #18 | 900 | 5 | [\`/blog/podcasts\`](https://acmeplumbing.example/blog/podcasts) |
+
+_Searcher wants_: What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.
+
+_Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+_Searches a month_: Average Google searches a month for the term across the United States.
+
+_Est. visits_: An estimate of clicks from Google: each term’s searches a month times the share of clicks its position usually gets. It isn’t from analytics.
 
 ---
 
@@ -1260,11 +1400,11 @@ Search terms about Acme Plumbing’s work where acmeplumbing.example is on page 
 
 | Search term | Topic | Position | Searches a month | Page to improve |
 | --- | --- | --- | ---: | --- |
-| emergency plumber | Plumbing | #8 | 3,600 | \`/\` |
-| water heater repair | Water heaters | #6 | 1,900 | \`/water-heaters\` |
-| drain cleaning | Plumbing | #14 | 880 | \`/drains\` |
-| tankless water heater install | Water heaters | #11 | 480 | \`/water-heaters/tankless\` |
-| garbage disposal repair | Pumps | #5 | 320 | \`/disposals\` |
+| emergency plumber | Plumbing | #8 | 3,600 | [\`/\`](https://acmeplumbing.example/) |
+| water heater repair | Water heaters | #6 | 1,900 | [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) |
+| drain cleaning | Plumbing | #14 | 880 | [\`/drains\`](https://acmeplumbing.example/drains) |
+| tankless water heater install | Water heaters | #11 | 480 | [\`/water-heaters/tankless\`](https://acmeplumbing.example/water-heaters/tankless) |
+| garbage disposal repair | Pumps | #5 | 320 | [\`/disposals\`](https://acmeplumbing.example/disposals) |
 
 _Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 
@@ -1274,10 +1414,12 @@ _Searches a month_: Average Google searches a month for the term across the Unit
 
 2 of the top 15 terms bring about 75 estimated visits a month (7%). They’re searches for another business or place, another area or something unrelated. People making them rarely want what acmeplumbing.example offers, so the visit total overstates the traffic that matters. They need no work.
 
-| Search term | About | Position | Searches a month | Est. visits | Page |
-| --- | --- | --- | ---: | ---: | --- |
-| riverside coffee | Another name or place | #4 | 1,300 | 70 | \`/blog/2023/03/riverside-coffee-opens/\` |
-| best podcasts 2026 | Unrelated | #18 | 900 | 5 | \`/blog/podcasts\` |
+| Search term | About | Searcher wants | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| riverside coffee | Another name or place | A specific place or site | #4 | 1,300 | 70 | [\`/blog/2023/03/riverside-coffee-opens/\`](https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/) |
+| best podcasts 2026 | Unrelated | An answer | #18 | 900 | 5 | [\`/blog/podcasts\`](https://acmeplumbing.example/blog/podcasts) |
+
+_Searcher wants_: What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.
 
 ## Rankings by position
 
@@ -1294,23 +1436,23 @@ _Searches a month_: Average Google searches a month for the term across the Unit
 
 The 15 terms that bring the most estimated visits.
 
-| Search term | About | Position | Searches a month | Est. visits | Page |
-| --- | --- | --- | ---: | ---: | --- |
-| plumber springfield | Plumbing | #2 | 2,400 | 500 | \`/\` |
-| emergency plumber | Plumbing | #8 | 3,600 | 90 | \`/\` |
-| water heater repair | Water heaters | #6 | 1,900 | 120 | \`/water-heaters\` |
-| drain cleaning | Plumbing | #14 | 880 | 20 | \`/drains\` |
-| sewer line repair springfield | Plumbing | #3 | 590 | 140 | \`/sewer\` |
-| tankless water heater install | Water heaters | #11 | 480 | 12 | \`/water-heaters/tankless\` |
-| garbage disposal repair | Pumps | #5 | 320 | 30 | \`/disposals\` |
-| leak detection | Plumbing | #19 | 260 | 3 | \`/leaks\` |
-| toilet repair | Plumbing | #1 | 210 | 60 | \`/toilets\` |
-| sump pump | Pumps | #24 | 170 | 1 | \`/sump-pumps\` |
-| repipe house cost | Plumbing | #9 | 140 | 6 | \`/blog/repipe-cost-guide-for-older-homes\` |
-| frozen pipes | Plumbing | #32 | 90 | 0 | \`/blog/frozen-pipes\` |
-| acme plumbing reviews | Your name | #1 | 90 | 40 | \`/reviews\` |
-| riverside coffee | Another name or place | #4 | 1,300 | 70 | \`/blog/2023/03/riverside-coffee-opens/\` |
-| best podcasts 2026 | Unrelated | #18 | 900 | 5 | \`/blog/podcasts\` |
+| Search term | About | Searcher wants | Position | Searches a month | Est. visits | Page |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| plumber springfield | Plumbing |  | #2 | 2,400 | 500 | [\`/\`](https://acmeplumbing.example/) |
+| emergency plumber | Plumbing |  | #8 | 3,600 | 90 | [\`/\`](https://acmeplumbing.example/) |
+| water heater repair | Water heaters |  | #6 | 1,900 | 120 | [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) |
+| drain cleaning | Plumbing |  | #14 | 880 | 20 | [\`/drains\`](https://acmeplumbing.example/drains) |
+| sewer line repair springfield | Plumbing |  | #3 | 590 | 140 | [\`/sewer\`](https://acmeplumbing.example/sewer) |
+| tankless water heater install | Water heaters |  | #11 | 480 | 12 | [\`/water-heaters/tankless\`](https://acmeplumbing.example/water-heaters/tankless) |
+| garbage disposal repair | Pumps |  | #5 | 320 | 30 | [\`/disposals\`](https://acmeplumbing.example/disposals) |
+| leak detection | Plumbing |  | #19 | 260 | 3 | [\`/leaks\`](https://acmeplumbing.example/leaks) |
+| toilet repair | Plumbing |  | #1 | 210 | 60 | [\`/toilets\`](https://acmeplumbing.example/toilets) |
+| sump pump | Pumps |  | #24 | 170 | 1 | [\`/sump-pumps\`](https://acmeplumbing.example/sump-pumps) |
+| repipe house cost | Plumbing |  | #9 | 140 | 6 | [\`/blog/repipe-cost-guide-for-older-homes\`](https://acmeplumbing.example/blog/repipe-cost-guide-for-older-homes) |
+| frozen pipes | Plumbing |  | #32 | 90 | 0 | [\`/blog/frozen-pipes\`](https://acmeplumbing.example/blog/frozen-pipes) |
+| acme plumbing reviews | Your name |  | #1 | 90 | 40 | [\`/reviews\`](https://acmeplumbing.example/reviews) |
+| riverside coffee | Another name or place | A specific place or site | #4 | 1,300 | 70 | [\`/blog/2023/03/riverside-coffee-opens/\`](https://acmeplumbing.example/blog/2023/03/riverside-coffee-opens/) |
+| best podcasts 2026 | Unrelated | An answer | #18 | 900 | 5 | [\`/blog/podcasts\`](https://acmeplumbing.example/blog/podcasts) |
 
 ## Top pages
 
@@ -1318,9 +1460,9 @@ Pages ranked by the estimated visits those 15 terms bring them.
 
 | Page | Search terms | Est. visits |
 | --- | ---: | ---: |
-| \`/\` | 2 | 590 |
-| \`/sewer\` | 1 | 140 |
-| \`/water-heaters\` | 1 | 120 |
+| [\`/\`](https://acmeplumbing.example/) | 2 | 590 |
+| [\`/sewer\`](https://acmeplumbing.example/sewer) | 1 | 140 |
+| [\`/water-heaters\`](https://acmeplumbing.example/water-heaters) | 1 | 120 |
 
 ---
 

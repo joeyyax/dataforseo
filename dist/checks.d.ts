@@ -265,6 +265,10 @@ export interface MapsListing {
     rating: number | null;
     reviews: number | null;
     category: string | null;
+    /** The listing's website. */
+    url?: string | null;
+    /** The listing on Google Maps. */
+    maps_url?: string | null;
 }
 /** The Maps listings in a maps/live/advanced result, ads left out. */
 export declare function parseMapsItems(result: any): MapsListing[];

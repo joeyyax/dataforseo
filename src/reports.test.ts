@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { aiReport, buildReport, funnels, usd, gapReport, localReport, rankReport, snapshotReport, redirectReport, type Block } from './index.js';
-import { aiFixture, gapFixture, localFixture, rankFixture, redirectFixture, sampleReports, snapshotFixture } from './test/report-fixtures.js';
+import { aiFixture, gapFixture, localFixture, rankFixture, rankPrevFixture, redirectFixture, sampleReports, snapshotFixture } from './test/report-fixtures.js';
 
 function find(blocks: Block[], id: string): any {
   for (const b of blocks) {
@@ -76,9 +76,9 @@ describe('report blocks', () => {
     const blocks = buildReport(sampleReports()['competitor-gap']);
 
     expect(find(blocks, 'themes').rows[0]).toMatchObject({ theme: 'Water heaters', weak: 2, missing: 0, leader: 'rivalplumbing.example' });
-    expect(find(blocks, 'weak').rows[0]).toMatchObject({ keyword: 'tankless water heater', them: 'rivalplumbing.example #3', you: '#14', url: '/services' });
+    expect(find(blocks, 'weak').rows[0]).toMatchObject({ keyword: 'tankless water heater', them: '[rivalplumbing.example #3](https://rivalplumbing.example/)', you: '#14', url: '[/services](https://acmeplumbing.example/services)' });
     expect(find(blocks, 'missing').rows.map((r: any) => r.keyword)).toContain('sump pump installation');
-    expect(find(blocks, 'competitors').rows[0]).toStrictEqual({ domain: 'rivalplumbing.example', weak: 2, missing: 3, all: 140 });
+    expect(find(blocks, 'competitors').rows[0]).toStrictEqual({ domain: '[rivalplumbing.example](https://rivalplumbing.example)', weak: 2, missing: 3, shared: 60, all: 140 });
     const filter = gapReport(gapFixture, '2026-10-08').method.find((m) => m.label === 'Filter')?.text;
     expect(filter).toMatch(/Left out: 3 terms naming a competitor or another business \(like “rival plumbing coupons”\), 12 unrelated to your work \(like “zip code finder”\) and 4 where you already rank ahead/);
   });
@@ -98,7 +98,7 @@ describe('report blocks', () => {
   });
 
   it('AI report lists the pages cited', () => {
-    expect(find(buildReport(aiReport(aiFixture, '2026-10-08')), 'pages').rows).toStrictEqual([{ url: '/sewer', prompts: 1, volume: 260 }]);
+    expect(find(buildReport(aiReport(aiFixture, '2026-10-08')), 'pages').rows).toStrictEqual([{ url: '[/sewer](https://acmeplumbing.example/sewer)', prompts: 1, volume: 260 }]);
   });
 
   it('baseline shows what is tracked; a same-data check says when to look again; a real check shows both positions', () => {
@@ -112,7 +112,7 @@ describe('report blocks', () => {
     expect(same.stats.map((s) => s.tone ?? 'neutral')).not.toContain('good');
 
     const check = buildReport(reports['rank-check']);
-    expect(find(check, 'dropped').rows).toStrictEqual([{ keyword: 'emergency plumber', from: '#8', to: 'Left the set', search_volume: 3600, url: '/' }]);
+    expect(find(check, 'dropped').rows).toStrictEqual([{ keyword: 'emergency plumber', from: '#8', to: 'Left the set', search_volume: 3600, url: '[/](https://acmeplumbing.example/)' }]);
     expect(find(check, 'dropped').columns[2].tones).toStrictEqual({ 'Left the set': 'bad' });
     expect(find(check, 'stats').items.find((s: any) => s.label === 'Moved up')).toMatchObject({ tone: 'good', href: '#up-title' });
   });
@@ -124,10 +124,10 @@ describe('report blocks', () => {
 
     const blocks = buildReport(spec);
     expect(find(blocks, 'actions').items).toStrictEqual([
-      '“drain cleaning”: #14, with `/drains`. #1 is [rivalplumbing.example](https://rivalplumbing.example/).',
+      '“drain cleaning”: #14, with [`/drains`](https://www.acmeplumbing.example/drains). #1 is [rivalplumbing.example](https://rivalplumbing.example/).',
       '“emergency plumber”: not in the top 20. #1 is [rivalplumbing.example](https://rivalplumbing.example/).',
     ]);
-    expect(find(blocks, 'results').rows[0]).toStrictEqual({ keyword: 'plumber springfield', position: '#1', url: '/', top: '[acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/)', features: 'Map results, Questions' });
+    expect(find(blocks, 'results').rows[0]).toStrictEqual({ keyword: 'plumber springfield', position: '#1', url: '[/](https://www.acmeplumbing.example/)', top: '[acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/)', features: 'Map results, Questions' });
     expect(find(blocks, 'results').columns[1].tones['Not in top 20']).toBe('bad');
   });
 
@@ -136,7 +136,7 @@ describe('report blocks', () => {
     expect(spec.answer).toBe('Since September 8, 2026, 2 search terms moved up, 0 moved down and 1 held. 1 entered the top 20 and 1 dropped out.');
 
     const blocks = buildReport(spec);
-    expect(find(blocks, 'actions').items).toStrictEqual(['“emergency plumber” dropped out of the top 20 (was #7). Check that `/` still loads.']);
+    expect(find(blocks, 'actions').items).toStrictEqual(['“emergency plumber” dropped out of the top 20 (was #7). Check that [`/`](https://www.acmeplumbing.example/) still loads.']);
     expect(find(blocks, 'up').rows.map((r: any) => [r.keyword, r.from, r.to, r.change])).toStrictEqual([['drain cleaning', '#18', '#14', 4], ['plumber springfield', '#2', '#1', 1]]);
     expect(find(blocks, 'entered').rows[0]).toMatchObject({ keyword: 'sump pump install', from: 'Not in top 20', to: '#9' });
     expect(find(blocks, 'results')).toBeDefined();
@@ -154,7 +154,7 @@ describe('report blocks', () => {
     const pages = [page('/north/'), page('/south/'), page('/east/'), page('/locations/')];
     expect(funnels(pages).map((f) => [f.lands, f.from.length])).toStrictEqual([['/locations', 3]]);
     const blocks = buildReport(redirectReport({ ...redirectFixture, pages: [...redirectFixture.pages, ...pages] }, '2026-10-08'));
-    expect(find(blocks, 'general-0')).toMatchObject({ type: 'callout', title: '3 old pages land on `/locations`' });
+    expect(find(blocks, 'general-0')).toMatchObject({ type: 'callout', title: '3 old pages land on [`/locations`](https://staging.acmeplumbing.example/locations)' });
   });
 
   it('redirect report shows the chain when a path takes two or more hops', () => {
@@ -166,9 +166,54 @@ describe('report blocks', () => {
     const blocks = buildReport(redirectReport({ ...redirectFixture, pages: [...redirectFixture.pages, hopped] }, '2026-10-08'));
     const table = find(blocks, 'redirecting');
     expect(table.columns.map((c: any) => c.key)).toContain('chain');
-    expect(table.rows.find((r: any) => r.path === '/rebate/').chain).toBe('/rebate/ → /rebate → /services/rebate');
-    expect(table.rows.find((r: any) => r.path === '/about-us/').chain).toBeNull();
+    expect(table.rows.find((r: any) => r.path === `[/rebate/](${o}/rebate/)`).chain).toBe('/rebate/ → /rebate → /services/rebate');
+    expect(table.rows.find((r: any) => r.path.startsWith('[/about-us/]')).chain).toBeNull();
     expect(find(blocks, 'chains')).toMatchObject({ type: 'callout', title: '1 address takes two or more redirects' });
+  });
+});
+
+describe('reports show what the check returned', () => {
+  it('snapshot names the similar terms behind an opportunity', () => {
+    const kw = { ...snapshotFixture.top_keywords.find((k) => k.keyword === 'drain cleaning')!, keyword: 'drain unclogging', position: 15, search_volume: 100 };
+    const rows = find(buildReport(snapshotReport({ ...snapshotFixture, top_keywords: [...snapshotFixture.top_keywords, kw] }, '2026-10-08')), 'actions').rows;
+    expect(rows.find((r: any) => r.keyword.startsWith('drain cleaning')).keyword).toBe('drain cleaning (also “drain unclogging”)');
+  });
+
+  it('gap lists every left-out example', () => {
+    const spec = gapReport({ ...gapFixture, excluded_examples: { ...gapFixture.excluded_examples, unrelated: ['zip code finder', 'weather'] } }, '2026-10-08');
+    expect(spec.method.find((m) => m.label === 'Filter')?.text).toMatch(/12 unrelated to your work \(like “zip code finder” and “weather”\)/);
+  });
+
+  it('local links each listing and shows its reviews', () => {
+    const blocks = buildReport(sampleReports()['local-visibility']);
+    expect(find(blocks, 'results').rows[0]).toMatchObject({ listing: 'Acme Plumbing · 4.6★ (120)', first: '[Rival Plumbing](https://www.google.com/maps?cid=123) · 4.8★ (312)' });
+    expect(find(blocks, 'actions').items[0]).toContain('[Rival Plumbing](https://www.google.com/maps?cid=123) (4.8 stars, 312 reviews)');
+  });
+
+  it('AI topics show every top source with its count', () => {
+    const row = find(buildReport(sampleReports()['ai-visibility']), 'topics').rows[0];
+    expect(row.sources).toBe('[rivalplumbing.example](https://rivalplumbing.example) (30), [forum.example](https://forum.example) (20), [hardware.example](https://hardware.example) (9)');
+  });
+
+  it('rank check since names the terms it couldn’t compare', () => {
+    const spec = rankReport(rankFixture, '2026-10-08', { ...rankPrevFixture, terms: [...rankPrevFixture.terms, { ...rankPrevFixture.terms[0]!, keyword: 'boiler repair' }] });
+    expect(spec.method.find((m) => m.label === 'Compared')?.text).toMatch(/1 term in only one check isn’t compared: “boiler repair”\./);
+  });
+
+  it('baseline comparisons list every tracked term', () => {
+    const reports = sampleReports();
+    for (const name of ['rank-check', 'rank-check-same-data']) {
+      expect(find(buildReport(reports[name]!), 'tracked-details')).toMatchObject({ type: 'details' });
+    }
+    expect(find(buildReport(reports['rank-baseline']!), 'positions')).toBeDefined();
+  });
+
+  it('redirect report says why a request failed and lists homepage redirects', () => {
+    const blocks = buildReport(sampleReports()['backlink-redirects']);
+    expect(find(blocks, 'fix').rows.find((r: any) => r.status === 'No response').error).toBe('fetch failed');
+    const home = find(blocks, 'home');
+    expect(home.columns.map((c: any) => c.key)).toStrictEqual(['path', 'domains']);
+    expect(home.rows).toMatchObject([{ path: '[/blog/2020/03/hello](https://staging.acmeplumbing.example/blog/2020/03/hello)', domains: 3 }]);
   });
 });
 

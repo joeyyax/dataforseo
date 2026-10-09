@@ -587,6 +587,10 @@ export interface MapsListing {
   rating: number | null;
   reviews: number | null;
   category: string | null;
+  /** The listing's website. */
+  url?: string | null;
+  /** The listing on Google Maps. */
+  maps_url?: string | null;
 }
 
 /** The Maps listings in a maps/live/advanced result, ads left out. */
@@ -598,6 +602,8 @@ export function parseMapsItems(result: any): MapsListing[] {
     rating: typeof i.rating?.value === 'number' ? i.rating.value : null,
     reviews: typeof i.rating?.votes_count === 'number' ? i.rating.votes_count : null,
     category: i.category ?? null,
+    url: typeof i.url === 'string' ? i.url : null,
+    maps_url: i.cid ? `https://www.google.com/maps?cid=${encodeURIComponent(String(i.cid))}` : null,
   }));
 }
 

@@ -20,7 +20,7 @@ export declare function parseInline(text: string): Inline[];
 export declare function safeHref(href: string): boolean;
 /** The text without markup. */
 export declare function plainText(text: string): string;
-/** A table cell as inline markup: numbers with thousands separators, code and path cells as code. */
+/** A table cell as inline markup: numbers with thousands separators, code and path cells as code, a path cell holding a `[path](url)` as a linked path. */
 export declare function cellMarkup(column: TableColumn, value: string | number | null | undefined): Inline[];
 /** True when a column holds numbers and reads best right-aligned. */
 export declare function isNumeric(column: TableColumn): boolean;

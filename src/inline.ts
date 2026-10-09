@@ -36,10 +36,16 @@ export function plainText(text: string): string {
   return flat(parseInline(text));
 }
 
-/** A table cell as inline markup: numbers with thousands separators, code and path cells as code. */
+const LINK_ONLY = /^\[([^\]]+)\]\(([^)\s]+)\)$/;
+
+/** A table cell as inline markup: numbers with thousands separators, code and path cells as code, a path cell holding a `[path](url)` as a linked path. */
 export function cellMarkup(column: TableColumn, value: string | number | null | undefined): Inline[] {
   if (value === null || value === undefined || value === '') return [];
   if (typeof value === 'number' && (column.format === 'number' || column.format === 'bar')) return [{ type: 'text', text: value.toLocaleString('en-US') }];
+  if (column.format === 'path') {
+    const link = String(value).match(LINK_ONLY);
+    if (link && safeHref(link[2] as string)) return [{ type: 'link', href: link[2] as string, children: [{ type: 'code', text: link[1] as string }] }];
+  }
   if (column.format === 'code' || column.format === 'path') return [{ type: 'code', text: String(value) }];
   return parseInline(String(value));
 }

@@ -18,6 +18,7 @@ export interface TableColumn {
     key: string;
     label: string;
     align?: 'left' | 'right';
+    /** `path` takes a path or a `[path](url)` link. */
     format?: 'text' | 'code' | 'number' | 'badge' | 'path' | 'bar';
     /** Badge value → tone. */
     tones?: Record<string, BadgeTone>;

@@ -9,7 +9,7 @@ It calls [DataForSEO](https://dataforseo.com), a pay-per-use API for search data
 Install from a release tag, which includes the built code. It needs Node 22 or later.
 
 ```sh
-pnpm add github:joeyyax/dataforseo#v0.5.1
+pnpm add github:joeyyax/dataforseo#v0.6.0
 ```
 
 ## First use
@@ -316,7 +316,7 @@ Text fields can hold `**bold**`, `` `code` `` and `[links](https://example.com)`
 | `chart` | `kind` (`bar`, `line` or `pie`), `labels`, `series` (each a `name` and `values`), `title` |
 | `footer` | `text` |
 
-`terms` maps a term to its definition. A column's `format` is `text`, `code`, `number`, `badge`, `path` or `bar`.
+`terms` maps a term to its definition. A column's `format` is `text`, `code`, `number`, `badge`, `path` or `bar`. A `path` cell holds a path or a `[path](url)` link, which renders as the path linked to the page.
 
 ## Reference
 

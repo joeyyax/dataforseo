@@ -116,6 +116,20 @@ describe('toHtml', () => {
   });
 });
 
+describe('path cells', () => {
+  const table = (a: string): Block[] => [{ type: 'table', columns: [{ key: 'a', label: 'Page', format: 'path' }], rows: [{ a }] }];
+
+  it('render a linked path as a link around the code', () => {
+    expect(toHtml(table('[/drains](https://example.com/drains)'))).toContain('<td><a href="https://example.com/drains" rel="noopener"><code>/drains</code></a></td>');
+    expect(toMarkdown(table('[/drains](https://example.com/drains)'))).toContain('| [`/drains`](https://example.com/drains) |');
+  });
+
+  it('keep an unsafe or partial link as code', () => {
+    expect(toHtml(table('[/x](javascript:alert(1))'))).not.toContain('<a ');
+    expect(toHtml(table('[/x](https://example.com) and more'))).toContain('<code>[/x](https://example.com) and more</code>');
+  });
+});
+
 describe('parseInline', () => {
   it('reads bold, code and links, and leaves unmatched markers as text', () => {
     expect(parseInline('**a `b`** [c](/d) **open')).toEqual([

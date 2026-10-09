@@ -8,8 +8,10 @@ const kw = (keyword: string, position: number, search_volume: number, etv: numbe
 
 export const plumbingTopics = ['Plumbing: plumber, plumbing, pipe, repipe, leak, drain, sewer, toilet', 'Water heaters: water heater', 'Pumps: sump pump, disposal'];
 const relevance = relevanceFor({ domain: 'acmeplumbing.example', brand: 'Acme Plumbing', competitors: ['rivalplumbing.example', 'citydrains.example'], topics: plumbingTopics });
-const listing = (position: number, title: string, rating: number | null = 4.6, reviews: number | null = 120) =>
-  ({ position, title, domain: null, rating, reviews, category: 'Plumber' });
+const listing = (position: number, title: string, rating: number | null = 4.6, reviews: number | null = 120) => ({
+  position, title, domain: null, rating, reviews, category: 'Plumber',
+  ...(title === 'Rival Plumbing' ? { url: 'https://rivalplumbing.example/', maps_url: 'https://www.google.com/maps?cid=123' } : {}),
+});
 
 const keywords = [
   kw('plumber springfield', 2, 2400, 500, '/'),

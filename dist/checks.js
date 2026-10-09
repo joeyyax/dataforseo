@@ -338,6 +338,8 @@ export function parseMapsItems(result) {
         rating: typeof i.rating?.value === 'number' ? i.rating.value : null,
         reviews: typeof i.rating?.votes_count === 'number' ? i.rating.votes_count : null,
         category: i.category ?? null,
+        url: typeof i.url === 'string' ? i.url : null,
+        maps_url: i.cid ? `https://www.google.com/maps?cid=${encodeURIComponent(String(i.cid))}` : null,
     }));
 }
 function normName(s) {

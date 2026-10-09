@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.6.0 (2026-10-09)
+
+### Added
+
+- `MapsListing` has `url`, the listing's website, and `maps_url`, its Google Maps page. Both are optional, so earlier results still fit the type.
+- `snapshotOpportunities` returns `also` with each row: the other terms on the same page.
+- A `path` table cell can hold a `[path](url)` link. `toHtml` and `toMarkdown` render it as the path linked to the page.
+
+### Changed
+
+Every report shows what its check returned, and links each page.
+
+- Pages are links in every report: ranking pages, cited pages, competitor pages, old addresses and where they land.
+- `snapshotReport` names the similar terms behind each opportunity and adds what the searcher wants to the term tables.
+- `gapReport` links each competitor's ranking page, adds what the searcher wants, lists every left-out example and adds each competitor's terms where both rank.
+- `localReport` links each listing to Google Maps or its website and shows the rating and review count for the top 3.
+- `aiReport` shows all of a topic's top sources with how many answers cite each.
+- `rankReport` names the terms it couldn't compare.
+- `baselineReport` lists every tracked term on comparison and same-data reports, shows total estimated visits and adds the position bands for all terms to the first baseline.
+- `redirectReport` says why a request got no response and lists the pages sent to the homepage.
+
 ## 0.5.1 (2026-10-09)
 
 ### Changed

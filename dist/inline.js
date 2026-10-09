@@ -29,12 +29,18 @@ export function plainText(text) {
     const flat = (parts) => parts.map((p) => ('children' in p ? flat(p.children) : p.text)).join('');
     return flat(parseInline(text));
 }
-/** A table cell as inline markup: numbers with thousands separators, code and path cells as code. */
+const LINK_ONLY = /^\[([^\]]+)\]\(([^)\s]+)\)$/;
+/** A table cell as inline markup: numbers with thousands separators, code and path cells as code, a path cell holding a `[path](url)` as a linked path. */
 export function cellMarkup(column, value) {
     if (value === null || value === undefined || value === '')
         return [];
     if (typeof value === 'number' && (column.format === 'number' || column.format === 'bar'))
         return [{ type: 'text', text: value.toLocaleString('en-US') }];
+    if (column.format === 'path') {
+        const link = String(value).match(LINK_ONLY);
+        if (link && safeHref(link[2]))
+            return [{ type: 'link', href: link[2], children: [{ type: 'code', text: link[1] }] }];
+    }
     if (column.format === 'code' || column.format === 'path')
         return [{ type: 'code', text: String(value) }];
     return parseInline(String(value));

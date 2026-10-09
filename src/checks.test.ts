@@ -202,6 +202,7 @@ describe('competitorGap', () => {
 describe('localVisibility', () => {
   const listing = (rank: number, title: string, domain: string | null, rating?: number, votes?: number) => ({
     type: 'maps_search', rank_group: rank, title, domain, rating: rating ? { value: rating, votes_count: votes } : null, category: 'Plumber',
+    ...(domain ? { url: `https://${domain}/`, cid: '42' } : {}),
   });
   const routes = {
     '/serp/google/maps/live/advanced': (body: any) => [{
@@ -226,6 +227,8 @@ describe('localVisibility', () => {
     ]);
     expect(result.results.map((r) => [r.keyword, r.position])).toStrictEqual([['plumber', 2], ['drain cleaning', 9]]);
     expect(result.results[0]!.top_3.map((l) => l.title)).toStrictEqual(['Rival Plumbing', 'Acme Plumbing LLC', 'Third']);
+    expect(result.results[0]!.top_3[0]).toMatchObject({ url: 'https://rival.example/', maps_url: 'https://www.google.com/maps?cid=42' });
+    expect(result.results[0]!.top_3[1]).toMatchObject({ url: null, maps_url: null });
     expect(result).toMatchObject({ summary: { top_3: 1, lower: 1, not_found: 0 }, cost: 0.004, cached: false });
   });
 

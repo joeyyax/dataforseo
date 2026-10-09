@@ -28,6 +28,39 @@ export const GLOSSARY = {
 function quote(s) {
     return `“${s}”`;
 }
+/** Percent-encodes what would end a markdown link early. */
+function href(url) {
+    return url.replace(/[()\s<>]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0')}`);
+}
+/** The full URL, with a relative one resolved on `domain`. */
+function absolute(url, domain) {
+    if (/^https?:\/\//i.test(url))
+        return url;
+    if (domain && url.startsWith('/'))
+        return `https://${domain}${url}`;
+    return null;
+}
+function label(s) {
+    return s.replace(/[[\]`]/g, '');
+}
+/** A page for a `path` cell: its path, linked. */
+function pageLink(url, domain) {
+    if (!url)
+        return null;
+    const path = label(pathOf(url) || '/');
+    const full = absolute(url, domain);
+    return full ? `[${path}](${href(full)})` : path;
+}
+/** A page in running text: its path as code, linked. */
+function pageCode(url, domain) {
+    const path = label(pathOf(url ?? null) || '/');
+    const full = url ? absolute(url, domain) : null;
+    return full ? `[\`${path}\`](${href(full)})` : code(path);
+}
+/** A domain, linked to its homepage. */
+function siteLink(domain) {
+    return `[${label(domain)}](https://${href(domain)})`;
+}
 function labsWhere(location, language) {
     return `Google in ${location === 'United States' ? 'the United States' : location}, ${language}. Rankings are national, not what someone searching from one city sees.`;
 }
@@ -76,14 +109,36 @@ function sum(list) {
     return list.reduce((s, k) => s + k.etv, 0);
 }
 // SEO snapshot
-function termRows(list) {
-    return list.map((k) => ({ keyword: k.keyword, about: about(k), position: `#${k.position}`, search_volume: k.search_volume, etv: Math.round(k.etv), url: k.url }));
+/** Every ranking term per position band. */
+function bandsTable(p) {
+    return {
+        id: 'positions',
+        type: 'table',
+        columns: [
+            { key: 'band', label: 'Position', help: GLOSSARY.position },
+            { key: 'meaning', label: 'What it means' },
+            { key: 'terms', label: 'Search terms', format: 'bar' },
+        ],
+        rows: [
+            { band: '#1 to #3', meaning: 'Top of page one. Most clicks go here.', terms: p.top_3 },
+            { band: '#4 to #10', meaning: 'Rest of page one.', terms: p['4_10'] },
+            { band: '#11 to #20', meaning: 'Page two. Few people look this far.', terms: p['11_20'] },
+            { band: '#21 to #100', meaning: 'Page three or later. Almost no clicks.', terms: p['21_100'] },
+        ],
+    };
 }
-function termTable(id, list, opts = {}) {
-    const rows = termRows(list);
+function wants(intent) {
+    return intent ? (LOOKING_FOR[intent] ?? null) : null;
+}
+function termRows(list, domain) {
+    return list.map((k) => ({ keyword: k.keyword, about: about(k), wants: wants(k.intent), position: `#${k.position}`, search_volume: k.search_volume, etv: Math.round(k.etv), url: pageLink(k.url, domain) }));
+}
+function termTable(id, list, domain, opts = {}) {
+    const rows = termRows(list, domain);
     const columns = [
         { key: 'keyword', label: 'Search term' },
         ...(opts.about === false ? [] : [{ key: 'about', label: 'About' }]),
+        { key: 'wants', label: 'Searcher wants', help: GLOSSARY.intent },
         { key: 'position', label: 'Position', format: 'badge', tones: tonesFor(rows, 'position', positionTone), help: GLOSSARY.position },
         { key: 'search_volume', label: 'Searches a month', format: 'number', help: GLOSSARY.searches },
         { key: 'etv', label: 'Est. visits', format: 'number', help: GLOSSARY.visits },
@@ -104,10 +159,12 @@ export function snapshotOpportunities(keywords) {
     const byPage = new Map();
     for (const k of candidates) {
         const seen = byPage.get(k.url);
-        if (seen)
+        if (seen) {
             seen.similar++;
+            seen.also.push(k.keyword);
+        }
         else
-            byPage.set(k.url, { ...k, similar: 0 });
+            byPage.set(k.url, { ...k, similar: 0, also: [] });
     }
     return [...byPage.values()].slice(0, ACTIONS);
 }
@@ -140,12 +197,12 @@ export function snapshotReport(r, date) {
         ...(sorted ? [{ label: 'Visits not about your work', value: percent(offShare), note: `of the top ${count(kw.length)} terms’ visits`, ...(off.length ? { href: '#off-topic' } : {}) }] : []),
     ];
     const opportunityRows = opportunities.map((k) => ({
-        keyword: k.similar ? `${k.keyword} (+${count(k.similar)} similar)` : k.keyword,
+        keyword: k.also.length ? `${k.keyword} (also ${series([...k.also.slice(0, 3).map(quote), ...(k.also.length > 3 ? [`${count(k.also.length - 3)} more in Top search terms`] : [])])})` : k.keyword,
         about: about(k),
-        wants: k.intent ? (LOOKING_FOR[k.intent] ?? null) : null,
+        wants: wants(k.intent),
         position: `#${k.position}`,
         search_volume: k.search_volume,
-        url: k.url,
+        url: pageLink(k.url, r.domain),
     }));
     const actions = opportunities.length ? [{
             id: 'actions',
@@ -160,12 +217,6 @@ export function snapshotReport(r, date) {
             ],
             rows: opportunityRows.map(({ about: a, ...rest }) => (sorted ? { about: a, ...rest } : rest)),
         }] : [];
-    const bands = [
-        { band: '#1 to #3', meaning: 'Top of page one. Most clicks go here.', terms: p.top_3 },
-        { band: '#4 to #10', meaning: 'Rest of page one.', terms: p['4_10'] },
-        { band: '#11 to #20', meaning: 'Page two. Few people look this far.', terms: p['11_20'] },
-        { band: '#21 to #100', meaning: 'Page three or later. Almost no clicks.', terms: p['21_100'] },
-    ];
     const deep = r.keywords_total ? p['21_100'] / r.keywords_total : 0;
     return {
         kind: 'SEO snapshot',
@@ -197,7 +248,7 @@ export function snapshotReport(r, date) {
                     type: 'text',
                     text: `${count(off.length)} of the top ${count(kw.length)} terms bring about ${count(sum(off))} estimated visits a month (${percent(offShare)}). They’re searches for another business or place, another area or something unrelated. People making them rarely want what ${r.domain} offers, so the visit total overstates the traffic that matters. They need no work.`,
                 },
-                termTable('off-topic', [...off].sort((a, b) => b.etv - a.etv), { visible: 5 }),
+                termTable('off-topic', [...off].sort((a, b) => b.etv - a.etv), r.domain, { visible: 5 }),
             ] : []),
             ...(r.keywords_total ? [
                 { id: 'positions-title', type: 'heading', level: 2, text: 'Rankings by position' },
@@ -206,21 +257,12 @@ export function snapshotReport(r, date) {
                     type: 'text',
                     text: `${percent(deep)} of the ${count(r.keywords_total)} terms are on page three or later, where almost nobody clicks. Most visits come from page one.`,
                 },
-                {
-                    id: 'positions',
-                    type: 'table',
-                    columns: [
-                        { key: 'band', label: 'Position', help: GLOSSARY.position },
-                        { key: 'meaning', label: 'What it means' },
-                        { key: 'terms', label: 'Search terms', format: 'bar' },
-                    ],
-                    rows: bands,
-                },
+                bandsTable(p),
             ] : []),
             ...(kw.length ? [
                 { id: 'top-terms-title', type: 'heading', level: 2, text: 'Top search terms' },
                 { id: 'top-terms-note', type: 'text', text: `The ${count(kw.length)} terms that bring the most estimated visits.` },
-                termTable('top-terms', kw, { about: sorted || kw.some((k) => k.kind !== 'unsorted') }),
+                termTable('top-terms', kw, r.domain, { about: sorted || kw.some((k) => k.kind !== 'unsorted') }),
                 { id: 'top-pages-title', type: 'heading', level: 2, text: 'Top pages' },
                 { id: 'top-pages-note', type: 'text', text: `Pages ranked by the estimated visits those ${count(kw.length)} terms bring them.` },
                 {
@@ -231,7 +273,7 @@ export function snapshotReport(r, date) {
                         { key: 'keywords', label: 'Search terms', format: 'number' },
                         { key: 'etv', label: 'Est. visits', format: 'number', help: GLOSSARY.visits },
                     ],
-                    rows: r.top_pages,
+                    rows: r.top_pages.map((p) => ({ ...p, url: pageLink(p.url, r.domain) })),
                     ...(r.top_pages.length > VISIBLE_ROWS ? { visible: VISIBLE_ROWS } : {}),
                 },
             ] : []),
@@ -242,21 +284,32 @@ export function snapshotReport(r, date) {
     };
 }
 // Competitor gap
+/** A competitor's ranking page as a link: its domain and position. */
+function rivalLink(c) {
+    const full = c.url ? absolute(c.url, c.domain) : null;
+    const text = `${label(c.domain)} #${c.position}`;
+    return full ? `[${text}](${href(full)})` : text;
+}
 function best(g) {
     const c = g.competitors[0];
-    return c ? `${c.domain} is #${c.position}` : 'a competitor is on page one';
+    if (!c)
+        return 'a competitor is on page one';
+    const full = c.url ? absolute(c.url, c.domain) : null;
+    return `${full ? `[${label(c.domain)}](${href(full)})` : c.domain} is #${c.position}`;
 }
-function gapTable(id, list, weak, sorted) {
+function gapTable(id, list, weak, sorted, domain) {
     const rows = list.map((g) => ({
         keyword: g.keyword,
         theme: g.theme ?? null,
+        wants: wants(g.intent),
         search_volume: g.search_volume,
-        them: g.competitors.map((c) => `${c.domain} #${c.position}`).join(', '),
-        ...(weak ? { you: pos(g.position), url: g.url } : {}),
+        them: g.competitors.map(rivalLink).join(', '),
+        ...(weak ? { you: pos(g.position), url: pageLink(g.url, domain) } : {}),
     }));
     const columns = [
         { key: 'keyword', label: 'Search term' },
         ...(sorted ? [{ key: 'theme', label: 'Topic' }] : []),
+        { key: 'wants', label: 'Searcher wants', help: GLOSSARY.intent },
         { key: 'search_volume', label: 'Searches a month', format: 'number', help: GLOSSARY.searches },
         { key: 'them', label: weak ? 'Ahead of you' : 'Who ranks', help: GLOSSARY.position },
         ...(weak ? [
@@ -304,10 +357,11 @@ export function gapReport(r, date) {
         };
     }).sort((a, b) => b.search_volume - a.search_volume);
     const ex = r.excluded;
+    const like = (list) => (list.length ? ` (like ${series(list.map(quote))})` : '');
     const left = [
-        ex.other_name ? `${plural(ex.other_name, 'term')} naming a competitor or another business${r.excluded_examples.other_name.length ? ` (like ${quote(r.excluded_examples.other_name[0])})` : ''}` : '',
-        ex.elsewhere ? `${count(ex.elsewhere)} about another area${r.excluded_examples.elsewhere.length ? ` (like ${quote(r.excluded_examples.elsewhere[0])})` : ''}` : '',
-        ex.unrelated ? `${count(ex.unrelated)} unrelated to your work${r.excluded_examples.unrelated.length ? ` (like ${quote(r.excluded_examples.unrelated[0])})` : ''}` : '',
+        ex.other_name ? `${plural(ex.other_name, 'term')} naming a competitor or another business${like(r.excluded_examples.other_name)}` : '',
+        ex.elsewhere ? `${count(ex.elsewhere)} about another area${like(r.excluded_examples.elsewhere)}` : '',
+        ex.unrelated ? `${count(ex.unrelated)} unrelated to your work${like(r.excluded_examples.unrelated)}` : '',
         ex.brand ? `${count(ex.brand)} with your own name` : '',
         ex.ahead ? `${count(ex.ahead)} where you already rank ahead` : '',
     ].filter(Boolean);
@@ -316,7 +370,7 @@ export function gapReport(r, date) {
         const list = themes.get(t.theme) ?? [];
         const biggest = list[0];
         const closest = list.filter((g) => g.gap === 'weak').sort((a, b) => (a.position ?? 999) - (b.position ?? 999) || b.search_volume - a.search_volume)[0];
-        const you = (g) => (g.gap === 'weak' ? `you’re #${g.position} with ${code(g.url ?? '/')}` : 'you’re not in the top 100');
+        const you = (g) => (g.gap === 'weak' ? `you’re #${g.position} with ${pageCode(g.url ?? '/', r.domain)}` : 'you’re not in the top 100');
         const lead = `**${t.theme}:** ${plural(t.terms, 'term')}, ${count(t.search_volume)} searches a month. The biggest is ${quote(biggest.keyword)}: ${best(biggest)} and ${you(biggest)}.`;
         return closest && closest !== biggest ? `${lead} Your best position is on ${quote(closest.keyword)}: ${best(closest)} and ${you(closest)}.` : lead;
     });
@@ -370,30 +424,32 @@ export function gapReport(r, date) {
             ...(weak.length ? [
                 { id: 'weak-title', type: 'heading', level: 2, text: 'Behind a competitor' },
                 { id: 'weak-note', type: 'text', text: `Both sites rank and the competitor is higher. These are usually the quickest to improve, since Google already connects ${r.domain} to the search.` },
-                gapTable('weak', weak, true, sorted),
+                gapTable('weak', weak, true, sorted, r.domain),
             ] : []),
             ...(missing.length ? [
                 { id: 'missing-title', type: 'heading', level: 2, text: 'Not ranking' },
                 { id: 'missing-note', type: 'text', text: `A competitor is on page one and ${r.domain} isn’t in the top 100, usually because no page covers the search.` },
-                gapTable('missing', missing, false, sorted),
+                gapTable('missing', missing, false, sorted, r.domain),
             ] : []),
             { id: 'competitors-title', type: 'heading', level: 2, text: 'By competitor' },
             {
                 id: 'competitors',
                 type: 'table',
                 columns: [
-                    { key: 'domain', label: 'Competitor', format: 'code' },
+                    { key: 'domain', label: 'Competitor' },
                     { key: 'weak', label: 'Ahead of you', format: 'number' },
                     { key: 'missing', label: 'Only they rank', format: 'number' },
+                    { key: 'shared', label: 'Both rank', format: 'number', help: `Every term where they’re on page one and ${r.domain} ranks too, in either order and on any topic.` },
                     {
                         key: 'all', label: 'Only they rank, any term', format: 'number',
                         help: `Every term where they’re on page one and ${r.domain} isn’t in the top 100, before terms unrelated to your work are left out.`,
                     },
                 ],
                 rows: r.competitors.map((c) => ({
-                    domain: c.domain,
+                    domain: siteLink(c.domain),
                     weak: weak.filter((g) => g.competitors.some((x) => x.domain === c.domain)).length,
                     missing: missing.filter((g) => g.competitors.some((x) => x.domain === c.domain)).length,
+                    shared: c.shared_total,
                     all: c.missing_total,
                 })),
             },
@@ -404,9 +460,21 @@ export function gapReport(r, date) {
     };
 }
 // Local visibility
+/** A listing's name, linked to it on Google Maps, else to its website. */
+function listingName(l) {
+    const to = l.maps_url ?? l.url ?? (l.domain ? `https://${l.domain}` : null);
+    return to ? `[${label(l.title)}](${href(to)})` : l.title;
+}
 function describeListing(l) {
     const rating = l.rating !== null ? `${l.rating} stars${l.reviews !== null ? `, ${plural(l.reviews, 'review')}` : ''}` : 'no rating';
-    return `${l.title} (${rating})`;
+    return `${listingName(l)} (${rating})`;
+}
+/** A table cell: linked name, rating and review count. */
+function listingCell(l) {
+    if (!l)
+        return null;
+    const rating = l.rating !== null ? ` · ${l.rating}★${l.reviews !== null ? ` (${count(l.reviews)})` : ''}` : '';
+    return `${listingName(l)}${rating}`;
 }
 /** "Austin,Texas,United States" → "Austin, Texas, United States". */
 function place(location) {
@@ -420,17 +488,17 @@ export function localReport(r, date) {
         const top = leaders.length ? ` The top 3 are ${series(leaders)}.` : '';
         return x.position === null
             ? `${quote(x.keyword)}: not in the top ${MAPS_DEPTH}.${top}`
-            : `${quote(x.keyword)}: ${x.listing?.title ?? 'your listing'} is #${x.position}.${top}`;
+            : `${quote(x.keyword)}: ${x.listing ? listingName(x.listing) : 'your listing'} is #${x.position}.${top}`;
     });
     const sweeps = r.results.filter((x) => x.top_3.length === 3 && x.top_3.every(yours));
     const { top_3, lower, not_found } = r.summary;
     const rows = r.results.map((x) => ({
         keyword: x.keyword,
         you: x.position === null ? 'Not found' : `#${x.position}`,
-        listing: x.listing ? `${x.listing.title}${x.listing.rating !== null ? ` · ${x.listing.rating}★` : ''}` : null,
-        first: x.top_3[0]?.title ?? null,
-        second: x.top_3[1]?.title ?? null,
-        third: x.top_3[2]?.title ?? null,
+        listing: listingCell(x.listing),
+        first: listingCell(x.top_3[0]),
+        second: listingCell(x.top_3[1]),
+        third: listingCell(x.top_3[2]),
     }));
     const where = place(r.location);
     return {
@@ -464,7 +532,7 @@ export function localReport(r, date) {
                 columns: [
                     { key: 'keyword', label: 'Search' },
                     { key: 'you', label: 'You', format: 'badge', tones: tonesFor(rows, 'you', positionTone), help: `Your best Maps position for the search, out of the top ${MAPS_DEPTH}.` },
-                    { key: 'listing', label: 'Your listing' },
+                    { key: 'listing', label: 'Your listing', help: 'Name, Google rating and number of reviews.' },
                     { key: 'first', label: '#1' },
                     { key: 'second', label: '#2' },
                     { key: 'third', label: '#3' },
@@ -478,14 +546,14 @@ export function localReport(r, date) {
     };
 }
 // AI visibility
-/** First path on the domain for each cited page, most prompts first. */
+/** Each cited page, linked, most AI searches first. */
 function citedPages(r) {
     const pages = new Map();
     for (const p of r.top_prompts) {
         if (!p.url)
             continue;
         const path = pathOf(p.url) || '/';
-        const page = pages.get(path) ?? { url: path, prompts: 0, volume: 0 };
+        const page = pages.get(path) ?? { url: pageLink(p.url, r.domain), prompts: 0, volume: 0 };
         page.prompts++;
         page.volume += p.ai_search_volume;
         pages.set(path, page);
@@ -498,8 +566,8 @@ function topicActions(uncited, domain) {
     const withSources = uncited.filter((t) => t.top_sources.length);
     const same = withSources.length > 1 && withSources.every((t) => leaders(t).join() === leaders(withSources[0]).join());
     const lines = same
-        ? [`For questions about ${series(withSources.map((t) => quote(t.keyword)))}, AI answers cite ${series(leaders(withSources[0]))} most. ${domain} isn’t a top source for any of them.`]
-        : withSources.map((t) => `For questions about ${quote(t.keyword)}, AI answers cite ${series(leaders(t))} most. ${domain} isn’t in the top ${count(t.top_sources.length)}.`);
+        ? [`For questions about ${series(withSources.map((t) => quote(t.keyword)))}, AI answers cite ${series(leaders(withSources[0]).map(siteLink))} most. ${domain} isn’t a top source for any of them.`]
+        : withSources.map((t) => `For questions about ${quote(t.keyword)}, AI answers cite ${series(leaders(t).map(siteLink))} most. ${domain} isn’t in the top ${count(t.top_sources.length)}.`);
     return [...lines, ...uncited.filter((t) => !t.top_sources.length).map((t) => `AI answers about ${quote(t.keyword)} cite no sources in the sample, so there’s no site to compare with.`)];
 }
 /** Report for `aiVisibility`. */
@@ -592,13 +660,13 @@ export function aiReport(r, date) {
                         { key: 'keyword', label: 'Topic' },
                         { key: 'cited', label: `${r.domain} a top source`, format: 'badge', tones: { Yes: 'good', No: 'warn', 'Too few answers': 'neutral' } },
                         { key: 'mentions', label: 'Answers found', format: 'number', help: 'Answers in the sample to questions that contain the topic.' },
-                        { key: 'sources', label: 'Most cited sites' },
+                        { key: 'sources', label: 'Most cited sites', help: 'The sites AI answers cite most for the topic, with how many answers cite each.' },
                     ],
                     rows: r.topics.map((t) => ({
                         keyword: t.keyword,
                         cited: t.mentions < MIN_TOPIC_ANSWERS ? 'Too few answers' : t.cited ? 'Yes' : 'No',
                         mentions: t.mentions,
-                        sources: t.mentions < MIN_TOPIC_ANSWERS ? null : t.top_sources.slice(0, 3).map((s) => s.domain).join(', ') || null,
+                        sources: t.mentions < MIN_TOPIC_ANSWERS ? null : t.top_sources.map((s) => `${siteLink(s.domain)} (${count(s.mentions)})`).join(', ') || null,
                     })),
                 },
             ] : []),
@@ -627,7 +695,7 @@ export function aiReport(r, date) {
                         { key: 'volume', label: 'AI searches a month', format: 'number', help: GLOSSARY.aiSearches },
                         { key: 'url', label: 'Page cited', format: 'path' },
                     ],
-                    rows: r.top_prompts.map((p) => ({ question: p.question, platform: PLATFORM_LABEL[p.platform] ?? p.platform, volume: p.ai_search_volume, url: p.url ? pathOf(p.url) || '/' : null })),
+                    rows: r.top_prompts.map((p) => ({ question: p.question, platform: PLATFORM_LABEL[p.platform] ?? p.platform, volume: p.ai_search_volume, url: pageLink(p.url, r.domain) })),
                     ...(r.top_prompts.length > VISIBLE_ROWS ? { visible: VISIBLE_ROWS } : {}),
                 },
             ] : []),
@@ -641,8 +709,8 @@ export function aiReport(r, date) {
 function addDays(iso, days) {
     return new Date(Date.parse(iso) + days * 86_400_000).toISOString();
 }
-function trackedTable(id, keywords) {
-    return termTable(id, keywords.map((k) => ({ ...k, kind: 'unsorted' })), { about: false });
+function trackedTable(id, keywords, domain) {
+    return termTable(id, keywords.map((k) => ({ ...k, kind: 'unsorted' })), domain, { about: false });
 }
 /** Report for `rankBaseline`: the baseline itself, a same-data notice or the changes since. */
 export function baselineReport(r, date) {
@@ -657,8 +725,14 @@ export function baselineReport(r, date) {
     const trackedSection = (title) => [
         { id: 'tracked-title', type: 'heading', level: 2, text: title },
         { id: 'tracked-note', type: 'text', text: `The ${plural(r.keywords.length, 'search term')} that bring ${r.domain} the most estimated visits, with the position each had on ${longDate(r.fetched_at)}.` },
-        trackedTable('tracked', r.keywords),
+        trackedTable('tracked', r.keywords, r.domain),
     ];
+    const trackedDetails = {
+        id: 'tracked-details',
+        type: 'details',
+        summary: `All ${plural(r.keywords.length, 'tracked term')} on ${longDate(r.fetched_at)}`,
+        blocks: [trackedTable('tracked', r.keywords, r.domain)],
+    };
     if (!r.compared_to) {
         return {
             kind: 'Ranking baseline',
@@ -670,7 +744,7 @@ export function baselineReport(r, date) {
                 { label: 'Terms tracked', value: count(r.keywords_tracked), href: '#tracked' },
                 { label: 'In the top 3', value: count(top3), note: 'positions #1 to #3', href: '#tracked' },
                 { label: 'On page one', value: count(pageOne), note: 'positions #1 to #10', href: '#tracked' },
-                { label: 'Est. visits a month', value: count(sum(r.keywords)), note: 'from these terms', href: '#tracked' },
+                { label: 'Est. visits a month', value: count(sum(r.keywords)), note: `from these terms, of ${count(r.est_monthly_visits)} in all`, href: '#tracked' },
             ],
             method: [
                 { label: 'What', text: `The ${plural(r.keywords_tracked, 'search term')} with the most estimated visits, up to ${count(r.limit)}, with position, searches a month and the ranking page. ${r.domain} shows up for ${plural(r.keywords_total, 'term')} in all.` },
@@ -679,7 +753,13 @@ export function baselineReport(r, date) {
             ],
             actionsTitle: 'Next step',
             actions: [{ id: 'next', type: 'text', text: `Run the ranking check after ${next}, once DataForSEO has fresh rankings, then monthly. If the site is relaunching, run one after launch too.` }],
-            sections: trackedSection('What’s tracked'),
+            sections: [
+                ...trackedSection('What’s tracked'),
+                ...(r.keywords_total ? [
+                    { id: 'positions-title', type: 'heading', level: 2, text: `All ${plural(r.keywords_total, 'term')} by position` },
+                    bandsTable(r.positions),
+                ] : []),
+            ],
             source,
             cost: r.cost,
             cached: r.cached,
@@ -694,7 +774,7 @@ export function baselineReport(r, date) {
             title: `${r.domain} rankings: nothing to compare until ${next}`,
             answer: `Nothing to compare. This check got the same rankings data as the ${since} baseline, so no position could change.`,
             stats: [
-                { label: 'Terms tracked', value: count(r.keywords_tracked), href: '#next' },
+                { label: 'Terms tracked', value: count(r.keywords_tracked), href: '#tracked-details' },
                 { label: 'Baseline', value: longDate(prior.created), note: 'the list this check compares with', href: '#method' },
             ],
             method: [
@@ -703,8 +783,8 @@ export function baselineReport(r, date) {
                 ...common,
             ],
             actionsTitle: 'Next step',
-            actions: [{ id: 'next', type: 'text', text: `Run the check again after ${next}, once DataForSEO has refreshed its rankings. The tracked terms are on the baseline page.` }],
-            sections: [],
+            actions: [{ id: 'next', type: 'text', text: `Run the check again after ${next}, once DataForSEO has refreshed its rankings.` }],
+            sections: [trackedDetails],
             source,
             cost: r.cost,
             cached: r.cached,
@@ -715,7 +795,7 @@ export function baselineReport(r, date) {
         ? ` The baseline held ${plural(prior.keywords_tracked, 'term')} and this check ${count(r.keywords_tracked)}, so both were cut to the top ${count(prior.compared_terms)} to match.`
         : '';
     const moveTable = (id, list) => {
-        const rows = list.map((m) => ({ keyword: m.keyword, from: pos(m.from), to: m.to === null ? 'Left the set' : `#${m.to}`, search_volume: m.search_volume, url: m.url }));
+        const rows = list.map((m) => ({ keyword: m.keyword, from: pos(m.from), to: m.to === null ? 'Left the set' : `#${m.to}`, search_volume: m.search_volume, url: pageLink(m.url, r.domain) }));
         return {
             id,
             type: 'table',
@@ -737,7 +817,7 @@ export function baselineReport(r, date) {
         moveTable(id, list),
     ] : []);
     const actions = [
-        ...diff.lost.map((m) => `${quote(m.keyword)} left the tracked set (was #${m.from}, ${count(m.search_volume)} searches a month). Check that ${code(m.url)} still loads.`),
+        ...diff.lost.map((m) => `${quote(m.keyword)} left the tracked set (was #${m.from}, ${count(m.search_volume)} searches a month). Check that ${pageCode(m.url, r.domain)} still loads.`),
         ...diff.declined.filter((m) => (m.to ?? 0) - (m.from ?? 0) >= 3)
             .map((m) => `${quote(m.keyword)} fell from #${m.from} to #${m.to} (${count(m.search_volume)} searches a month).`),
     ].slice(0, ACTIONS);
@@ -766,6 +846,7 @@ export function baselineReport(r, date) {
             ...section('down', 'Moved down', 'A higher number is a lower spot on the page.', diff.declined),
             ...section('up', 'Moved up', `Higher on the page than on ${since}.`, diff.improved),
             ...section('new', 'Joined the tracked set', `Not in the top ${count(prior.compared_terms)} by estimated visits on ${since}.`, diff.gained),
+            trackedDetails,
         ],
         source,
         cost: r.cost,
@@ -780,15 +861,16 @@ const FEATURE_LABEL = {
 function featureLabel(type) {
     return FEATURE_LABEL[type] ?? capitalize(type.replace(/_/g, ' '));
 }
-/** Report for `rankCheck`, or for the changes since `prev` when given. */
 /** A result as a link: its domain and a short path, pointing at the page. */
 function listingLink(l) {
     let path = pathOf(l.url);
     if (path.length > 30)
         path = `${path.slice(0, 14)}…${path.slice(-14)}`;
-    const label = `${l.domain.replace(/^www\./, '')}${path === '/' ? '' : path}`.replace(/[[\]]/g, '');
-    return `[${label}](${l.url})`;
+    const text = label(`${l.domain.replace(/^www\./, '')}${path === '/' ? '' : path}`);
+    const full = absolute(l.url, l.domain);
+    return full ? `[${text}](${href(full)})` : text;
 }
+/** Report for `rankCheck`, or for the changes since `prev` when given. */
 export function rankReport(r, date, prev) {
     const n = r.terms.length;
     const notIn = (depth) => `Not in top ${depth}`;
@@ -797,7 +879,7 @@ export function rankReport(r, date, prev) {
     const rows = r.terms.map((t) => ({
         keyword: t.keyword,
         position: t.position === null ? notIn(r.depth) : `#${t.position}`,
-        url: t.url ? pathOf(t.url) || '/' : null,
+        url: pageLink(t.url, r.domain),
         top: t.top_3.map(listingLink).join(', ') || null,
         features: t.features.map(featureLabel).join(', ') || null,
     }));
@@ -837,7 +919,7 @@ export function rankReport(r, date, prev) {
             const first = t.top_3[0] ? ` #1 is ${listingLink(t.top_3[0])}.` : '';
             return t.position === null
                 ? `${quote(t.keyword)}: not in the top ${r.depth}.${first}`
-                : `${quote(t.keyword)}: #${t.position}, with ${code(pathOf(t.url) || '/')}.${first}`;
+                : `${quote(t.keyword)}: #${t.position}, with ${pageCode(t.url, r.domain)}.${first}`;
         });
         return {
             ...base,
@@ -864,7 +946,7 @@ export function rankReport(r, date, prev) {
     const since = longDate(prev.fetched_at);
     const compared = diff.improved.length + diff.declined.length + diff.unchanged.length + diff.gained.length + diff.lost.length;
     const moveTable = (id, list) => {
-        const moves = list.map((m) => ({ keyword: m.keyword, from: m.from === null ? notIn(diff.depth) : `#${m.from}`, to: m.to === null ? notIn(diff.depth) : `#${m.to}`, change: m.change, url: m.url ? pathOf(m.url) || '/' : null }));
+        const moves = list.map((m) => ({ keyword: m.keyword, from: m.from === null ? notIn(diff.depth) : `#${m.from}`, to: m.to === null ? notIn(diff.depth) : `#${m.to}`, change: m.change, url: pageLink(m.url, r.domain) }));
         return {
             id,
             type: 'table',
@@ -886,7 +968,7 @@ export function rankReport(r, date, prev) {
         moveTable(id, list),
     ] : []);
     const actions = [
-        ...diff.lost.map((m) => `${quote(m.keyword)} dropped out of the top ${diff.depth} (was #${m.from}). Check that ${code(pathOf(m.url) || '/')} still loads.`),
+        ...diff.lost.map((m) => `${quote(m.keyword)} dropped out of the top ${diff.depth} (was #${m.from}). Check that ${pageCode(m.url, r.domain)} still loads.`),
         ...diff.declined.filter((m) => m.change <= -3).map((m) => `${quote(m.keyword)} fell from #${m.from} to #${m.to}.`),
     ];
     const tile = (label, list, tone, id, note) => ({
@@ -896,7 +978,7 @@ export function rankReport(r, date, prev) {
             label: 'Compared',
             text: `With the check from ${since}, for the ${plural(compared, 'search term')} in both.`
                 + (prev.depth !== r.depth ? ` One check read deeper, so both are cut to the top ${diff.depth}.` : '')
-                + (diff.not_compared.length ? ` ${plural(diff.not_compared.length, 'term')} in only one check ${diff.not_compared.length === 1 ? 'isn’t' : 'aren’t'} compared.` : ''),
+                + (diff.not_compared.length ? ` ${plural(diff.not_compared.length, 'term')} in only one check ${diff.not_compared.length === 1 ? 'isn’t' : 'aren’t'} compared: ${series(diff.not_compared.map(quote))}.` : ''),
         }];
     return {
         ...base,
@@ -981,9 +1063,9 @@ export function redirectReport(r, date) {
     const pathTable = (id, list, landing, visible = VISIBLE_ROWS) => {
         const showChain = list.some((p) => (p.hops?.length ?? 0) >= 2);
         const rows = list.map((p) => ({
-            path: pathOf(p.checked_url),
+            path: pageLink(p.checked_url),
             kind: fileKind(pathOf(p.checked_url)),
-            ...(landing ? { lands: pathOf(p.final_url) || null } : { status: p.final_status !== null ? String(p.final_status) : 'No response' }),
+            ...(landing ? { lands: pageLink(p.final_url) } : { status: p.final_status !== null ? String(p.final_status) : 'No response', error: p.final_status === null ? (p.error ?? null) : null }),
             ...(showChain ? { chain: chain(p) } : {}),
             domains: p.referring_domains,
         }));
@@ -996,6 +1078,7 @@ export function redirectReport(r, date) {
                 landing
                     ? { key: 'lands', label: 'Lands on', format: 'path' }
                     : { key: 'status', label: 'Result', format: 'badge', tones: tonesFor(rows, 'status', () => 'neutral'), help: '404 means page not found. Any other number is an error the server returned.' },
+                ...(landing ? [] : [{ key: 'error', label: 'Why', help: 'What went wrong when the server gave no response.' }]),
                 ...(showChain ? [{ key: 'chain', label: 'Redirect chain', help: 'Every address the request passed through, when it took two or more redirects.' }] : []),
                 { key: 'domains', label: 'Linking sites', format: 'number', help: GLOSSARY.linkingSites },
             ],
@@ -1036,6 +1119,7 @@ export function redirectReport(r, date) {
         sections: [
             ...(homeRedirects.length ? [
                 { id: 'home-redirects', type: 'callout', tone: 'warn', title: 'Sent to the homepage', text: `${plural(homeRedirects.length, 'inner page')} ${homeRedirects.length === 1 ? 'redirects' : 'redirect'} to the homepage, which Google treats like a missing page. Point ${homeRedirects.length === 1 ? 'it' : 'each'} at its closest match.` },
+                { ...pathTable('home', homeRedirects, true, 5), columns: [{ key: 'path', label: 'Old address', format: 'path' }, { key: 'domains', label: 'Linking sites', format: 'number', help: GLOSSARY.linkingSites }] },
             ] : []),
             ...(chained.length ? [{
                     id: 'chains',
@@ -1048,8 +1132,8 @@ export function redirectReport(r, date) {
                 id: `general-${i}`,
                 type: 'callout',
                 tone: 'info',
-                title: `${plural(g.from.length, 'old page')} land on ${code(g.lands)}`,
-                text: `If the new site has a closer page for any of them, point it there: ${series(g.from.slice(0, 4).map((p) => code(pathOf(p.checked_url))))}${g.from.length > 4 ? ` and ${count(g.from.length - 4)} more` : ''}.`,
+                title: `${plural(g.from.length, 'old page')} land on ${pageCode(g.from[0]?.final_url ?? g.lands)}`,
+                text: `If the new site has a closer page for any of them, point it there: ${series(g.from.slice(0, 4).map((p) => pageCode(p.checked_url)))}${g.from.length > 4 ? ` and ${count(g.from.length - 4)} more, in Redirecting` : ''}.`,
             })),
             ...(gated.length ? [
                 { id: 'gated-title', type: 'heading', level: 2, text: 'Behind a login' },
