@@ -7,7 +7,7 @@ DataForSEO client with a pluggable cache, the SEO checks built on it and builder
 Installed from a tag, with the built `dist/` committed:
 
 ```sh
-pnpm add github:joeyyax/dataforseo#v0.1.0
+pnpm add github:joeyyax/dataforseo#v0.2.0
 ```
 
 ## Use
@@ -39,6 +39,8 @@ interface CacheStore {
 ```
 
 `createDiskCacheStore(dir)` writes one JSON file per key with its `expires_at`.
+
+`createHttpCacheStore({ url, token })` reads `GET {url}/{key}` (`{ value }` or 404) and writes `PUT {url}/{key}` with `{ value, ttl_ms }`, sending `Authorization: Bearer <token>`. Timeouts (3s get, 10s set), network errors and non-2xx responses throw, so the client logs them and calls live.
 
 ## Release
 

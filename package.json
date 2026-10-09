@@ -1,6 +1,6 @@
 {
   "name": "@joeyyax/dataforseo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "DataForSEO client with a pluggable cache, SEO checks and report builders.",
   "license": "MIT",
   "type": "module",
