@@ -1,6 +1,7 @@
 import { type ReportSpec } from './report.js';
 import { type AiResult, type BaselineResult, type ClassifiedKeyword, type GapResult, type LocalResult, type SnapshotResult } from './checks.js';
 import type { BacklinkRedirectsResult, PathCheck } from './redirects.js';
+import { type RankCheckResult } from './rank.js';
 /** One definition per term, so every report explains it the same way. */
 export declare const GLOSSARY: {
     readonly position: "Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.";
@@ -15,6 +16,7 @@ export declare const GLOSSARY: {
     readonly linkingSites: "Other websites with at least one link to that address. Each site counts once.";
     readonly mapsTop3: "The three listings Google shows with the map at the top of local results. Most taps go to these.";
     readonly aiSearches: "DataForSEO’s estimate of how often people ask AI tools that question in a month.";
+    readonly features: "Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.";
 };
 /**
  * Topic terms at #4 to #20, one per page, since the fix is the page.
@@ -33,6 +35,8 @@ export declare function localReport(r: LocalResult, date: string): ReportSpec;
 export declare function aiReport(r: AiResult, date: string): ReportSpec;
 /** Report for `rankBaseline`: the baseline itself, a same-data notice or the changes since. */
 export declare function baselineReport(r: BaselineResult, date: string): ReportSpec;
+/** Report for `rankCheck`, or for the changes since `prev` when given. */
+export declare function rankReport(r: RankCheckResult, date: string, prev?: RankCheckResult): ReportSpec;
 /** "/a → /b → /c" when a check took two or more redirects, else null. */
 export declare function chain(p: PathCheck): string | null;
 /** Several old paths landing on one general page, so each lost its specific match. */

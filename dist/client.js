@@ -6,6 +6,9 @@ export const DEFAULT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 /** Per-request timeout: 30 seconds. */
 export const DEFAULT_TIMEOUT_MS = 30_000;
 const OK = 20000;
+const CREATED = 20100;
+/** Most tasks one task_post call takes. */
+export const TASK_POST_LIMIT = 100;
 /** DataForSEO's status code for a used-up daily spend limit. */
 export const DAILY_LIMIT_STATUS = 40203;
 /** The daily-limit error as a plain sentence, with the limit when DataForSEO gives one. */
@@ -32,9 +35,18 @@ export class DataForSeoError extends Error {
 }
 /** Status 40203: the account's daily spend limit is used up. */
 export class DailyLimitError extends DataForSeoError {
-    constructor(statusMessage, endpoint = '') {
-        super(costLimitMessage(statusMessage), DAILY_LIMIT_STATUS, endpoint);
+    constructor(statusMessage, endpoint = '', message = costLimitMessage(statusMessage)) {
+        super(message, DAILY_LIMIT_STATUS, endpoint);
         this.name = 'DailyLimitError';
+    }
+}
+/** Thrown when queued tasks aren't ready in time. They're paid for; `ids` collects them later. */
+export class QueueTimeoutError extends Error {
+    ids;
+    constructor(ids, timeoutMs) {
+        super(`${ids.length} queued ${ids.length === 1 ? 'task wasn\'t' : 'tasks weren\'t'} ready after ${Math.round(timeoutMs / 1000)} seconds. DataForSEO keeps results for 30 days: ${ids.join(', ')}.`);
+        this.ids = ids;
+        this.name = 'QueueTimeoutError';
     }
 }
 function isEntry(v) {
@@ -58,7 +70,7 @@ export function createDataForSeoClient(opts) {
         }
         return `Basic ${Buffer.from(`${opts.login}:${opts.password}`).toString('base64')}`;
     }
-    async function request(endpoint, body, timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS) {
+    async function send(endpoint, body, timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS) {
         const auth = requireCredentials();
         const res = await fetchFn(`${BASE_URL}${endpoint}`, {
             method: body === undefined ? 'GET' : 'POST',
@@ -80,13 +92,20 @@ export function createDataForSeoClient(opts) {
             const status = data?.status_code ?? res.status;
             throw new DataForSeoError(`DataForSEO ${endpoint} ${status}: ${data?.status_message ?? text.slice(0, 300)}`, status, endpoint);
         }
-        const task = data.tasks?.[0];
+        return data;
+    }
+    function checkTask(endpoint, task, ok = OK) {
         if (task?.status_code === DAILY_LIMIT_STATUS)
             throw new DailyLimitError(task.status_message, endpoint);
-        if (!task || task.status_code !== OK) {
+        if (!task || task.status_code !== ok) {
             const message = `DataForSEO ${endpoint} task ${task?.status_code ?? 'missing'}: ${task?.status_message ?? 'no task in response'}`;
             throw new DataForSeoError(message, task?.status_code ?? null, endpoint);
         }
+    }
+    async function request(endpoint, body, timeoutMs) {
+        const data = await send(endpoint, body, timeoutMs);
+        const task = data.tasks?.[0];
+        checkTask(endpoint, task);
         return { result: task.result?.[0] ?? null, cost: Number(data.cost ?? 0) };
     }
     async function readCache(key) {
@@ -129,6 +148,48 @@ export function createDataForSeoClient(opts) {
             const entry = { endpoint, body, fetched_at: new Date(now()).toISOString(), cost, result };
             await writeCache(key, entry);
             return { result, cost, cached: false, fetched_at: entry.fetched_at };
+        },
+        async cached(endpoint, task) {
+            const hit = await readCache(cacheKey(endpoint, [task]));
+            return hit ? { result: hit.result, cost: 0, cached: true, fetched_at: hit.fetched_at } : null;
+        },
+        async queued(api, tasks, { priority = false, pollMs = 10_000, timeoutMs = 600_000 } = {}) {
+            requireCredentials();
+            const post = `${api}/task_post`;
+            const ids = [];
+            const costs = [];
+            for (let start = 0; start < tasks.length; start += TASK_POST_LIMIT) {
+                const batch = tasks.slice(start, start + TASK_POST_LIMIT);
+                const data = await send(post, batch.map((t, i) => ({ ...t, tag: String(start + i), ...(priority ? { priority: 2 } : {}) })));
+                for (const task of data.tasks ?? []) {
+                    checkTask(post, task, CREATED);
+                    const i = Number(task.data?.tag);
+                    ids[i] = task.id;
+                    costs[i] = Number(task.cost ?? 0);
+                }
+            }
+            const out = new Array(tasks.length);
+            const pending = new Map(ids.map((id, i) => [id, i]));
+            const deadline = Date.now() + timeoutMs;
+            while (pending.size) {
+                const ready = await send(`${api}/tasks_ready`);
+                for (const item of ready.tasks?.[0]?.result ?? []) {
+                    const i = pending.get(item?.id);
+                    if (i === undefined)
+                        continue;
+                    const { result } = await request(`${api}/task_get/regular/${item.id}`);
+                    const entry = { endpoint: `${api}/live/regular`, body: [tasks[i]], fetched_at: new Date(now()).toISOString(), cost: costs[i], result };
+                    await writeCache(cacheKey(entry.endpoint, entry.body), entry);
+                    out[i] = { result, cost: costs[i], cached: false, fetched_at: entry.fetched_at };
+                    pending.delete(item.id);
+                }
+                if (!pending.size)
+                    break;
+                if (Date.now() + pollMs > deadline)
+                    throw new QueueTimeoutError([...pending.keys()], timeoutMs);
+                await new Promise((r) => setTimeout(r, pollMs));
+            }
+            return out;
         },
     };
 }

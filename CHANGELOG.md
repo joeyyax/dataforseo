@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0 (2026-10-09)
+
+### Added
+
+- `rankCheck(client, input)`: where a domain ranks on Google for the terms you name, from a search run that day. Modes `queue`, `priority` and `live`; one cached result per term, shared across modes.
+- `rankDiff(prev, next)`: terms gained, lost, improved, declined and unchanged between two rank checks, with each change in places.
+- `rankReport(result, date, prev?)`: the report for a rank check, or for what moved since `prev`.
+- `estimateRankCost`, `parseSerp`, `RANK_PRICES`, `DEFAULT_RANK_DEPTH` and `DEFAULT_RANK_MAX_KEYWORDS`, with the types `RankCheckInput`, `RankCheckResult`, `RankTerm`, `RankMode`, `RankDiff`, `RankMove` and `SerpResult`.
+- `DataForSeoClient.cached` and `DataForSeoClient.queued`, both optional. `createDataForSeoClient` implements them. `queued` posts tasks in batches of `TASK_POST_LIMIT` (100), polls tasks_ready and fetches each result.
+- `QueueTimeoutError`, with the `ids` of queued tasks that weren't ready in time, and `QueueOptions`.
+- `DailyLimitError` takes an optional message.
+
 ## 0.4.0 (2026-10-09)
 
 ### Changed

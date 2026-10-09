@@ -3,6 +3,8 @@ import { type CacheStore } from './cache.js';
 export declare const DEFAULT_TTL_MS: number;
 /** Per-request timeout: 30 seconds. */
 export declare const DEFAULT_TIMEOUT_MS = 30000;
+/** Most tasks one task_post call takes. */
+export declare const TASK_POST_LIMIT = 100;
 /** DataForSEO's status code for a used-up daily spend limit. */
 export declare const DAILY_LIMIT_STATUS = 40203;
 /** The daily-limit error as a plain sentence, with the limit when DataForSEO gives one. */
@@ -18,7 +20,7 @@ export declare class DataForSeoError extends Error {
 /** Status 40203: the account's daily spend limit is used up. */
 export declare class DailyLimitError extends DataForSeoError {
     readonly status: typeof DAILY_LIMIT_STATUS;
-    constructor(statusMessage: unknown, endpoint?: string);
+    constructor(statusMessage: unknown, endpoint?: string, message?: string);
 }
 /** One DataForSEO call. `cost` is USD for this call: 0 when served from cache. */
 export interface Charged<T = any> {
@@ -26,6 +28,20 @@ export interface Charged<T = any> {
     cost: number;
     cached: boolean;
     fetched_at: string;
+}
+/** Thrown when queued tasks aren't ready in time. They're paid for; `ids` collects them later. */
+export declare class QueueTimeoutError extends Error {
+    readonly ids: string[];
+    constructor(ids: string[], timeoutMs: number);
+}
+/** Options for `DataForSeoClient.queued`. */
+export interface QueueOptions {
+    /** High priority: faster, at twice the price. */
+    priority?: boolean;
+    /** Wait between tasks_ready checks. Default: 10 seconds. */
+    pollMs?: number;
+    /** Throws `QueueTimeoutError` after this long. Default: 10 minutes. */
+    timeoutMs?: number;
 }
 /** The client the checks take. */
 export interface DataForSeoClient {
@@ -36,6 +52,13 @@ export interface DataForSeoClient {
         refresh?: boolean;
         timeoutMs?: number;
     }): Promise<Charged>;
+    /** The cached response for this live task, or null. Free. */
+    cached?(endpoint: string, task: Record<string, unknown>): Promise<Charged | null>;
+    /**
+     * Posts tasks to `{api}/task_post`, waits for `{api}/tasks_ready` and fetches each from `{api}/task_get/regular`.
+     * Results keep input order and are cached as if sent to `{api}/live/regular`. Never reads the cache.
+     */
+    queued?(api: string, tasks: Record<string, unknown>[], opts?: QueueOptions): Promise<Charged[]>;
 }
 /** Options for `createDataForSeoClient`. */
 export interface DataForSeoOptions {

@@ -9,7 +9,7 @@ It calls [DataForSEO](https://dataforseo.com), a pay-per-use API for search data
 Install from a release tag, which includes the built code. It needs Node 22 or later.
 
 ```sh
-pnpm add github:joeyyax/dataforseo#v0.4.0
+pnpm add github:joeyyax/dataforseo#v0.5.0
 ```
 
 ## First use
@@ -176,6 +176,42 @@ How often ChatGPT and Google AI Overviews link the site as a source and name the
 const ai = await aiVisibility(client, { domain: 'example.com', brand: 'Example Plumbing', keywords: ['water heater'] });
 ```
 
+### Rank check
+
+Where the domain shows on Google for search terms you choose: its position, the page and what else is on the results page. One search per term. It throws before paying when there are more terms than `max_keywords` (100 by default). It throws `DailyLimitError` when the searches could cost more than what's left of today's spend limit.
+
+```ts
+const ranks = await rankCheck(client, {
+  domain: 'example.com',
+  keywords: ['plumber springfield', 'drain cleaning'],
+  location: 'Springfield,Illinois,United States',
+});
+```
+
+Each term has a `position`, which is `null` outside the top `depth` results (10 by default, up to 100). A result on `www.example.com` or another subdomain counts. `device: 'mobile'` searches as a phone.
+
+The mode trades price for speed. Prices are for the first 10 results of one search, and each further 10 costs 25% less.
+
+| Mode | Per search | Results in |
+| --- | --- | --- |
+| `queue` (default) | $0.0006 | about 5 minutes |
+| `priority` | $0.0012 | about 1 minute |
+| `live` | $0.002 | a few seconds |
+
+A queued check of 100 terms costs about $0.06. `queue` and `priority` send terms in batches of 100, then check for results every 10 seconds (`pollMs`) for up to 10 minutes (`timeoutMs`). After that, `QueueTimeoutError` lists the IDs of the paid searches. Each term is cached on its own, so a rerun pays only for terms not searched in the last 7 days, in any mode.
+
+The SEO snapshot and ranking baseline estimate positions for terms the domain already ranks for, from data DataForSEO refreshes about monthly. A rank check runs the searches you name on Google the day you run it, including terms the domain doesn't rank for.
+
+To see what moved, keep each result and pass the earlier one to `rankReport`, or to `rankDiff` for the data alone:
+
+```ts
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const previous = JSON.parse(readFileSync('ranks.json', 'utf8'));
+const spec = rankReport(ranks, '2026-11-09', previous);
+writeFileSync('ranks.json', JSON.stringify(ranks));
+```
+
 ### Ranking baseline
 
 Saves the domain's top 100 terms and their positions. Each run after the first compares with the most recent snapshot before it for the same location and language. One call, about $0.02. It's free when a snapshot made the same call within 7 days.
@@ -207,7 +243,7 @@ const links = await backlinkRedirects(client, {
 
 A report turns a check's result into a page someone outside SEO can read: the answer first, then what to do, then the detail. It takes three steps:
 
-1. A report builder takes a check's result and a `YYYY-MM-DD` date and returns a `ReportSpec`. Each check except competitor candidates has one: `snapshotReport`, `gapReport`, `localReport`, `aiReport`, `baselineReport` and `redirectReport`.
+1. A report builder takes a check's result and a `YYYY-MM-DD` date and returns a `ReportSpec`. Each check except competitor candidates has one: `snapshotReport`, `gapReport`, `localReport`, `aiReport`, `rankReport`, `baselineReport` and `redirectReport`. `rankReport` also takes an earlier rank check and reports what moved.
 2. `buildReport(spec)` lays the spec out as blocks: a title, a one-line answer, stat tiles, how it was measured, what to do and the detail.
 3. A renderer turns the blocks into output: Markdown, HTML or your own format.
 
