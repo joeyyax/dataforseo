@@ -9,13 +9,13 @@ It calls [DataForSEO](https://dataforseo.com), a pay-per-use API for search data
 Install from a release tag, which includes the built code. It needs Node 22 or later.
 
 ```sh
-pnpm add github:joeyyax/dataforseo#v0.3.0
+pnpm add github:joeyyax/dataforseo#v0.4.0
 ```
 
 ## First use
 
 ```ts
-import { buildReport, createDataForSeoClient, seoSnapshot, snapshotReport } from '@joeyyax/dataforseo';
+import { buildReport, createDataForSeoClient, seoSnapshot, snapshotReport, toMarkdown } from '@joeyyax/dataforseo';
 
 const client = createDataForSeoClient({
   login: process.env.DATAFORSEO_LOGIN!,
@@ -26,10 +26,10 @@ const client = createDataForSeoClient({
 const snapshot = await seoSnapshot(client, { domain: 'example.com' });
 console.log(snapshot.est_monthly_visits, snapshot.cost, snapshot.cached);
 
-const blocks = buildReport(snapshotReport(snapshot, '2026-10-09'));
+console.log(toMarkdown(buildReport(snapshotReport(snapshot, '2026-10-09'))));
 ```
 
-Run it twice and the second run returns `cost: 0` and `cached: true`.
+It prints the estimate, what it cost and whether it came from the cache, then the report as Markdown. Run it twice and the second run returns `cost: 0` and `cached: true`.
 
 ## Credentials
 
@@ -178,7 +178,7 @@ const ai = await aiVisibility(client, { domain: 'example.com', brand: 'Example P
 
 ### Ranking baseline
 
-Saves the domain's top 100 terms and their positions. Each later run compares with the most recent snapshot before it for the same location and language. One call, about $0.02. It's free when a snapshot made the same call within 7 days.
+Saves the domain's top 100 terms and their positions. Each run after the first compares with the most recent snapshot before it for the same location and language. One call, about $0.02. It's free when a snapshot made the same call within 7 days.
 
 ```ts
 const snapshots = createDiskSnapshotStore('./snapshots');
@@ -187,7 +187,7 @@ const later = await rankBaseline(client, snapshots, { domain: 'example.com' });
 console.log(later.diff?.declined);
 ```
 
-DataForSEO refreshes rankings about monthly, so a check sooner than that usually finds nothing to compare. To store snapshots somewhere else, implement `SnapshotStore`.
+DataForSEO refreshes rankings about monthly, so checks less than a month apart usually find nothing to compare. To store snapshots somewhere else, implement `SnapshotStore`.
 
 ### Backlink redirects
 
@@ -205,19 +205,82 @@ const links = await backlinkRedirects(client, {
 
 ## Reports
 
-Each check except competitor candidates has a report builder: `snapshotReport`, `gapReport`, `localReport`, `aiReport`, `baselineReport` and `redirectReport`. Each takes the check's result and a `YYYY-MM-DD` date and returns a `ReportSpec`.
+A report turns a check's result into a page someone outside SEO can read: the answer first, then what to do, then the detail. It takes three steps:
 
-`buildReport(spec)` turns that into blocks: a title, a one-line answer, stat tiles, how it was measured, what to do and the detail. The block types are heading, text, stats, table, callout, list, details, chart and footer. Text can hold `**bold**`, `` `code` `` and `[links](https://example.com)`. Rendering is up to you:
+1. A report builder takes a check's result and a `YYYY-MM-DD` date and returns a `ReportSpec`. Each check except competitor candidates has one: `snapshotReport`, `gapReport`, `localReport`, `aiReport`, `baselineReport` and `redirectReport`.
+2. `buildReport(spec)` lays the spec out as blocks: a title, a one-line answer, stat tiles, how it was measured, what to do and the detail.
+3. A renderer turns the blocks into output: Markdown, HTML or your own format.
 
 ```ts
 const spec = gapReport(gap, '2026-10-09');
-for (const block of buildReport(spec)) {
-  if (block.type === 'heading') console.log(`${'#'.repeat(block.level ?? 2)} ${block.text}`);
-  if (block.type === 'text') console.log(block.text);
-}
+const blocks = buildReport(spec);
 ```
 
-The wording avoids SEO terms, and `GLOSSARY` defines the ones it keeps. `spec.cost` isn't on the page.
+The wording avoids SEO terms, and `GLOSSARY` defines the ones it keeps. The renderers show each definition once, under the term's first use. `spec.cost` isn't on the page.
+
+### Markdown
+
+`toMarkdown(blocks)` returns GitHub-flavored Markdown. The same blocks always give the same text.
+
+```ts
+import { writeFileSync } from 'node:fs';
+
+writeFileSync('gap.md', toMarkdown(blocks));
+```
+
+Stat tiles become a list, callouts become quotes and charts become a table of their values.
+
+### HTML
+
+`toHtml(blocks)` returns an `<article>` with no styles. Every element you'd style has a `dfs-` class.
+
+```ts
+const fragment = toHtml(blocks);
+```
+
+`variant: 'page'` returns a whole document with one small stylesheet: system fonts, light and dark themes, print styles and tables that scroll inside their own box on phones.
+
+```ts
+writeFileSync('gap.html', toHtml(blocks, { variant: 'page' }));
+```
+
+Both escape all text. Only bold, code and links become HTML, and links get `rel="noopener"`. A link that isn't `http`, `https`, `mailto` or relative stays plain text.
+
+### Your own renderer
+
+A renderer is a function that takes the blocks, and the spec when it needs the date or title: `Renderer<T>`. Blocks are plain JSON, so a renderer can also send them to a service that does the rendering:
+
+```ts
+import type { Renderer } from '@joeyyax/dataforseo';
+
+const publish: Renderer<Promise<string>> = async (blocks, spec) => {
+  const res = await fetch('https://reports.example.com/api', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${process.env.REPORTS_TOKEN}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: spec?.title, date: spec?.date, blocks }),
+  });
+  if (!res.ok) throw new Error(`Report service returned ${res.status}`);
+  return (await res.json()).url;
+};
+
+const url = await publish(blocks, spec);
+```
+
+Text fields can hold `**bold**`, `` `code` `` and `[links](https://example.com)`, and `parseInline(text)` splits them into parts. Any block can have an `id`, which stays the same across runs, for an anchor or an update key. Each type is exported on its own (`HeadingBlock`, `TableBlock` and the rest), and `Block` is their union:
+
+| Block | Fields |
+| --- | --- |
+| `heading` | `text`, `level` (1 to 3, 2 by default), `kicker` |
+| `text` | `text`, `size` (`lg`, `base` or `sm`), `terms` |
+| `stats` | `items`, each with `label`, `value`, `note`, `tone` and `href` |
+| `table` | `columns`, each with `key`, `label`, `align`, `format`, `tones` and `help`; `rows`, `sortable`, `visible` |
+| `callout` | `tone` (`info`, `good`, `warn` or `bad`), `title`, `text`, `terms` |
+| `list` | `items`, `ordered`, `terms` |
+| `details` | `summary`, `blocks`, `open` |
+| `chart` | `kind` (`bar`, `line` or `pie`), `labels`, `series` (each a `name` and `values`), `title` |
+| `footer` | `text` |
+
+`terms` maps a term to its definition. A column's `format` is `text`, `code`, `number`, `badge`, `path` or `bar`.
 
 ## Reference
 

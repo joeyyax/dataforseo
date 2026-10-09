@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 (2026-10-09)
+
+### Added
+
+- `toMarkdown(blocks)`: GitHub-flavored Markdown for a report.
+- `toHtml(blocks, { variant })`: an unstyled `<article>` with `dfs-` classes, or with `variant: 'page'` a standalone document with its own stylesheet for light, dark and print.
+- `Renderer<T>`, the type for your own renderer.
+- A named type for each block: `HeadingBlock`, `TextBlock`, `StatsBlock`, `TableBlock`, `CalloutBlock`, `ListBlock`, `DetailsBlock`, `ChartBlock` and `FooterBlock`. `Block` is their union, unchanged.
+- `parseInline(text)` and the `Inline` type, to read the bold, code and links in block text.
+
 ## 0.3.0 (2026-10-09)
 
 ### Added

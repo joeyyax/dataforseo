@@ -1,6 +1,6 @@
 {
   "name": "@joeyyax/dataforseo",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Check how a site shows up in search and get reports someone outside SEO can read. Uses DataForSEO and caches every answer.",
   "license": "MIT",
   "type": "module",
