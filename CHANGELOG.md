@@ -12,6 +12,10 @@
 - `QueueTimeoutError`, with the `ids` of queued tasks that weren't ready in time, and `QueueOptions`.
 - `DailyLimitError` takes an optional message.
 
+### Changed
+
+- The ranking baseline's comparison report is labeled "Ranking baseline", so it isn't confused with the rank check.
+
 ## 0.4.0 (2026-10-09)
 
 ### Changed

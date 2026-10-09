@@ -689,7 +689,7 @@ export function baselineReport(r, date) {
     const since = longDate(prior.created);
     if (prior.same_data || !r.diff) {
         return {
-            kind: 'Ranking check',
+            kind: 'Ranking baseline',
             date,
             title: `${r.domain} rankings: nothing to compare until ${next}`,
             answer: `Nothing to compare. This check got the same rankings data as the ${since} baseline, so no position could change.`,
@@ -743,7 +743,7 @@ export function baselineReport(r, date) {
     ].slice(0, ACTIONS);
     const toned = (n, tone) => (n ? tone : 'neutral');
     return {
-        kind: 'Ranking check',
+        kind: 'Ranking baseline',
         date,
         title: `${r.domain} rankings since ${since}`,
         answer: `Since ${since}, ${plural(diff.improved.length, 'tracked term')} moved up, ${count(diff.declined.length)} moved down and ${count(diff.unchanged)} held their position. ${count(diff.lost.length)} left the tracked set and ${count(diff.gained.length)} joined it.`,

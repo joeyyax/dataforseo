@@ -458,7 +458,7 @@ exports[`toHtml > renders the rank-baseline report 1`] = `
 
 exports[`toHtml > renders the rank-check report 1`] = `
 "<article class="dfs-report">
-<hgroup id="title"><p class="dfs-kicker">Ranking check · October 8, 2026</p><h1>acmeplumbing.example rankings since September 1, 2026</h1></hgroup>
+<hgroup id="title"><p class="dfs-kicker">Ranking baseline · October 8, 2026</p><h1>acmeplumbing.example rankings since September 1, 2026</h1></hgroup>
 <p id="answer" class="dfs-lg">Since September 1, 2026, 2 tracked terms moved up, 2 moved down and 7 held their position. 1 left the tracked set and 2 joined it.</p>
 <dl class="dfs-stats" id="stats">
 <div class="dfs-stat dfs-good"><dt>Moved up</dt><dd class="dfs-value"><a href="#up-title">2</a></dd></div>
@@ -524,7 +524,7 @@ exports[`toHtml > renders the rank-check report 1`] = `
 
 exports[`toHtml > renders the rank-check-same-data report 1`] = `
 "<article class="dfs-report">
-<hgroup id="title"><p class="dfs-kicker">Ranking check · October 8, 2026</p><h1>acmeplumbing.example rankings: nothing to compare until November 7, 2026</h1></hgroup>
+<hgroup id="title"><p class="dfs-kicker">Ranking baseline · October 8, 2026</p><h1>acmeplumbing.example rankings: nothing to compare until November 7, 2026</h1></hgroup>
 <p id="answer" class="dfs-lg">Nothing to compare. This check got the same rankings data as the October 8, 2026 baseline, so no position could change.</p>
 <dl class="dfs-stats" id="stats">
 <div class="dfs-stat"><dt>Terms tracked</dt><dd class="dfs-value"><a href="#next">15</a></dd></div>
@@ -1134,7 +1134,7 @@ _Searches a month_: Average Google searches a month for the term across the Unit
 exports[`toMarkdown > renders the rank-check report 1`] = `
 "# acmeplumbing.example rankings since September 1, 2026
 
-_Ranking check · October 8, 2026_
+_Ranking baseline · October 8, 2026_
 
 Since September 1, 2026, 2 tracked terms moved up, 2 moved down and 7 held their position. 1 left the tracked set and 2 joined it.
 
@@ -1205,7 +1205,7 @@ Not in the top 12 by estimated visits on September 1, 2026.
 exports[`toMarkdown > renders the rank-check-same-data report 1`] = `
 "# acmeplumbing.example rankings: nothing to compare until November 7, 2026
 
-_Ranking check · October 8, 2026_
+_Ranking baseline · October 8, 2026_
 
 Nothing to compare. This check got the same rankings data as the October 8, 2026 baseline, so no position could change.
 
