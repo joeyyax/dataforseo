@@ -1,7 +1,7 @@
 {
   "name": "@joeyyax/dataforseo",
   "version": "0.2.1",
-  "description": "DataForSEO client with a pluggable cache, SEO checks and report builders.",
+  "description": "Check how a site shows up in search and get reports someone outside SEO can read. Uses DataForSEO and caches every answer.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
@@ -13,6 +13,8 @@
   "sideEffects": false,
   "engines": { "node": ">=22" },
   "repository": { "type": "git", "url": "git+https://github.com/joeyyax/dataforseo.git" },
+  "homepage": "https://github.com/joeyyax/dataforseo#readme",
+  "bugs": { "url": "https://github.com/joeyyax/dataforseo/issues" },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
