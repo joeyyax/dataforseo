@@ -7,7 +7,7 @@ DataForSEO client with a pluggable cache, the SEO checks built on it and builder
 Installed from a tag, with the built `dist/` committed:
 
 ```sh
-pnpm add github:joeyyax/dataforseo#v0.2.0
+pnpm add github:joeyyax/dataforseo#v0.2.1
 ```
 
 ## Use
