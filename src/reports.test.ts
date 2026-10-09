@@ -127,7 +127,7 @@ describe('report blocks', () => {
       '“drain cleaning”: #14, with `/drains`. #1 is [rivalplumbing.example](https://rivalplumbing.example/).',
       '“emergency plumber”: not in the top 20. #1 is [rivalplumbing.example](https://rivalplumbing.example/).',
     ]);
-    expect(find(blocks, 'results').rows[0]).toStrictEqual({ keyword: 'plumber springfield', position: '#1', url: '/', first: 'acmeplumbing.example', features: 'Map results, Questions' });
+    expect(find(blocks, 'results').rows[0]).toStrictEqual({ keyword: 'plumber springfield', position: '#1', url: '/', top: '[acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/)', features: 'Map results, Questions' });
     expect(find(blocks, 'results').columns[1].tones['Not in top 20']).toBe('bad');
   });
 
