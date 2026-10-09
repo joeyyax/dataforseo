@@ -97,7 +97,7 @@ const { spent, limit, left } = await dailyBudget(client);
 
 `limit` and `left` are `null` when no limit is set. `balance(client)` returns the account balance, total deposits and spend, also free.
 
-Once the limit is used up, paid calls throw `DailyLimitError` until midnight UTC. Its message reads "DataForSEO's daily spend limit ($3) is used up. It resets at midnight UTC." Other API errors throw `DataForSeoError`, with DataForSEO's `status` code and the `endpoint`.
+Once the limit is used up, paid calls throw `DailyLimitError` until midnight UTC. Its message reads "DataForSEO's daily spend limit ($10) is used up. It resets at midnight UTC." Other API errors throw `DataForSeoError`, with DataForSEO's `status` code and the `endpoint`.
 
 ```ts
 try {
