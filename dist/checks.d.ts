@@ -29,11 +29,11 @@ export interface Spend {
     cached: boolean;
     fetched_at: string;
 }
-/** Cost adds up; cached only when every call was; fetched_at is the oldest pull. */
+/** Several calls as one: total cost, cached only when all were and the oldest `fetched_at`. */
 export declare function combine(charges: Charged[], nowIso: string): Spend;
 /** Same site: exact domain or a subdomain of it. */
 export declare function sameSite(candidate: string | null | undefined, domain: string): boolean;
-/** `money.statistics.day` cut to its USD `total`; the per-API keys do not track spend. */
+/** Today's date and USD spend from user_data's `money.statistics.day`. */
 export declare function daySpend(day: any): {
     date?: string;
     total?: number;
@@ -214,10 +214,7 @@ export interface GapInput extends Market, RelevanceOptions {
     /** Default: `DEFAULT_GAP_LIMIT`. */
     limit?: number;
 }
-/**
- * Search terms where a named competitor is on Google's page one and the domain is behind it or absent:
- * two Labs domain_intersection calls per competitor, then the relevance filter.
- */
+/** Search terms where a competitor is on Google's page one and the domain is lower or missing: two calls per competitor. */
 export declare function competitorGap(client: DataForSeoClient, input: GapInput, now?: () => number): Promise<GapResult>;
 /** True for directories, social sites, reference sites and public bodies. */
 export declare function isNoiseCompetitor(domain: string): boolean;
@@ -258,10 +255,7 @@ export interface CandidatesInput extends Market {
     /** Default: `DEFAULT_CANDIDATES`. */
     limit?: number;
 }
-/**
- * Domains ranking for the same search terms: the caller's keywords, or the domain's own top
- * non-brand keywords from the same ranked_keywords pull as `seoSnapshot`, so a recent snapshot makes that step free.
- */
+/** Domains that rank for the same terms: the given keywords, or the domain's top non-brand terms from the `seoSnapshot` call. */
 export declare function competitorCandidates(client: DataForSeoClient, input: CandidatesInput, now?: () => number): Promise<CandidatesResult>;
 /** One Google Maps result. */
 export interface MapsListing {
@@ -368,7 +362,7 @@ export interface BaselineResult extends Spend {
     est_monthly_visits: number;
     positions: Positions;
     keywords: RankedKeyword[];
-    /** `same_data` when both snapshots hold the same DataForSEO pull, so nothing can have moved. `compared_terms` is the top-N both sides were cut to; `trimmed` when either held more. */
+    /** `same_data`: both hold the same pull, so nothing moved. Both sides are cut to `compared_terms`; `trimmed` says one held more. */
     compared_to: {
         id: string;
         created: string;
@@ -385,10 +379,10 @@ export interface BaselineInput extends Market {
     domain: string;
     /** Added to the snapshot id, e.g. "Pre launch". */
     label?: string;
-    /** A snapshot id to compare with. Default: the latest earlier one for the same market. */
+    /** A snapshot id to compare with. Default: the most recent one before it for the same market. */
     compare_to?: string;
     /** Default: `DEFAULT_BASELINE_LIMIT`. */
     limit?: number;
 }
-/** Saves the domain's top terms and positions, then diffs them against an earlier snapshot. */
+/** Saves the domain's top terms and positions, then compares them with an earlier snapshot. */
 export declare function rankBaseline(client: DataForSeoClient, snapshots: SnapshotStore, input: BaselineInput, now?: () => number): Promise<BaselineResult>;

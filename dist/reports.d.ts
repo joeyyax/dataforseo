@@ -17,8 +17,8 @@ export declare const GLOSSARY: {
     readonly aiSearches: "DataForSEO’s estimate of how often people ask AI tools that question in a month.";
 };
 /**
- * Terms about the client's work at #4 to #20: page one or two, not yet top 3. One per page, since the fix is the page.
- * Searches for a specific place or site come last; people looking for a service or an answer come first.
+ * Topic terms at #4 to #20, one per page, since the fix is the page.
+ * Searches for a service or an answer come first; searches for a specific place or site come last.
  */
 export declare function snapshotOpportunities(keywords: ClassifiedKeyword[]): (ClassifiedKeyword & {
     similar: number;

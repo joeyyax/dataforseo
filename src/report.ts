@@ -53,7 +53,7 @@ export interface MethodLine {
 
 /** A report before layout. `buildReport` turns it into blocks. */
 export interface ReportSpec {
-  /** Report type for the kicker, e.g. "SEO snapshot". */
+  /** Report type, shown over the title, e.g. "SEO snapshot". */
   kind: string;
   /** YYYY-MM-DD. */
   date: string;
@@ -80,7 +80,7 @@ export interface ReportSpec {
   note?: string;
 }
 
-/** Kicker, title, answer, stat tiles, method, actions, sections and footer, in that order. */
+/** Turns a spec into blocks: title, answer, stat tiles, method, actions, sections and footer. */
 export function buildReport(spec: ReportSpec): Block[] {
   const blocks: Block[] = [
     { id: 'title', type: 'heading', level: 1, text: spec.title, kicker: `${spec.kind} · ${longDate(spec.date)}` },

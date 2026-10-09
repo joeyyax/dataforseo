@@ -23,7 +23,7 @@ export interface PathCheck extends PathTarget {
   final_status: number | null;
   final_url: string | null;
   verdict: RedirectVerdict;
-  /** Redirected to the new site's homepage from a deeper path, which search engines treat as a soft 404. */
+  /** An inner page redirected to the homepage, which Google treats like a missing page. */
   home_redirect?: true;
   /** Each redirect followed, in order. */
   hops?: { url: string; status: number }[];

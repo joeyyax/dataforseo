@@ -1,4 +1,4 @@
-/** Kicker, title, answer, stat tiles, method, actions, sections and footer, in that order. */
+/** Turns a spec into blocks: title, answer, stat tiles, method, actions, sections and footer. */
 export function buildReport(spec) {
     const blocks = [
         { id: 'title', type: 'heading', level: 1, text: spec.title, kicker: `${spec.kind} · ${longDate(spec.date)}` },

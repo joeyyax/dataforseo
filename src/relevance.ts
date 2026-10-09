@@ -1,9 +1,8 @@
 import { normalizeDomain } from './util.js';
 
 /**
- * How a search term relates to the client: their own name, one of their topics, someone else's
- * name (a navigational search for another brand or place) or unrelated. `unsorted` means no
- * topics were given, so on- and off-topic can't be told apart.
+ * How a search term relates to the business: its name, one of its topics, another business or place,
+ * another area or unrelated. `unsorted` means no topics were given.
  */
 export type TermKind = 'brand' | 'topic' | 'elsewhere' | 'other-name' | 'unrelated' | 'unsorted';
 
@@ -32,12 +31,12 @@ export interface Topic {
 
 /** The parsed filter `classify` sorts terms with. Build it with `relevanceFor`. */
 export interface Relevance {
-  /** Squashed names that mean the client: domain stem, brand, aliases. */
+  /** Squashed names that mean the business: domain stem, brand and aliases. */
   brand: string[];
   /** Squashed names that mean a competitor. */
   others: string[];
   topics: Topic[];
-  /** Places the client serves, lowercased. Empty means no area check. */
+  /** Places the business serves, lowercased. Empty means no area check. */
   area: string[];
 }
 
@@ -98,7 +97,7 @@ export function relevanceFor(input: { domain: string; brand?: string; aliases?: 
   };
 }
 
-/** A US place the term names that isn't part of the client's area, if any. */
+/** A US place the term names outside the given area, if any. */
 export function elsewhere(keyword: string, area: string[]): string | undefined {
   if (!area.length) return undefined;
   const k = keyword.toLowerCase();

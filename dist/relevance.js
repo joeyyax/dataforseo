@@ -57,7 +57,7 @@ export function relevanceFor(input) {
         area: (input.area ?? []).map((a) => a.trim().toLowerCase()).filter(Boolean),
     };
 }
-/** A US place the term names that isn't part of the client's area, if any. */
+/** A US place the term names outside the given area, if any. */
 export function elsewhere(keyword, area) {
     if (!area.length)
         return undefined;

@@ -8,7 +8,7 @@ export const DEFAULT_TIMEOUT_MS = 30_000;
 const OK = 20000;
 /** DataForSEO's status code for a used-up daily spend limit. */
 export const DAILY_LIMIT_STATUS = 40203;
-/** 40203 as a plain message, e.g. "money limit per day has been exceeded: 1.09792 >= 1". */
+/** The daily-limit error as a plain sentence, with the limit when DataForSEO gives one. */
 export function costLimitMessage(statusMessage) {
     const limit = Number(String(statusMessage ?? '').match(/>=\s*([\d.]+)/)?.[1]);
     const amount = Number.isFinite(limit) ? ` ($${Number.isInteger(limit) ? limit : limit.toFixed(2)})` : '';

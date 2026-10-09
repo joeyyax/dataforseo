@@ -28,7 +28,7 @@ const LABS = '/dataforseo_labs/google';
 const LLM = '/ai_optimization/llm_mentions';
 /** LLM Mentions calls can take up to 120 seconds. */
 const LLM_TIMEOUT_MS = 130_000;
-/** Cost adds up; cached only when every call was; fetched_at is the oldest pull. */
+/** Several calls as one: total cost, cached only when all were and the oldest `fetched_at`. */
 export function combine(charges, nowIso) {
     if (!charges.length)
         return { cost: 0, cached: false, fetched_at: nowIso };
@@ -49,7 +49,7 @@ function itemsOf(result) {
     return Array.isArray(result?.items) ? result.items : [];
 }
 // Balance
-/** `money.statistics.day` cut to its USD `total`; the per-API keys do not track spend. */
+/** Today's date and USD spend from user_data's `money.statistics.day`. */
 export function daySpend(day) {
     if (!day || typeof day !== 'object')
         return undefined;
@@ -186,10 +186,7 @@ export function mergeGaps(pulls, r) {
     }
     return [...terms.values()].sort((a, b) => b.search_volume - a.search_volume || b.competitors.length - a.competitors.length);
 }
-/**
- * Search terms where a named competitor is on Google's page one and the domain is behind it or absent:
- * two Labs domain_intersection calls per competitor, then the relevance filter.
- */
+/** Search terms where a competitor is on Google's page one and the domain is lower or missing: two calls per competitor. */
 export async function competitorGap(client, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
     const location = input.location ?? DEFAULT_LOCATION;
@@ -267,10 +264,7 @@ const NOISE_TLD = /\.(gov|edu|mil|int)(\.[a-z]{2})?$|\.(k12|gov|state)\.[a-z]{2}
 export function isNoiseCompetitor(domain) {
     return NOISE_TLD.test(domain) || NOISE_DOMAINS.some((n) => sameSite(domain, n));
 }
-/**
- * Domains ranking for the same search terms: the caller's keywords, or the domain's own top
- * non-brand keywords from the same ranked_keywords pull as `seoSnapshot`, so a recent snapshot makes that step free.
- */
+/** Domains that rank for the same terms: the given keywords, or the domain's top non-brand terms from the `seoSnapshot` call. */
 export async function competitorCandidates(client, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
     const location = input.location ?? DEFAULT_LOCATION;
@@ -465,7 +459,7 @@ function latestComparable(all, cur, limit) {
     const earlier = all.filter((s) => s.location === cur.location && s.language === cur.language && s.created < cur.created && s.id !== cur.id);
     return earlier.filter((s) => snapshotLimit(s) >= limit).at(-1) ?? earlier.at(-1);
 }
-/** Saves the domain's top terms and positions, then diffs them against an earlier snapshot. */
+/** Saves the domain's top terms and positions, then compares them with an earlier snapshot. */
 export async function rankBaseline(client, snapshots, input, now = Date.now) {
     const domain = normalizeDomain(input.domain);
     const location = input.location ?? DEFAULT_LOCATION;

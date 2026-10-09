@@ -86,7 +86,7 @@ export interface MethodLine {
 }
 /** A report before layout. `buildReport` turns it into blocks. */
 export interface ReportSpec {
-    /** Report type for the kicker, e.g. "SEO snapshot". */
+    /** Report type, shown over the title, e.g. "SEO snapshot". */
     kind: string;
     /** YYYY-MM-DD. */
     date: string;
@@ -112,7 +112,7 @@ export interface ReportSpec {
     cached?: boolean;
     note?: string;
 }
-/** Kicker, title, answer, stat tiles, method, actions, sections and footer, in that order. */
+/** Turns a spec into blocks: title, answer, stat tiles, method, actions, sections and footer. */
 export declare function buildReport(spec: ReportSpec): Block[];
 /** Badge tones for every distinct value in one column. */
 export declare function tonesFor(rows: Record<string, string | number | null>[], key: string, tone: (value: string) => BadgeTone): Record<string, BadgeTone>;

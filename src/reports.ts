@@ -114,8 +114,8 @@ function termTable(id: string, list: ClassifiedKeyword[], opts: { about?: boolea
 }
 
 /**
- * Terms about the client's work at #4 to #20: page one or two, not yet top 3. One per page, since the fix is the page.
- * Searches for a specific place or site come last; people looking for a service or an answer come first.
+ * Topic terms at #4 to #20, one per page, since the fix is the page.
+ * Searches for a service or an answer come first; searches for a specific place or site come last.
  */
 export function snapshotOpportunities(keywords: ClassifiedKeyword[]): (ClassifiedKeyword & { similar: number })[] {
   const nav = (k: ClassifiedKeyword) => (k.intent === 'navigational' ? 1 : 0);

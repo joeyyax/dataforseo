@@ -5,7 +5,7 @@ export declare const DEFAULT_TTL_MS: number;
 export declare const DEFAULT_TIMEOUT_MS = 30000;
 /** DataForSEO's status code for a used-up daily spend limit. */
 export declare const DAILY_LIMIT_STATUS = 40203;
-/** 40203 as a plain message, e.g. "money limit per day has been exceeded: 1.09792 >= 1". */
+/** The daily-limit error as a plain sentence, with the limit when DataForSEO gives one. */
 export declare function costLimitMessage(statusMessage: unknown): string;
 /** The next midnight UTC, when the daily spend limit resets. */
 export declare function nextUtcMidnight(at?: number): Date;
@@ -29,9 +29,9 @@ export interface Charged<T = any> {
 }
 /** The client the checks take. */
 export interface DataForSeoClient {
-    /** Account money and limits. The endpoint is free, so it is never cached. */
+    /** Account balance and limits. Free, so never cached. */
     userData(): Promise<Charged>;
-    /** POSTs one task to a live endpoint, through the cache. */
+    /** Sends one task to a live endpoint, through the cache. */
     live(endpoint: string, task: Record<string, unknown>, opts?: {
         refresh?: boolean;
         timeoutMs?: number;
