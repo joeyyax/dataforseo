@@ -35,7 +35,6 @@ export declare function localReport(r: LocalResult, date: string): ReportSpec;
 export declare function aiReport(r: AiResult, date: string): ReportSpec;
 /** Report for `rankBaseline`: the baseline itself, a same-data notice or the changes since. */
 export declare function baselineReport(r: BaselineResult, date: string): ReportSpec;
-/** Report for `rankCheck`, or for the changes since `prev` when given. */
 export declare function rankReport(r: RankCheckResult, date: string, prev?: RankCheckResult): ReportSpec;
 /** "/a → /b → /c" when a check took two or more redirects, else null. */
 export declare function chain(p: PathCheck): string | null;

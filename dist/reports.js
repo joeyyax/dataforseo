@@ -781,6 +781,14 @@ function featureLabel(type) {
     return FEATURE_LABEL[type] ?? capitalize(type.replace(/_/g, ' '));
 }
 /** Report for `rankCheck`, or for the changes since `prev` when given. */
+/** A result as a link: its domain and a short path, pointing at the page. */
+function listingLink(l) {
+    let path = pathOf(l.url);
+    if (path.length > 30)
+        path = `${path.slice(0, 14)}…${path.slice(-14)}`;
+    const label = `${l.domain.replace(/^www\./, '')}${path === '/' ? '' : path}`.replace(/[[\]]/g, '');
+    return `[${label}](${l.url})`;
+}
 export function rankReport(r, date, prev) {
     const n = r.terms.length;
     const notIn = (depth) => `Not in top ${depth}`;
@@ -790,7 +798,7 @@ export function rankReport(r, date, prev) {
         keyword: t.keyword,
         position: t.position === null ? notIn(r.depth) : `#${t.position}`,
         url: t.url ? pathOf(t.url) || '/' : null,
-        first: t.top_3[0]?.domain ?? null,
+        top: t.top_3.map(listingLink).join(', ') || null,
         features: t.features.map(featureLabel).join(', ') || null,
     }));
     const results = [
@@ -802,7 +810,7 @@ export function rankReport(r, date, prev) {
                 { key: 'keyword', label: 'Search term' },
                 { key: 'position', label: 'Position', format: 'badge', tones: tonesFor(rows, 'position', positionTone), help: GLOSSARY.position },
                 { key: 'url', label: 'Page', format: 'path' },
-                { key: 'first', label: '#1' },
+                { key: 'top', label: 'Top 3' },
                 { key: 'features', label: 'Also on the page', help: GLOSSARY.features },
             ],
             rows,
@@ -826,7 +834,7 @@ export function rankReport(r, date, prev) {
             ...r.terms.filter((t) => t.position === null),
         ];
         const actions = misses.slice(0, ACTIONS).map((t) => {
-            const first = t.top_3[0] ? ` #1 is ${t.top_3[0].domain}.` : '';
+            const first = t.top_3[0] ? ` #1 is ${listingLink(t.top_3[0])}.` : '';
             return t.position === null
                 ? `${quote(t.keyword)}: not in the top ${r.depth}.${first}`
                 : `${quote(t.keyword)}: #${t.position}, with ${code(pathOf(t.url) || '/')}.${first}`;

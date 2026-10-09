@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1 (2026-10-09)
+
+### Changed
+
+- `rankReport` shows each search's top 3 as links to their pages, and links the #1 result in what to do.
+
 ## 0.5.0 (2026-10-09)
 
 ### Added

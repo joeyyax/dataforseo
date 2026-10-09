@@ -9,7 +9,7 @@ It calls [DataForSEO](https://dataforseo.com), a pay-per-use API for search data
 Install from a release tag, which includes the built code. It needs Node 22 or later.
 
 ```sh
-pnpm add github:joeyyax/dataforseo#v0.5.0
+pnpm add github:joeyyax/dataforseo#v0.5.1
 ```
 
 ## First use

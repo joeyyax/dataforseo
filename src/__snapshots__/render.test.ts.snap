@@ -273,18 +273,18 @@ exports[`toHtml > renders the live-rank-check report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">Search terms where acmeplumbing.example isn’t on page one, closest first.</p>
 <ul id="actions">
-<li>“drain cleaning”: #14, with <code>/drains</code>. #1 is rivalplumbing.example.</li>
-<li>“emergency plumber”: not in the top 20. #1 is rivalplumbing.example.</li>
+<li>“drain cleaning”: #14, with <code>/drains</code>. #1 is <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>.</li>
+<li>“emergency plumber”: not in the top 20. #1 is <a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>.</li>
 </ul>
 <h2 id="results-title">Results by search</h2>
 <div class="dfs-table" id="results" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">#1</th><th scope="col">Also on the page</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">Top 3</th><th scope="col">Also on the page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td>acmeplumbing.example</td><td>Map results, Questions</td></tr>
-<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td>rivalplumbing.example</td><td>Ads</td></tr>
-<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td>rivalplumbing.example</td><td></td></tr>
-<tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td>rivalplumbing.example</td><td>Map results, AI Overview</td></tr>
-<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td>rivalplumbing.example</td><td></td></tr>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td><a href="https://acmeplumbing.example/" rel="noopener">acmeplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, Questions</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Ads</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
+<tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, AI Overview</td></tr>
+<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Also on the page</dt><dd>Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.</dd></div></dl>
@@ -349,13 +349,13 @@ exports[`toHtml > renders the live-rank-check-since report 1`] = `
 </table></div>
 <h2 id="results-title">Results by search</h2>
 <div class="dfs-table" id="results" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">#1</th><th scope="col">Also on the page</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">Top 3</th><th scope="col">Also on the page</th></tr></thead>
 <tbody>
-<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td>acmeplumbing.example</td><td>Map results, Questions</td></tr>
-<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td>rivalplumbing.example</td><td>Ads</td></tr>
-<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td>rivalplumbing.example</td><td></td></tr>
-<tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td>rivalplumbing.example</td><td>Map results, AI Overview</td></tr>
-<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td>rivalplumbing.example</td><td></td></tr>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td><a href="https://acmeplumbing.example/" rel="noopener">acmeplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, Questions</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Ads</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
+<tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td>Map results, AI Overview</td></tr>
+<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td><a href="https://rivalplumbing.example/" rel="noopener">rivalplumbing.example</a>, <a href="https://citydrains.example/" rel="noopener">citydrains.example</a>, <a href="https://pipes.example/" rel="noopener">pipes.example</a></td><td></td></tr>
 </tbody>
 </table></div>
 <dl class="dfs-terms"><div><dt>Also on the page</dt><dd>Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.</dd></div></dl>
@@ -931,18 +931,18 @@ _top 3_: Positions #1 to #3, which get most of the clicks.
 
 Search terms where acmeplumbing.example isn’t on page one, closest first.
 
-- “drain cleaning”: #14, with \`/drains\`. #1 is rivalplumbing.example.
-- “emergency plumber”: not in the top 20. #1 is rivalplumbing.example.
+- “drain cleaning”: #14, with \`/drains\`. #1 is [rivalplumbing.example](https://rivalplumbing.example/).
+- “emergency plumber”: not in the top 20. #1 is [rivalplumbing.example](https://rivalplumbing.example/).
 
 ## Results by search
 
-| Search term | Position | Page | #1 | Also on the page |
+| Search term | Position | Page | Top 3 | Also on the page |
 | --- | --- | --- | --- | --- |
-| plumber springfield | #1 | \`/\` | acmeplumbing.example | Map results, Questions |
-| water heater repair | #4 | \`/water-heaters\` | rivalplumbing.example | Ads |
-| drain cleaning | #14 | \`/drains\` | rivalplumbing.example |  |
-| emergency plumber | Not in top 20 |  | rivalplumbing.example | Map results, AI Overview |
-| sump pump install | #9 | \`/sump-pumps\` | rivalplumbing.example |  |
+| plumber springfield | #1 | \`/\` | [acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, Questions |
+| water heater repair | #4 | \`/water-heaters\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Ads |
+| drain cleaning | #14 | \`/drains\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
+| emergency plumber | Not in top 20 |  | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, AI Overview |
+| sump pump install | #9 | \`/sump-pumps\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
 
 _Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 
@@ -1013,13 +1013,13 @@ Not in the top 20 on September 8, 2026.
 
 ## Results by search
 
-| Search term | Position | Page | #1 | Also on the page |
+| Search term | Position | Page | Top 3 | Also on the page |
 | --- | --- | --- | --- | --- |
-| plumber springfield | #1 | \`/\` | acmeplumbing.example | Map results, Questions |
-| water heater repair | #4 | \`/water-heaters\` | rivalplumbing.example | Ads |
-| drain cleaning | #14 | \`/drains\` | rivalplumbing.example |  |
-| emergency plumber | Not in top 20 |  | rivalplumbing.example | Map results, AI Overview |
-| sump pump install | #9 | \`/sump-pumps\` | rivalplumbing.example |  |
+| plumber springfield | #1 | \`/\` | [acmeplumbing.example](https://acmeplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, Questions |
+| water heater repair | #4 | \`/water-heaters\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Ads |
+| drain cleaning | #14 | \`/drains\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
+| emergency plumber | Not in top 20 |  | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) | Map results, AI Overview |
+| sump pump install | #9 | \`/sump-pumps\` | [rivalplumbing.example](https://rivalplumbing.example/), [citydrains.example](https://citydrains.example/), [pipes.example](https://pipes.example/) |  |
 
 _Also on the page_: Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.
 
