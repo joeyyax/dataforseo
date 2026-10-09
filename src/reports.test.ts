@@ -177,3 +177,15 @@ describe('buildReport', () => {
     expect(usd(0.002)).toBe('$0.0020');
   });
 });
+
+describe('buildReport empty columns', () => {
+  it('drops a table column with no value in any row', async () => {
+    const { buildReport } = await import('./report.js');
+    const blocks = buildReport({
+      kind: 'Test', title: 't', date: '2026-10-09', answer: 'a', stats: [], method: [], source: 's',
+      actions: [{ id: 'tbl', type: 'table', columns: [{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }], rows: [{ a: 1, b: null }, { a: 2, b: '' }] }],
+    } as never);
+    const table = blocks.find((b) => b.id === 'tbl') as { columns: { key: string }[] };
+    expect(table.columns.map((c) => c.key)).toEqual(['a']);
+  });
+});

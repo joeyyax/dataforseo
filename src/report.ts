@@ -166,7 +166,16 @@ export function buildReport(spec: ReportSpec): Block[] {
   const ids = new Set(blocks.map((b) => b.id));
   const stats = blocks[2] as Extract<Block, { type: 'stats' }>;
   stats.items = stats.items.map((s) => (s.href && ids.has(`${s.href.slice(1)}-title`) ? { ...s, href: `${s.href}-title` } : s));
-  return blocks;
+  return blocks.map(dropEmptyColumns);
+}
+
+/** Drops table columns with no value in any row, inside details too. */
+function dropEmptyColumns(block: Block): Block {
+  if (block.type === 'details') return { ...block, blocks: block.blocks.map(dropEmptyColumns) };
+  if (block.type !== 'table' || !block.rows.length) return block;
+  const empty = (v: unknown) => v === null || v === undefined || v === '';
+  const columns = block.columns.filter((c) => block.rows.some((r) => !empty(r[c.key])));
+  return columns.length === block.columns.length ? block : { ...block, columns };
 }
 
 /** Badge tones for every distinct value in one column. */

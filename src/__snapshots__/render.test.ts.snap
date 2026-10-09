@@ -395,10 +395,10 @@ exports[`toHtml > renders the rank-check report 1`] = `
 <h2 id="new-title">Joined the tracked set (2)</h2>
 <p id="new-note">Not in the top 12 by estimated visits on September 1, 2026.</p>
 <div class="dfs-table" id="new" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">Now</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page</th></tr></thead>
 <tbody>
-<tr><td>hydro jetting</td><td class="dfs-num"></td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">1,300</td><td><code>/drains/jetting</code></td></tr>
-<tr><td>backflow testing</td><td class="dfs-num"></td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">480</td><td><code>/backflow</code></td></tr>
+<tr><td>hydro jetting</td><td><span class="dfs-badge">#9</span></td><td class="dfs-num">1,300</td><td><code>/drains/jetting</code></td></tr>
+<tr><td>backflow testing</td><td><span class="dfs-badge">#15</span></td><td class="dfs-num">480</td><td><code>/backflow</code></td></tr>
 </tbody>
 </table></div>
 <footer class="dfs-footer" id="footer"><p>Data: DataForSEO Labs, October 8, 2026.</p></footer>
@@ -455,16 +455,16 @@ exports[`toHtml > renders the seo-snapshot report 1`] = `
 <h2 id="actions-title">What to do</h2>
 <p id="actions-intro">Search terms about Acme Plumbing’s work where acmeplumbing.example is on page one or two but outside the top 3, one per page. The top 3 get most of the clicks. Searches for a service or an answer come first, then the most searched.</p>
 <div class="dfs-table" id="actions" tabindex="0"><table>
-<thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col">Searcher wants</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page to improve</th></tr></thead>
+<thead><tr><th scope="col">Search term</th><th scope="col">Topic</th><th scope="col">Position</th><th scope="col" class="dfs-num">Searches a month</th><th scope="col">Page to improve</th></tr></thead>
 <tbody>
-<tr><td>emergency plumber</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td><code>/</code></td></tr>
-<tr><td>water heater repair</td><td>Water heaters</td><td></td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td><code>/water-heaters</code></td></tr>
-<tr><td>drain cleaning</td><td>Plumbing</td><td></td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td><code>/drains</code></td></tr>
-<tr><td>tankless water heater install</td><td>Water heaters</td><td></td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td><code>/water-heaters/tankless</code></td></tr>
-<tr><td>garbage disposal repair</td><td>Pumps</td><td></td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td><code>/disposals</code></td></tr>
+<tr><td>emergency plumber</td><td>Plumbing</td><td><span class="dfs-badge">#8</span></td><td class="dfs-num">3,600</td><td><code>/</code></td></tr>
+<tr><td>water heater repair</td><td>Water heaters</td><td><span class="dfs-badge">#6</span></td><td class="dfs-num">1,900</td><td><code>/water-heaters</code></td></tr>
+<tr><td>drain cleaning</td><td>Plumbing</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">880</td><td><code>/drains</code></td></tr>
+<tr><td>tankless water heater install</td><td>Water heaters</td><td><span class="dfs-badge">#11</span></td><td class="dfs-num">480</td><td><code>/water-heaters/tankless</code></td></tr>
+<tr><td>garbage disposal repair</td><td>Pumps</td><td><span class="dfs-badge">#5</span></td><td class="dfs-num">320</td><td><code>/disposals</code></td></tr>
 </tbody>
 </table></div>
-<dl class="dfs-terms"><div><dt>Searcher wants</dt><dd>What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.</dd></div><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
+<dl class="dfs-terms"><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Searches a month</dt><dd>Average Google searches a month for the term across the United States.</dd></div></dl>
 <h2 id="off-topic-title">Searches that aren’t about your work</h2>
 <p id="off-topic-note">2 of the top 15 terms bring about 75 estimated visits a month (7%). They’re searches for another business or place, another area or something unrelated. People making them rarely want what acmeplumbing.example offers, so the visit total overstates the traffic that matters. They need no work.</p>
 <div class="dfs-table" id="off-topic" tabindex="0"><table>
@@ -948,10 +948,10 @@ Higher on the page than on September 1, 2026.
 
 Not in the top 12 by estimated visits on September 1, 2026.
 
-| Search term | Was | Now | Searches a month | Page |
-| --- | ---: | --- | ---: | --- |
-| hydro jetting |  | #9 | 1,300 | \`/drains/jetting\` |
-| backflow testing |  | #15 | 480 | \`/backflow\` |
+| Search term | Now | Searches a month | Page |
+| --- | --- | ---: | --- |
+| hydro jetting | #9 | 1,300 | \`/drains/jetting\` |
+| backflow testing | #15 | 480 | \`/backflow\` |
 
 ---
 
@@ -1015,15 +1015,13 @@ _page one_: Positions #1 to #10, the first page of results. Few people click pas
 
 Search terms about Acme Plumbing’s work where acmeplumbing.example is on page one or two but outside the top 3, one per page. The top 3 get most of the clicks. Searches for a service or an answer come first, then the most searched.
 
-| Search term | Topic | Searcher wants | Position | Searches a month | Page to improve |
-| --- | --- | --- | --- | ---: | --- |
-| emergency plumber | Plumbing |  | #8 | 3,600 | \`/\` |
-| water heater repair | Water heaters |  | #6 | 1,900 | \`/water-heaters\` |
-| drain cleaning | Plumbing |  | #14 | 880 | \`/drains\` |
-| tankless water heater install | Water heaters |  | #11 | 480 | \`/water-heaters/tankless\` |
-| garbage disposal repair | Pumps |  | #5 | 320 | \`/disposals\` |
-
-_Searcher wants_: What the searcher is likely after, as DataForSEO classifies it: an answer, a specific place or site, options to compare or a way to act.
+| Search term | Topic | Position | Searches a month | Page to improve |
+| --- | --- | --- | ---: | --- |
+| emergency plumber | Plumbing | #8 | 3,600 | \`/\` |
+| water heater repair | Water heaters | #6 | 1,900 | \`/water-heaters\` |
+| drain cleaning | Plumbing | #14 | 880 | \`/drains\` |
+| tankless water heater install | Water heaters | #11 | 480 | \`/water-heaters/tankless\` |
+| garbage disposal repair | Pumps | #5 | 320 | \`/disposals\` |
 
 _Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
 

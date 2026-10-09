@@ -2,6 +2,10 @@
 
 ## 0.4.0 (2026-10-09)
 
+### Changed
+
+- `buildReport` drops table columns with no value in any row.
+
 ### Added
 
 - `toMarkdown(blocks)`: GitHub-flavored Markdown for a report.
