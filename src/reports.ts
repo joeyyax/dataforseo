@@ -5,6 +5,7 @@ import {
 } from './checks.js';
 import type { BacklinkRedirectsResult, PathCheck } from './redirects.js';
 import type { KeywordMove, RankedKeyword } from './snapshots.js';
+import { rankDiff, type RankCheckResult, type RankMove } from './rank.js';
 import { mentions, type TermKind } from './relevance.js';
 
 const ACTIONS = 5;
@@ -30,6 +31,7 @@ export const GLOSSARY = {
   linkingSites: 'Other websites with at least one link to that address. Each site counts once.',
   mapsTop3: 'The three listings Google shows with the map at the top of local results. Most taps go to these.',
   aiSearches: 'DataForSEO’s estimate of how often people ask AI tools that question in a month.',
+  features: 'Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.',
 } as const;
 
 function quote(s: string): string {
@@ -819,6 +821,154 @@ export function baselineReport(r: BaselineResult, date: string): ReportSpec {
     source,
     cost: r.cost,
     cached: r.cached,
+  };
+}
+
+// Rank check
+
+const FEATURE_LABEL: Record<string, string> = {
+  featured_snippet: 'Featured snippet', local_pack: 'Map results', map: 'Map', people_also_ask: 'Questions', ai_overview: 'AI Overview',
+  paid: 'Ads', video: 'Videos', images: 'Images', top_stories: 'News', shopping: 'Shopping', knowledge_graph: 'Knowledge panel',
+};
+
+function featureLabel(type: string): string {
+  return FEATURE_LABEL[type] ?? capitalize(type.replace(/_/g, ' '));
+}
+
+/** Report for `rankCheck`, or for the changes since `prev` when given. */
+export function rankReport(r: RankCheckResult, date: string, prev?: RankCheckResult): ReportSpec {
+  const n = r.terms.length;
+  const notIn = (depth: number) => `Not in top ${depth}`;
+  const days = [...new Set(r.terms.map((t) => day(t.fetched_at)))].sort();
+  const searched = days.length > 1 ? `Searched between ${longDate(days[0])} and ${longDate(days.at(-1)!)}.` : `Searched ${longDate(r.fetched_at)}.`;
+  const rows = r.terms.map((t) => ({
+    keyword: t.keyword,
+    position: t.position === null ? notIn(r.depth) : `#${t.position}`,
+    url: t.url ? pathOf(t.url) || '/' : null,
+    first: t.top_3[0]?.domain ?? null,
+    features: t.features.map(featureLabel).join(', ') || null,
+  }));
+  const results: Block[] = [
+    { id: 'results-title', type: 'heading', level: 2, text: 'Results by search' },
+    {
+      id: 'results',
+      type: 'table',
+      columns: [
+        { key: 'keyword', label: 'Search term' },
+        { key: 'position', label: 'Position', format: 'badge', tones: tonesFor(rows, 'position', positionTone), help: GLOSSARY.position },
+        { key: 'url', label: 'Page', format: 'path' },
+        { key: 'first', label: '#1' },
+        { key: 'features', label: 'Also on the page', help: GLOSSARY.features },
+      ],
+      rows,
+      sortable: rows.length > VISIBLE_ROWS,
+      ...(rows.length > VISIBLE_ROWS ? { visible: VISIBLE_ROWS } : {}),
+    },
+  ];
+  const method: MethodLine[] = [
+    { label: 'What', text: `Where ${r.domain} ranks in Google’s regular results for ${n > 10 ? plural(n, 'search term') : series(r.terms.map((t) => quote(t.keyword)))}.` },
+    { label: 'Where', text: `Google in ${r.location === 'United States' ? 'the United States' : place(r.location)}, ${r.language}, on ${r.device === 'mobile' ? 'a phone' : 'a desktop computer'}. Results vary by place and device, so this is one view.` },
+    { label: 'When', text: searched },
+    { label: 'Matching', text: `A result counts when it’s on ${r.domain} or one of its subdomains. Its best result is shown; ads and map listings don’t count.` },
+    { label: 'Depth', text: `The top ${r.depth} results for each search.` },
+    { label: 'Source', text: 'DataForSEO, which runs each search on Google and returns the results.' },
+  ];
+  const base = { kind: 'Rank check', date, source: `DataForSEO Google results (${place(r.location)}, ${r.language}, ${r.device})`, cost: r.cost, cached: r.cached };
+
+  if (!prev) {
+    const { top_3, page_one, lower, not_found } = r.summary;
+    const misses = [
+      ...r.terms.filter((t) => t.position !== null && t.position > 10).sort((a, b) => a.position! - b.position!),
+      ...r.terms.filter((t) => t.position === null),
+    ];
+    const actions = misses.slice(0, ACTIONS).map((t) => {
+      const first = t.top_3[0] ? ` #1 is ${t.top_3[0].domain}.` : '';
+      return t.position === null
+        ? `${quote(t.keyword)}: not in the top ${r.depth}.${first}`
+        : `${quote(t.keyword)}: #${t.position}, with ${code(pathOf(t.url) || '/')}.${first}`;
+    });
+    return {
+      ...base,
+      title: `${r.domain} on Google`,
+      answer: `${r.domain} is on page one for ${count(page_one)} of ${plural(n, 'search term')} checked, ${count(top_3)} of them in the top 3.`
+        + (not_found ? ` It isn’t in the top ${r.depth} for ${count(not_found)}.` : ''),
+      answerTerms: { 'page one': GLOSSARY.pageOne, 'top 3': GLOSSARY.topThree },
+      stats: [
+        { label: 'In the top 3', value: count(top_3), note: `of ${plural(n, 'search term')}`, href: '#results' },
+        { label: 'On page one', value: count(page_one), note: 'positions #1 to #10', href: '#results' },
+        ...(r.depth > 10 ? [{ label: 'Lower', value: count(lower), note: `#11 to #${r.depth}`, tone: lower ? 'warn' : 'neutral', href: '#results' } as StatItem] : []),
+        { label: 'Not found', value: count(not_found), note: `outside the top ${r.depth}`, tone: not_found ? 'bad' : 'neutral', href: '#results' },
+      ],
+      method,
+      actions: actions.length ? [{ id: 'actions', type: 'list', items: actions }] : [],
+      actionsIntro: actions.length
+        ? `Search terms where ${r.domain} isn’t on page one, closest first.${misses.length > ACTIONS ? ` ${count(misses.length - ACTIONS)} more are in Results by search.` : ''}`
+        : undefined,
+      allClear: `${r.domain} is on page one for ${every(n, 'search term')} checked.`,
+      sections: results,
+    };
+  }
+
+  const diff = rankDiff(prev, r);
+  const since = longDate(prev.fetched_at);
+  const compared = diff.improved.length + diff.declined.length + diff.unchanged.length + diff.gained.length + diff.lost.length;
+  const moveTable = (id: string, list: RankMove[]): Block => {
+    const moves = list.map((m) => ({ keyword: m.keyword, from: m.from === null ? notIn(diff.depth) : `#${m.from}`, to: m.to === null ? notIn(diff.depth) : `#${m.to}`, change: m.change, url: m.url ? pathOf(m.url) || '/' : null }));
+    return {
+      id,
+      type: 'table',
+      columns: [
+        { key: 'keyword', label: 'Search term' },
+        { key: 'from', label: 'Was', align: 'right', help: GLOSSARY.position },
+        { key: 'to', label: 'Now', format: 'badge', tones: tonesFor(moves, 'to', positionTone) },
+        { key: 'change', label: 'Places', format: 'number', help: 'Places gained. A negative number is places lost.' },
+        { key: 'url', label: 'Page', format: 'path' },
+      ],
+      rows: moves,
+      sortable: moves.length > VISIBLE_ROWS,
+      ...(moves.length > VISIBLE_ROWS ? { visible: VISIBLE_ROWS } : {}),
+    };
+  };
+  const section = (id: string, title: string, note: string, list: RankMove[]): Block[] => (list.length ? [
+    { id: `${id}-title`, type: 'heading', level: 2, text: `${title} (${count(list.length)})` },
+    { id: `${id}-note`, type: 'text', text: note },
+    moveTable(id, list),
+  ] : []);
+  const actions = [
+    ...diff.lost.map((m) => `${quote(m.keyword)} dropped out of the top ${diff.depth} (was #${m.from}). Check that ${code(pathOf(m.url) || '/')} still loads.`),
+    ...diff.declined.filter((m) => m.change! <= -3).map((m) => `${quote(m.keyword)} fell from #${m.from} to #${m.to}.`),
+  ];
+  const tile = (label: string, list: RankMove[], tone: 'good' | 'warn' | 'bad', id: string, note?: string): StatItem => ({
+    label, value: count(list.length), ...(note ? { note } : {}), tone: list.length ? tone : 'neutral', ...(list.length ? { href: `#${id}` } : {}),
+  });
+  const notes: MethodLine[] = [{
+    label: 'Compared',
+    text: `With the check from ${since}, for the ${plural(compared, 'search term')} in both.`
+      + (prev.depth !== r.depth ? ` One check read deeper, so both are cut to the top ${diff.depth}.` : '')
+      + (diff.not_compared.length ? ` ${plural(diff.not_compared.length, 'term')} in only one check ${diff.not_compared.length === 1 ? 'isn’t' : 'aren’t'} compared.` : ''),
+  }];
+  return {
+    ...base,
+    title: `${r.domain} on Google since ${since}`,
+    answer: `Since ${since}, ${plural(diff.improved.length, 'search term')} moved up, ${count(diff.declined.length)} moved down and ${count(diff.unchanged.length)} held. `
+      + `${count(diff.gained.length)} entered the top ${diff.depth} and ${count(diff.lost.length)} dropped out.`,
+    stats: [
+      tile('Moved up', diff.improved, 'good', 'up'),
+      tile('Moved down', diff.declined, 'warn', 'down'),
+      tile('Entered', diff.gained, 'good', 'entered', `the top ${diff.depth}`),
+      tile('Dropped out', diff.lost, 'bad', 'dropped', `of the top ${diff.depth}`),
+    ],
+    method: [...method, ...notes],
+    actions: actions.length ? [{ id: 'actions', type: 'list', items: actions.slice(0, ACTIONS) }] : [],
+    actionsIntro: actions.length ? 'Terms that dropped out, then terms that fell three or more places.' : undefined,
+    allClear: `No search term dropped out of the top ${diff.depth} or fell three or more places since ${since}.`,
+    sections: [
+      ...section('dropped', 'Dropped out', `In the top ${diff.depth} on ${since}, not now.`, diff.lost),
+      ...section('down', 'Moved down', 'A higher number is a lower spot on the page.', diff.declined),
+      ...section('up', 'Moved up', `Higher on the page than on ${since}.`, diff.improved),
+      ...section('entered', 'Entered', `Not in the top ${diff.depth} on ${since}.`, diff.gained),
+      ...results,
+    ],
   };
 }
 

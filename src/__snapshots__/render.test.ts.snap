@@ -248,6 +248,122 @@ exports[`toHtml > renders the competitor-gap report 1`] = `
 "
 `;
 
+exports[`toHtml > renders the live-rank-check report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Rank check · October 8, 2026</p><h1>acmeplumbing.example on Google</h1></hgroup>
+<p id="answer" class="dfs-lg">acmeplumbing.example is on page one for 3 of 5 search terms checked, 1 of them in the top 3. It isn’t in the top 20 for 1.</p>
+<dl class="dfs-terms"><div><dt>page one</dt><dd>Positions #1 to #10, the first page of results. Few people click past it.</dd></div><div><dt>top 3</dt><dd>Positions #1 to #3, which get most of the clicks.</dd></div></dl>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat"><dt>In the top 3</dt><dd class="dfs-value"><a href="#results-title">1</a></dd><dd class="dfs-note">of 5 search terms</dd></div>
+<div class="dfs-stat"><dt>On page one</dt><dd class="dfs-value"><a href="#results-title">3</a></dd><dd class="dfs-note">positions #1 to #10</dd></div>
+<div class="dfs-stat dfs-warn"><dt>Lower</dt><dd class="dfs-value"><a href="#results-title">1</a></dd><dd class="dfs-note">#11 to #20</dd></div>
+<div class="dfs-stat dfs-bad"><dt>Not found</dt><dd class="dfs-value"><a href="#results-title">1</a></dd><dd class="dfs-note">outside the top 20</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Where acmeplumbing.example ranks in Google’s regular results for “plumber springfield”, “water heater repair”, “drain cleaning”, “emergency plumber” and “sump pump install”.</li>
+<li><strong>Where:</strong> Google in Springfield, Illinois, United States, English, on a phone. Results vary by place and device, so this is one view.</li>
+<li><strong>When:</strong> Searched October 8, 2026.</li>
+<li><strong>Matching:</strong> A result counts when it’s on acmeplumbing.example or one of its subdomains. Its best result is shown; ads and map listings don’t count.</li>
+<li><strong>Depth:</strong> The top 20 results for each search.</li>
+<li><strong>Source:</strong> DataForSEO, which runs each search on Google and returns the results.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">Search terms where acmeplumbing.example isn’t on page one, closest first.</p>
+<ul id="actions">
+<li>“drain cleaning”: #14, with <code>/drains</code>. #1 is rivalplumbing.example.</li>
+<li>“emergency plumber”: not in the top 20. #1 is rivalplumbing.example.</li>
+</ul>
+<h2 id="results-title">Results by search</h2>
+<div class="dfs-table" id="results" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">#1</th><th scope="col">Also on the page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td>acmeplumbing.example</td><td>Map results, Questions</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td>rivalplumbing.example</td><td>Ads</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td>rivalplumbing.example</td><td></td></tr>
+<tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td>rivalplumbing.example</td><td>Map results, AI Overview</td></tr>
+<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td>rivalplumbing.example</td><td></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Position</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div><div><dt>Also on the page</dt><dd>Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.</dd></div></dl>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Google results (Springfield, Illinois, United States, English, mobile), October 8, 2026.</p></footer>
+</article>
+"
+`;
+
+exports[`toHtml > renders the live-rank-check-since report 1`] = `
+"<article class="dfs-report">
+<hgroup id="title"><p class="dfs-kicker">Rank check · October 8, 2026</p><h1>acmeplumbing.example on Google since September 8, 2026</h1></hgroup>
+<p id="answer" class="dfs-lg">Since September 8, 2026, 2 search terms moved up, 0 moved down and 1 held. 1 entered the top 20 and 1 dropped out.</p>
+<dl class="dfs-stats" id="stats">
+<div class="dfs-stat dfs-good"><dt>Moved up</dt><dd class="dfs-value"><a href="#up-title">2</a></dd></div>
+<div class="dfs-stat"><dt>Moved down</dt><dd class="dfs-value">0</dd></div>
+<div class="dfs-stat dfs-good"><dt>Entered</dt><dd class="dfs-value"><a href="#entered-title">1</a></dd><dd class="dfs-note">the top 20</dd></div>
+<div class="dfs-stat dfs-bad"><dt>Dropped out</dt><dd class="dfs-value"><a href="#dropped-title">1</a></dd><dd class="dfs-note">of the top 20</dd></div>
+</dl>
+<details id="method">
+<summary>How this was measured</summary>
+<ul id="method-list">
+<li><strong>What:</strong> Where acmeplumbing.example ranks in Google’s regular results for “plumber springfield”, “water heater repair”, “drain cleaning”, “emergency plumber” and “sump pump install”.</li>
+<li><strong>Where:</strong> Google in Springfield, Illinois, United States, English, on a phone. Results vary by place and device, so this is one view.</li>
+<li><strong>When:</strong> Searched October 8, 2026.</li>
+<li><strong>Matching:</strong> A result counts when it’s on acmeplumbing.example or one of its subdomains. Its best result is shown; ads and map listings don’t count.</li>
+<li><strong>Depth:</strong> The top 20 results for each search.</li>
+<li><strong>Source:</strong> DataForSEO, which runs each search on Google and returns the results.</li>
+<li><strong>Compared:</strong> With the check from September 8, 2026, for the 5 search terms in both.</li>
+</ul>
+</details>
+<h2 id="actions-title">What to do</h2>
+<p id="actions-intro">Terms that dropped out, then terms that fell three or more places.</p>
+<ul id="actions">
+<li>“emergency plumber” dropped out of the top 20 (was #7). Check that <code>/</code> still loads.</li>
+</ul>
+<h2 id="dropped-title">Dropped out (1)</h2>
+<p id="dropped-note">In the top 20 on September 8, 2026, not now.</p>
+<div class="dfs-table" id="dropped" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>emergency plumber</td><td class="dfs-num">#7</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td><code>/</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Was</dt><dd>Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.</dd></div></dl>
+<h2 id="up-title">Moved up (2)</h2>
+<p id="up-note">Higher on the page than on September 8, 2026.</p>
+<div class="dfs-table" id="up" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col" class="dfs-num">Places</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>drain cleaning</td><td class="dfs-num">#18</td><td><span class="dfs-badge">#14</span></td><td class="dfs-num">4</td><td><code>/drains</code></td></tr>
+<tr><td>plumber springfield</td><td class="dfs-num">#2</td><td><span class="dfs-badge">#1</span></td><td class="dfs-num">1</td><td><code>/</code></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Places</dt><dd>Places gained. A negative number is places lost.</dd></div></dl>
+<h2 id="entered-title">Entered (1)</h2>
+<p id="entered-note">Not in the top 20 on September 8, 2026.</p>
+<div class="dfs-table" id="entered" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col" class="dfs-num">Was</th><th scope="col">Now</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><td>sump pump install</td><td class="dfs-num">Not in top 20</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td></tr>
+</tbody>
+</table></div>
+<h2 id="results-title">Results by search</h2>
+<div class="dfs-table" id="results" tabindex="0"><table>
+<thead><tr><th scope="col">Search term</th><th scope="col">Position</th><th scope="col">Page</th><th scope="col">#1</th><th scope="col">Also on the page</th></tr></thead>
+<tbody>
+<tr><td>plumber springfield</td><td><span class="dfs-badge">#1</span></td><td><code>/</code></td><td>acmeplumbing.example</td><td>Map results, Questions</td></tr>
+<tr><td>water heater repair</td><td><span class="dfs-badge">#4</span></td><td><code>/water-heaters</code></td><td>rivalplumbing.example</td><td>Ads</td></tr>
+<tr><td>drain cleaning</td><td><span class="dfs-badge">#14</span></td><td><code>/drains</code></td><td>rivalplumbing.example</td><td></td></tr>
+<tr><td>emergency plumber</td><td><span class="dfs-badge dfs-bad">Not in top 20</span></td><td></td><td>rivalplumbing.example</td><td>Map results, AI Overview</td></tr>
+<tr><td>sump pump install</td><td><span class="dfs-badge">#9</span></td><td><code>/sump-pumps</code></td><td>rivalplumbing.example</td><td></td></tr>
+</tbody>
+</table></div>
+<dl class="dfs-terms"><div><dt>Also on the page</dt><dd>Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.</dd></div></dl>
+<footer class="dfs-footer" id="footer"><p>Data: DataForSEO Google results (Springfield, Illinois, United States, English, mobile), October 8, 2026.</p></footer>
+</article>
+"
+`;
+
 exports[`toHtml > renders the local-visibility report 1`] = `
 "<article class="dfs-report">
 <hgroup id="title"><p class="dfs-kicker">Local visibility · October 8, 2026</p><h1>Acme Plumbing on Google Maps</h1></hgroup>
@@ -783,6 +899,133 @@ _Only they rank, any term_: Every term where they’re on page one and acmeplumb
 ---
 
 <sub>Data: DataForSEO Labs, October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the live-rank-check report 1`] = `
+"# acmeplumbing.example on Google
+
+_Rank check · October 8, 2026_
+
+acmeplumbing.example is on page one for 3 of 5 search terms checked, 1 of them in the top 3. It isn’t in the top 20 for 1.
+
+_page one_: Positions #1 to #10, the first page of results. Few people click past it.
+
+_top 3_: Positions #1 to #3, which get most of the clicks.
+
+- In the top 3: **1** (of 5 search terms)
+- On page one: **3** (positions #1 to #10)
+- Lower: **1** (#11 to #20)
+- Not found: **1** (outside the top 20)
+
+## How this was measured
+
+- **What:** Where acmeplumbing.example ranks in Google’s regular results for “plumber springfield”, “water heater repair”, “drain cleaning”, “emergency plumber” and “sump pump install”.
+- **Where:** Google in Springfield, Illinois, United States, English, on a phone. Results vary by place and device, so this is one view.
+- **When:** Searched October 8, 2026.
+- **Matching:** A result counts when it’s on acmeplumbing.example or one of its subdomains. Its best result is shown; ads and map listings don’t count.
+- **Depth:** The top 20 results for each search.
+- **Source:** DataForSEO, which runs each search on Google and returns the results.
+
+## What to do
+
+Search terms where acmeplumbing.example isn’t on page one, closest first.
+
+- “drain cleaning”: #14, with \`/drains\`. #1 is rivalplumbing.example.
+- “emergency plumber”: not in the top 20. #1 is rivalplumbing.example.
+
+## Results by search
+
+| Search term | Position | Page | #1 | Also on the page |
+| --- | --- | --- | --- | --- |
+| plumber springfield | #1 | \`/\` | acmeplumbing.example | Map results, Questions |
+| water heater repair | #4 | \`/water-heaters\` | rivalplumbing.example | Ads |
+| drain cleaning | #14 | \`/drains\` | rivalplumbing.example |  |
+| emergency plumber | Not in top 20 |  | rivalplumbing.example | Map results, AI Overview |
+| sump pump install | #9 | \`/sump-pumps\` | rivalplumbing.example |  |
+
+_Position_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+_Also on the page_: Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.
+
+---
+
+<sub>Data: DataForSEO Google results (Springfield, Illinois, United States, English, mobile), October 8, 2026.</sub>
+"
+`;
+
+exports[`toMarkdown > renders the live-rank-check-since report 1`] = `
+"# acmeplumbing.example on Google since September 8, 2026
+
+_Rank check · October 8, 2026_
+
+Since September 8, 2026, 2 search terms moved up, 0 moved down and 1 held. 1 entered the top 20 and 1 dropped out.
+
+- Moved up: **2**
+- Moved down: **0**
+- Entered: **1** (the top 20)
+- Dropped out: **1** (of the top 20)
+
+## How this was measured
+
+- **What:** Where acmeplumbing.example ranks in Google’s regular results for “plumber springfield”, “water heater repair”, “drain cleaning”, “emergency plumber” and “sump pump install”.
+- **Where:** Google in Springfield, Illinois, United States, English, on a phone. Results vary by place and device, so this is one view.
+- **When:** Searched October 8, 2026.
+- **Matching:** A result counts when it’s on acmeplumbing.example or one of its subdomains. Its best result is shown; ads and map listings don’t count.
+- **Depth:** The top 20 results for each search.
+- **Source:** DataForSEO, which runs each search on Google and returns the results.
+- **Compared:** With the check from September 8, 2026, for the 5 search terms in both.
+
+## What to do
+
+Terms that dropped out, then terms that fell three or more places.
+
+- “emergency plumber” dropped out of the top 20 (was #7). Check that \`/\` still loads.
+
+## Dropped out (1)
+
+In the top 20 on September 8, 2026, not now.
+
+| Search term | Was | Now | Page |
+| --- | ---: | --- | --- |
+| emergency plumber | #7 | Not in top 20 | \`/\` |
+
+_Was_: Where the page shows in Google’s results for that search. #1 is the first result; #1 to #10 is page one.
+
+## Moved up (2)
+
+Higher on the page than on September 8, 2026.
+
+| Search term | Was | Now | Places | Page |
+| --- | ---: | --- | ---: | --- |
+| drain cleaning | #18 | #14 | 4 | \`/drains\` |
+| plumber springfield | #2 | #1 | 1 | \`/\` |
+
+_Places_: Places gained. A negative number is places lost.
+
+## Entered (1)
+
+Not in the top 20 on September 8, 2026.
+
+| Search term | Was | Now | Page |
+| --- | ---: | --- | --- |
+| sump pump install | Not in top 20 | #9 | \`/sump-pumps\` |
+
+## Results by search
+
+| Search term | Position | Page | #1 | Also on the page |
+| --- | --- | --- | --- | --- |
+| plumber springfield | #1 | \`/\` | acmeplumbing.example | Map results, Questions |
+| water heater repair | #4 | \`/water-heaters\` | rivalplumbing.example | Ads |
+| drain cleaning | #14 | \`/drains\` | rivalplumbing.example |  |
+| emergency plumber | Not in top 20 |  | rivalplumbing.example | Map results, AI Overview |
+| sump pump install | #9 | \`/sump-pumps\` | rivalplumbing.example |  |
+
+_Also on the page_: Other things Google shows on the results page, such as ads, maps and answer boxes. They push the regular results down.
+
+---
+
+<sub>Data: DataForSEO Google results (Springfield, Illinois, United States, English, mobile), October 8, 2026.</sub>
 "
 `;
 

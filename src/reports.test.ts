@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { aiReport, buildReport, funnels, usd, gapReport, localReport, snapshotReport, redirectReport, type Block } from './index.js';
-import { aiFixture, gapFixture, localFixture, redirectFixture, sampleReports, snapshotFixture } from './test/report-fixtures.js';
+import { aiReport, buildReport, funnels, usd, gapReport, localReport, rankReport, snapshotReport, redirectReport, type Block } from './index.js';
+import { aiFixture, gapFixture, localFixture, rankFixture, redirectFixture, sampleReports, snapshotFixture } from './test/report-fixtures.js';
 
 function find(blocks: Block[], id: string): any {
   for (const b of blocks) {
@@ -36,6 +36,8 @@ describe('report blocks', () => {
       gapReport({ ...gapFixture, gaps: [], gap_terms: 0, gap_search_volume: 0 }, '2026-10-08'),
       localReport({ ...localFixture, results: [localFixture.results[0]], summary: { top_3: 1, lower: 0, not_found: 0 } }, '2026-10-08'),
       redirectReport({ ...redirectFixture, pages: redirectFixture.pages.filter((p) => p.verdict === 'ok') }, '2026-10-08'),
+      rankReport({ ...rankFixture, terms: rankFixture.terms.filter((t) => t.position !== null && t.position <= 10) }, '2026-10-08'),
+      rankReport(rankFixture, '2026-10-08', rankFixture),
     ];
     for (const spec of empty) {
       const blocks = buildReport(spec);
@@ -113,6 +115,31 @@ describe('report blocks', () => {
     expect(find(check, 'dropped').rows).toStrictEqual([{ keyword: 'emergency plumber', from: '#8', to: 'Left the set', search_volume: 3600, url: '/' }]);
     expect(find(check, 'dropped').columns[2].tones).toStrictEqual({ 'Left the set': 'bad' });
     expect(find(check, 'stats').items.find((s: any) => s.label === 'Moved up')).toMatchObject({ tone: 'good', href: '#up-title' });
+  });
+
+  it('rank check lists terms off page one, closest first, and who is #1', () => {
+    const spec = sampleReports()['live-rank-check'];
+    expect(spec.answer).toBe('acmeplumbing.example is on page one for 3 of 5 search terms checked, 1 of them in the top 3. It isn’t in the top 20 for 1.');
+    expect(spec.stats.map((s) => [s.label, s.value])).toStrictEqual([['In the top 3', '1'], ['On page one', '3'], ['Lower', '1'], ['Not found', '1']]);
+
+    const blocks = buildReport(spec);
+    expect(find(blocks, 'actions').items).toStrictEqual([
+      '“drain cleaning”: #14, with `/drains`. #1 is rivalplumbing.example.',
+      '“emergency plumber”: not in the top 20. #1 is rivalplumbing.example.',
+    ]);
+    expect(find(blocks, 'results').rows[0]).toStrictEqual({ keyword: 'plumber springfield', position: '#1', url: '/', first: 'acmeplumbing.example', features: 'Map results, Questions' });
+    expect(find(blocks, 'results').columns[1].tones['Not in top 20']).toBe('bad');
+  });
+
+  it('rank check against an earlier one reports each move and what to look at', () => {
+    const spec = sampleReports()['live-rank-check-since'];
+    expect(spec.answer).toBe('Since September 8, 2026, 2 search terms moved up, 0 moved down and 1 held. 1 entered the top 20 and 1 dropped out.');
+
+    const blocks = buildReport(spec);
+    expect(find(blocks, 'actions').items).toStrictEqual(['“emergency plumber” dropped out of the top 20 (was #7). Check that `/` still loads.']);
+    expect(find(blocks, 'up').rows.map((r: any) => [r.keyword, r.from, r.to, r.change])).toStrictEqual([['drain cleaning', '#18', '#14', 4], ['plumber springfield', '#2', '#1', 1]]);
+    expect(find(blocks, 'entered').rows[0]).toMatchObject({ keyword: 'sump pump install', from: 'Not in top 20', to: '#9' });
+    expect(find(blocks, 'results')).toBeDefined();
   });
 
   it('redirect report sorts files from pages, truncates paths and flags pages funneled to one general page', () => {

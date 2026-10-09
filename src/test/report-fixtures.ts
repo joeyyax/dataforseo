@@ -1,6 +1,6 @@
 // Sample check results for the report tests. Invented data on example domains.
-import type { AiResult, BacklinkRedirectsResult, BaselineResult, GapResult, LocalResult, ReportSpec, SnapshotResult } from '../index.js';
-import { aiReport, baselineReport, classify, gapReport, localReport, redirectReport, relevanceFor, snapshotReport } from '../index.js';
+import type { AiResult, BacklinkRedirectsResult, BaselineResult, GapResult, LocalResult, RankCheckResult, RankTerm, ReportSpec, SnapshotResult } from '../index.js';
+import { aiReport, baselineReport, classify, gapReport, localReport, rankReport, redirectReport, relevanceFor, snapshotReport } from '../index.js';
 
 const spend = { cost: 0.0144, cached: false, fetched_at: '2026-10-08T12:00:00.000Z' };
 const kw = (keyword: string, position: number, search_volume: number, etv: number, url: string, intent?: string) =>
@@ -143,6 +143,38 @@ export const redirectFixture: BacklinkRedirectsResult = {
   ...spend, cost: 0.0276,
 };
 
+const serp = (position: number, domain: string) => ({ position, domain, url: `https://${domain}/` });
+const rankTerm = (keyword: string, position: number | null, path: string | null, features: string[] = [], fetched_at = spend.fetched_at): RankTerm => ({
+  keyword, position, url: path && `https://www.acmeplumbing.example${path}`, title: path && 'Acme Plumbing', features,
+  top_3: [serp(1, position === 1 ? 'acmeplumbing.example' : 'rivalplumbing.example'), serp(2, 'citydrains.example'), serp(3, 'pipes.example')],
+  cost: 0.0006, cached: false, fetched_at,
+});
+
+export const rankFixture: RankCheckResult = {
+  domain: 'acmeplumbing.example', location: 'Springfield,Illinois,United States', language: 'English', device: 'mobile', depth: 20, mode: 'queue',
+  terms: [
+    rankTerm('plumber springfield', 1, '/', ['local_pack', 'people_also_ask']),
+    rankTerm('water heater repair', 4, '/water-heaters', ['paid']),
+    rankTerm('drain cleaning', 14, '/drains'),
+    rankTerm('emergency plumber', null, null, ['local_pack', 'ai_overview']),
+    rankTerm('sump pump install', 9, '/sump-pumps'),
+  ],
+  summary: { top_3: 1, page_one: 3, lower: 1, not_found: 1 },
+  ...spend, cost: 0.003,
+};
+
+export const rankPrevFixture: RankCheckResult = {
+  ...rankFixture,
+  terms: [
+    rankTerm('plumber springfield', 2, '/', [], '2026-09-08T12:00:00.000Z'),
+    rankTerm('water heater repair', 4, '/water-heaters', [], '2026-09-08T12:00:00.000Z'),
+    rankTerm('drain cleaning', 18, '/drains', [], '2026-09-08T12:00:00.000Z'),
+    rankTerm('emergency plumber', 7, '/', [], '2026-09-08T12:00:00.000Z'),
+    rankTerm('sump pump install', null, null, [], '2026-09-08T12:00:00.000Z'),
+  ],
+  fetched_at: '2026-09-08T12:00:00.000Z',
+};
+
 /** One spec per report, keyed by its slug suffix. */
 export function sampleReports(date = '2026-10-08'): Record<string, ReportSpec> {
   return {
@@ -154,5 +186,7 @@ export function sampleReports(date = '2026-10-08'): Record<string, ReportSpec> {
     'rank-check': baselineReport(baselineCompareFixture, date),
     'rank-check-same-data': baselineReport(baselineSameDataFixture, date),
     'backlink-redirects': redirectReport(redirectFixture, date),
+    'live-rank-check': rankReport(rankFixture, date),
+    'live-rank-check-since': rankReport(rankFixture, date, rankPrevFixture),
   };
 }

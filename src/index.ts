@@ -1,9 +1,9 @@
 // Client and cache
 export {
-  createDataForSeoClient, cacheKey, costLimitMessage, nextUtcMidnight, DataForSeoError, DailyLimitError,
-  DAILY_LIMIT_STATUS, DEFAULT_TIMEOUT_MS, DEFAULT_TTL_MS,
+  createDataForSeoClient, cacheKey, costLimitMessage, nextUtcMidnight, DataForSeoError, DailyLimitError, QueueTimeoutError,
+  DAILY_LIMIT_STATUS, DEFAULT_TIMEOUT_MS, DEFAULT_TTL_MS, TASK_POST_LIMIT,
 } from './client.js';
-export type { Charged, DataForSeoClient, DataForSeoOptions } from './client.js';
+export type { Charged, DataForSeoClient, DataForSeoOptions, QueueOptions } from './client.js';
 export { createDiskCacheStore, createHttpCacheStore } from './cache.js';
 export type { CacheStore, HttpCacheStoreOptions } from './cache.js';
 
@@ -23,6 +23,10 @@ export type {
 export { backlinkRedirects, firstLocation, groupByPath, isGated, mapToOrigin, sortWorstFirst, stripTracking, verdictFor, DEFAULT_REDIRECT_LIMIT } from './redirects.js';
 export type { BacklinkRedirectsInput, BacklinkRedirectsResult, PathCheck, PathTarget, RedirectVerdict } from './redirects.js';
 
+// Rank check
+export { estimateRankCost, parseSerp, rankCheck, rankDiff, DEFAULT_RANK_DEPTH, DEFAULT_RANK_MAX_KEYWORDS, RANK_PRICES } from './rank.js';
+export type { RankCheckInput, RankCheckResult, RankDiff, RankMode, RankMove, RankTerm, SerpResult } from './rank.js';
+
 // Snapshots
 export { createDiskSnapshotStore, createSnapshotStore, diffSnapshots, snapshotId, snapshotLimit, trimSnapshot } from './snapshots.js';
 export type { KeywordMove, RankedKeyword, RankSnapshot, SnapshotDiff, SnapshotStore } from './snapshots.js';
@@ -33,7 +37,7 @@ export type { Classified, Relevance, TermKind, Topic } from './relevance.js';
 
 // Reports
 export {
-  aiReport, baselineReport, gapReport, localReport, redirectReport, snapshotReport,
+  aiReport, baselineReport, gapReport, localReport, rankReport, redirectReport, snapshotReport,
   chain, funnels, snapshotOpportunities, GLOSSARY,
 } from './reports.js';
 export { buildReport, capitalize, code, count, day, every, longDate, percent, plural, series, theTop, times, tonesFor, usd } from './report.js';
